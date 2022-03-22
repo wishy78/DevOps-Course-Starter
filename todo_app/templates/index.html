@@ -6,7 +6,12 @@
     <h1 class="display-4">To-Do App</h1>
     <p class="lead">Just another to-do app.</p>
   </div>
-
+  <form action=".\new" method="POST" >
+    <div>
+      <label for="name">Title: </label>
+      <input type="text" name="title" id="title" required> <input type="submit" value="Add Item">
+    </div>
+  </form>
   <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
@@ -18,18 +23,4 @@
       {% endfor %}
     </div>
   </div>
-  <form action=".\new" method="POST" >
-    <div>
-      <label for="name">Title: </label>
-      <input type="text" name="title" id="title" required>
-    </div>
-    <!-- <div>
-      <label for="email">Status: </label>
-      <input type="text" name="status" id="status" required>
-    </div>-->
-    <div>
-      <input type="submit" value="Submit">
-    </div>
-  </form>
-  
 {% endblock %}
