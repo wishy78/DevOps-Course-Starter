@@ -1,4 +1,3 @@
-
 from requests import get,post
 from flask import session
 from os import getenv
@@ -12,17 +11,23 @@ board = getenv('TRELLO_BOARD_ID')
 
 
 def get_cards():
-    url = f"https://api.trello.com/1/boards/{board}/cards?fields=id,name&key={KEY}&token={TOKEN}"
+    lists = get_lists()
+    url = f"https://api.trello.com/1/boards/{board}/cards?fields=idList,name&key={KEY}&token={TOKEN}"
     response = get(url)
-    response.status_code
-    response.text
-    return session.get('cards', response.json())
-    
+   # response.status_code
+   # response.text
+    json_value = response.json()
+    for card in json_value : 
+        for list in lists:
+            if card["idList"] == list["id"]:
+                card["idList"] = list["name"]
+    return session.get('cards', json_value)
+
 def get_lists():
     url = f"https://api.trello.com/1/boards/{board}/lists?fields=id,name,idBoard&key={KEY}&token={TOKEN}"
     response = get(url)
-    response.status_code
-    response.text
+    #response.status_code
+    #response.text
     return response.json()  
 
 def add_card(title):
