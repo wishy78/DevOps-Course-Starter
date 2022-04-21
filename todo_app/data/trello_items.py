@@ -1,4 +1,4 @@
-from requests import get,post
+from requests import get,post,put
 from flask import session
 from os import getenv
 from dotenv import load_dotenv
@@ -8,11 +8,6 @@ load_dotenv()
 KEY = getenv('TRELLO_KEY')
 TOKEN = getenv('TRELLO_TOKEN')
 board = getenv('TRELLO_BOARD_ID')
-
-#####   needs editing
-def move_card(card,list):
-    url = f"https://api.trello.com/1/cards?idList=key={KEY}&token={TOKEN}" 
-    return
 
 def get_lists():
     url = f"https://api.trello.com/1/boards/{board}/lists?fields=id,name,idBoard&key={KEY}&token={TOKEN}"
@@ -32,18 +27,11 @@ def get_cards():
                 card["listName"] = list["name"]
     return session.get('cards', json_value)
 
-def get_list():
-    lists = get_lists()
-    url = f"https://api.trello.com/1/boards/{board}/cards?fields=idList,name&key={KEY}&token={TOKEN}"
-    response = get(url)
-   # response.status_code
-   # response.text
-    json_value = response.json()
-    for card in json_value : 
-        for list in lists:
-            if card["idList"] == list["id"]:
-                card["idList"] = list["name"]
-    return session.get('cards', json_value)
+#####   needs editing
+def move_card(card,list):
+    url = f"https://api.trello.com/1/cards/{card}?key={KEY}&token={TOKEN}&idList={list}"
+    response = put(url)
+    return
 
 def add_card(title):
     listId = " "

@@ -19,21 +19,17 @@
         <tr>
           <th>Task Name</th>
           <th>Current List</th>
-          <th>New List</th>
+          <th colspan={{lists|length}}>All List(s)</th>
         </tr>
       {% for item in cards %}
         <tr>
           <td>{{ item.name }}</td>
           <td>{{item.listName}}</td>
+          {% for list in lists %}
           <td>
-            <a href="./move/<id>/<idlist>">To Do</a>
-            <select id="newList" name="newList">
-              <option value="To Do">sss</option>
-              <option value="Doing">ddd</option>
-              <option value="Done" selected>fff</option>
-            </select>
+            <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
           </td>
-          <td>{{item.id}}</td>
+          {% endfor %}
         </tr>
 
       {% endfor %}
