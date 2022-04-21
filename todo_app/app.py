@@ -9,7 +9,7 @@ app.config.from_object(Config())
 
 @app.route('/')
 def index():
-    tt = task()
+    #tt = task()
     # so a class to hold a record
     # so do i need multiple class items in a dictionary?
     # where using a class to default settings so other systems can be used with minimal change
