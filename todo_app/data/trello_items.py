@@ -9,6 +9,15 @@ KEY = getenv('TRELLO_KEY')
 TOKEN = getenv('TRELLO_TOKEN')
 board = getenv('TRELLO_BOARD_ID')
 
+#####   needs editing
+def move_card(card,list):
+    url = f"https://api.trello.com/1/cards?idList=key={KEY}&token={TOKEN}" 
+    return
+
+def get_lists():
+    url = f"https://api.trello.com/1/boards/{board}/lists?fields=id,name,idBoard&key={KEY}&token={TOKEN}"
+    response = get(url)
+    return response.json() 
 
 def get_cards():
     lists = get_lists()
@@ -20,15 +29,21 @@ def get_cards():
     for card in json_value : 
         for list in lists:
             if card["idList"] == list["id"]:
-                card["idList"] = list["name"]
+                card["listName"] = list["name"]
     return session.get('cards', json_value)
 
-def get_lists():
-    url = f"https://api.trello.com/1/boards/{board}/lists?fields=id,name,idBoard&key={KEY}&token={TOKEN}"
+def get_list():
+    lists = get_lists()
+    url = f"https://api.trello.com/1/boards/{board}/cards?fields=idList,name&key={KEY}&token={TOKEN}"
     response = get(url)
-    #response.status_code
-    #response.text
-    return response.json()  
+   # response.status_code
+   # response.text
+    json_value = response.json()
+    for card in json_value : 
+        for list in lists:
+            if card["idList"] == list["id"]:
+                card["idList"] = list["name"]
+    return session.get('cards', json_value)
 
 def add_card(title):
     listId = " "
@@ -42,4 +57,4 @@ def add_card(title):
     response = post(url,data = urldata)
     return
 
-    
+

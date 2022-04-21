@@ -22,21 +22,18 @@
           <th>New List</th>
         </tr>
       {% for item in cards %}
-      <ul class="list-group mb-4">
-        <!-- List the todo items here -->
-        {{ item.name }} , {{item.idList}}
-      </ul>
-      
         <tr>
           <td>{{ item.name }}</td>
-          <td>{{item.idList}}</td>
+          <td>{{item.listName}}</td>
           <td>
+            <a href="./move/<id>/<idlist>">To Do</a>
             <select id="newList" name="newList">
               <option value="To Do">sss</option>
-              <option value="in Progress">ddd</option>
+              <option value="Doing">ddd</option>
               <option value="Done" selected>fff</option>
             </select>
           </td>
+          <td>{{item.id}}</td>
         </tr>
 
       {% endfor %}
