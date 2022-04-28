@@ -38,11 +38,11 @@ The `.env` file is used by flask to set environment variables when running `flas
 
 go to https://trello.com/ and create an account if not already have one
 collect the "key" and "tokens" from here https://trello.com/app-key
-create / choese the board you want to use
-run the following "GET" in postman to obtain the Board ID
+create / choese the board you want to use (must have a "To Do" List as minimum)
+run the following "GET" in postman to obtain the Board ID, replacing the relevent {feilds}
 https://api.trello.com/1/search?query={Board Name}&modelTypes=boards&key={Trello KEY}&token={Trello TOKEN}&search
 
-Add the following to the .env file replacing the {} items with the above you have obtained
+Add the following to the .env file replacing the {feild} items with the above you have obtained
 # Creds for trello
 TRELLO_KEY={Trello KEY}
 TRELLO_TOKEN={Trello TOKEN}
