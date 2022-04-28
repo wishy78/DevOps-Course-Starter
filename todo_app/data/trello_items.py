@@ -13,18 +13,14 @@ board = getenv('TRELLO_BOARD_ID')
 
 def get_lists():
     url = f"https://api.trello.com/1/boards/{board}/lists?fields=id,name,idBoard&key={KEY}&token={TOKEN}"
-    response = get(url)
-    return response.json() 
+    return get(url).json() 
 
 def get_cards():
-    url = f"https://api.trello.com/1/boards/{board}/cards?fields=idList,name&key={KEY}&token={TOKEN}"
-    response = get(url)
-    cards_json = response.json()
-    lists_json = get_lists()
     items = {}
     tasks = Task
-    for card in cards_json : 
-        for list in lists_json:
+    url = f"https://api.trello.com/1/boards/{board}/cards?fields=idList,name&key={KEY}&token={TOKEN}"
+    for card in get(url).json(): 
+        for list in get_lists():
             if card["idList"] == list["id"]:
                 card["listName"] = list["name"]
                 items[tasks.from_trello_card(card)] = tasks
@@ -32,19 +28,16 @@ def get_cards():
 
 def move_card(card,list):
     url = f"https://api.trello.com/1/cards/{card}?key={KEY}&token={TOKEN}&idList={list}"
-    response = put(url)
-    return
+    return put(url)
 
 def add_card(title):
     listId = " "
-    lists = get_lists()
-    for list in lists:
+    for list in get_lists():
         if (list["name"] == "To Do"):
             listId = list["id"]
             break
     url = f"https://api.trello.com/1/cards?idList={listId}&key={KEY}&token={TOKEN}" 
     urldata = {'name': title, 'pos': 'top'}
-    response = post(url,data = urldata)
-    return
+    return post(url,data = urldata)
 
 

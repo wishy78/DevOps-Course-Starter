@@ -7,25 +7,14 @@ app.config.from_object(Config())
 
 @app.route('/')
 def index():
-    #tt = task()
-    # so a class to hold a record
-    # so do i need multiple class items in a dictionary?
-    # where using a class to default settings so other systems can be used with minimal change
-    # eg task(ID, Name, State) (but this is in trello ID Name IDlist(name))
-    cards = get_cards()
-    lists = get_lists()
-    return render_template('index.html',cards=cards,lists=lists)
-    #return render_template('index.html',cards=cards)
-
+    return render_template('index.html',cards=get_cards(),lists=get_lists())
+ 
 @app.route('/new',methods=['POST'])
 def new():
     add_card(request.form.get('title') )
-    #add_item(request.form.get('title') )
     return redirect('/')
-
 
 @app.route('/move/<cardID>/<newList>')
 def move(cardID,newList):
     move_card(cardID,newList)
     return redirect('/')
-
