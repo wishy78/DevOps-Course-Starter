@@ -1,8 +1,6 @@
 from flask import Flask, redirect, render_template, request
 from todo_app.data.trello_items import add_card, get_cards, get_lists, move_card
 from todo_app.flask_config import Config
-from  todo_app.data.task_class import task,from_trello_card
-
 
 app = Flask(__name__)
 app.config.from_object(Config())

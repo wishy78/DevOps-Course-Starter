@@ -24,7 +24,7 @@
       {% for item in cards %}
         <tr>
           <td>{{ item.name }}</td>
-          <td>{{item.listName}}</td>
+          <td>{{item.status}}</td>
           {% for list in lists %}
           <td>
             <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>

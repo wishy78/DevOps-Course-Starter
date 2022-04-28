@@ -1,7 +1,9 @@
+
 from requests import get,post,put
 from flask import session
 from os import getenv
 from dotenv import load_dotenv
+from todo_app.data.task_class import Task
 
 load_dotenv()
 
@@ -15,19 +17,19 @@ def get_lists():
     return response.json() 
 
 def get_cards():
-    lists = get_lists()
     url = f"https://api.trello.com/1/boards/{board}/cards?fields=idList,name&key={KEY}&token={TOKEN}"
     response = get(url)
-   # response.status_code
-   # response.text
-    json_value = response.json()
-    for card in json_value : 
-        for list in lists:
+    cards_json = response.json()
+    lists_json = get_lists()
+    items = {}
+    tasks = Task
+    for card in cards_json : 
+        for list in lists_json:
             if card["idList"] == list["id"]:
                 card["listName"] = list["name"]
-    return session.get('cards', json_value)
+                items[tasks.from_trello_card(card)] = tasks
+    return session.get('cards', items)
 
-#####   needs editing
 def move_card(card,list):
     url = f"https://api.trello.com/1/cards/{card}?key={KEY}&token={TOKEN}&idList={list}"
     response = put(url)
