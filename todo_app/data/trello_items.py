@@ -16,14 +16,13 @@ def get_lists():
     return get(url).json() 
 
 def get_cards():
-    items = {}
-    tasks = Task
+    items = []
     url = f"https://api.trello.com/1/boards/{board}/cards?fields=idList,name&key={KEY}&token={TOKEN}"
     for card in get(url).json(): 
         for list in get_lists():
             if card["idList"] == list["id"]:
                 card["listName"] = list["name"]
-                items[tasks.from_trello_card(card)] = tasks
+                items.append(Task.from_trello_card(card))
     return session.get('cards', items)
 
 def move_card(card,list):
