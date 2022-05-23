@@ -6,13 +6,34 @@
     <h1 class="display-4">To-Do App</h1>
     <p class="lead">Just another to-do app.</p>
   </div>
-
+  <form action=".\new" method="POST" >
+    <div>
+      <label for="name">Title: </label>
+      <input type="text" name="title" id="title" required> <input type="submit" value="Add Item">
+    </div>
+  </form>
   <div class="row">
     <div class="col-md-12">
       <h2>Items</h2>
-      <ul class="list-group mb-4">
-        <!-- List the todo items here -->
-      </ul>
+      <table style="border: 1px solid balck;">
+        <tr>
+          <th>Task Name</th>
+          <th>Current State</th>
+          <th colspan={{lists|length}}>Availabale state(s)</th>
+        </tr>
+      {% for item in cards %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{item.status}}</td>
+          {% for list in lists %}
+          <td>
+            <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
+          </td>
+          {% endfor %}
+        </tr>
+
+      {% endfor %}
+    </table>
     </div>
   </div>
 {% endblock %}
