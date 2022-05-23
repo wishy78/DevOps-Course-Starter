@@ -54,7 +54,11 @@ Once the all dependencies have been installed, start the Flask app in developmen
 ```bash
 $ poetry run flask run
 ```
-
+To run Tests
+```bash
+ * Run 'poetry add pytest --dev'
+ * Run 'poetry run pytest'
+```
 You should see output similar to the following:
 ```bash
  * Serving Flask app "app" (lazy loading)
