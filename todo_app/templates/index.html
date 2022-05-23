@@ -21,7 +21,7 @@
           <th>Current State</th>
           <th colspan={{lists|length}}>Availabale state(s)</th>
         </tr>
-      {% for item in cards %}
+      {% for item in view_model.items %}
         <tr>
           <td>{{ item.name }}</td>
           <td>{{item.status}}</td>
