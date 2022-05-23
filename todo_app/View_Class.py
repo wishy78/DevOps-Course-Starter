@@ -16,16 +16,16 @@ class ViewModel:
 
  @property
  def toDo_items(self):
-   doingItems = []
+   toDoItems = []
    for item in self.items:
       if item.status == "To_Do":
-         doingItems.append(item)
-   return [doingItems]
+         toDoItems.append(item)
+   return [toDoItems]
 
  @property
  def done_items(self):
-   doingItems = []
+   doneItems = []
    for item in self.items:
       if item.status == "Done":
-         doingItems.append(item)
-   return [doingItems]
+         doneItems.append(item)
+   return [doneItems]
