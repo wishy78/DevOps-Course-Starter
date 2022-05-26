@@ -9,8 +9,13 @@ app.config.from_object(Config())
 @app.route('/')
 def index():
     item_view_model = ViewModel(get_cards())
-    item_view_model = get_cards()
-    print(item_view_model)
+    print(item_view_model.doing_items)
+    for item in item_view_model.doing_items:
+        for i in item:
+            print(i.name)
+    #item_view_model = get_cards()
+    #for item in item_view_model:
+     #   print(item.name)
     return render_template('index.html', view_model=item_view_model,lists=get_lists())
     #return render_template('index.html',cards=get_cards(),lists=get_lists())
  
