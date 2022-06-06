@@ -5,9 +5,13 @@ from todo_app.data.task_class import Task
 
 # load_dotenv()
 
-KEY = getenv('TRELLO_KEY')
-TOKEN = getenv('TRELLO_TOKEN')
-board = getenv('TRELLO_BOARD_ID')
+def read_env_deatils():
+    global KEY
+    global TOKEN
+    global board
+    KEY = getenv('TRELLO_KEY')
+    TOKEN = getenv('TRELLO_TOKEN')
+    board = getenv('TRELLO_BOARD_ID')
 
 
 def get_lists():

@@ -37,11 +37,6 @@ def stub(url, params = {}):
 #    url = f"https://api.trello.com/1/cards/{card}?key={KEY}&token={TOKEN}&idList={list}"
  #   url = f"https://api.trello.com/1/cards?idList={listId}&key={KEY}&token={TOKEN}"
 
-    if url == f'https://api.trello.com/1/boards/{test_board_id}/lists':
-        fake_response_data = [{
-            'id': '123abc',
-            'name': 'To Do'
-        }]
        
         #url = f"https://api.trello.com/1/boards/{board}/lists?fields=id,name,idBoard&key={KEY}&token={TOKEN}"
     if url == f'https://api.trello.com/1/boards/{test_board_id}/lists?fields=id,name,idBoard&key={test_key}&token={test_token}':
@@ -50,26 +45,14 @@ def stub(url, params = {}):
             'name': 'To Do',
             'idBoard': '{test_board_id}',
         }]
-    print(url)
-               #https://api.trello.com/1/boards/None/lists?fields=id,name,idBoard&key=None&token=None
-    if url == f'https://api.trello.com/1/boards/None/lists?fields=id,name,idBoard&key=None&token=None':
-        fake_response_data = [{
-            'id': '456abc',
-            'name': 'To Do',
-            'idBoard': '{test_board_id}',
-        }]
-         #url = f"https://api.trello.com/1/boards/{board}/cards?fields=idList,name&key={KEY}&token={TOKEN}"
     if url == f'https://api.trello.com/1/boards/{test_board_id}/cards?fields=idList,name&key={test_key}&token={test_token}':
         fake_response_data = [{
-            'cards': [{'idList': '123abc', 'name': 'Test card'}]
+            'idList': '456abc', 'name': 'Test card', 'id' : '789abc'
         }] 
-    if url == f'https://api.trello.com/1/boards/None/cards?fields=idList,name&key=None&token=None':
-        fake_response_data = [{
-            'cards': [{'idList': '123abc', 'name': 'Test card'}]
-        }]      
+    
 
+    if fake_response_data :
         return StubResponse(fake_response_data)
-
     raise Exception(f'Integration test did not expect URL "{url}"')
 
 
