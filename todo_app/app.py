@@ -7,14 +7,8 @@ from todo_app.View_Class import ViewModel
 def create_app():
     read_env_deatils()
     app = Flask(__name__)
-    # We specify the full path and remove the import for this config so it loads the env variables when the app is created,
-    # rather than when this file is imported
     app.config.from_object(Config())
-    # All the routes and setup code etc
-    # e.g.
-    # @app.route('/')
-    # def index():
-    # ...
+
     @app.route('/')
     def index():
         item_view_model = ViewModel(get_cards())

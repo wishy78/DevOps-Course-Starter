@@ -1,9 +1,6 @@
 import requests
 from os import getenv
-# from dotenv import load_dotenv
 from todo_app.data.task_class import Task
-
-# load_dotenv()
 
 def read_env_deatils():
     global KEY
