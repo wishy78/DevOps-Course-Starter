@@ -9,11 +9,11 @@ def test_View_Model_has_returned_only_Doing_Items():
              Task(id="123458", name="testcard 789", status="Done")]
 
     # Act
-    item_view_model = ViewModel(items).doing_items
+    item_list = ViewModel(items).doing_items
 
     # Assert
-    assert len(item_view_model) == 1
-    assert item_view_model[0][0].name == 'testcard 456'
+    assert len(item_list) == 1
+    assert item_list[0][0].name == 'testcard 456'
 
 
 def test_View_Model_has_returned_only_To_Do_Items():
@@ -23,11 +23,11 @@ def test_View_Model_has_returned_only_To_Do_Items():
              Task(id="123458", name="testcard 789", status="Done")]
 
     # Act
-    item_view_model = ViewModel(items).toDo_items
+    item_list = ViewModel(items).toDo_items
 
     # Assert
-    assert len(item_view_model) == 1
-    assert item_view_model[0][0].name == 'testcard 123'
+    assert len(item_list) == 1
+    assert item_list[0][0].name == 'testcard 123'
 
 
 def test_View_Model_has_returned_only_Done_Items():
@@ -37,8 +37,8 @@ def test_View_Model_has_returned_only_Done_Items():
              Task(id="123458", name="testcard 789", status="Done")]
 
     # Act
-    item_view_model = ViewModel(items).done_items
+    item_list = ViewModel(items).done_items
 
     # Assert
-    assert len(item_view_model) == 1
-    assert item_view_model[0][0].name == 'testcard 789'
+    assert len(item_list) == 1
+    assert item_list[0][0].name == 'testcard 789'

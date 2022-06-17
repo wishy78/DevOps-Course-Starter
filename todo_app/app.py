@@ -12,11 +12,6 @@ def create_app():
     @app.route('/')
     def index():
         item_view_model = ViewModel(get_cards())
-        wwww = ViewModel(get_cards)
-        print(item_view_model.doing_items)
-        for item in item_view_model.doing_items:
-            for i in item:
-                print(i.name)
         return render_template('index.html', view_model=item_view_model, lists=get_lists())
 
 
