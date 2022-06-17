@@ -14,26 +14,92 @@
   </form>
   <div class="row">
     <div class="col-md-12">
-      <h2>Items</h2>
+      
+      <h2>All - Items</h2>
       <table style="border: 1px solid balck;">
         <tr>
           <th>Task Name</th>
           <th>Current State</th>
           <th colspan={{lists|length}}>Availabale state(s)</th>
         </tr>
-      {% for item in cards %}
-        <tr>
-          <td>{{ item.name }}</td>
-          <td>{{item.status}}</td>
-          {% for list in lists %}
-          <td>
-            <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
-          </td>
-          {% endfor %}
-        </tr>
+        {% for item in view_model.items %}
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>{{item.status}}</td>
+            {% for list in lists %}
+            <td>
+              <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
+            </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </table>
 
-      {% endfor %}
-    </table>
+      <h2>To Do - Items</h2>
+      <table style="border: 1px solid balck;">
+        <tr>
+          <th>Task Name</th>
+          <th>Current State</th>
+          <th colspan={{lists|length}}>Availabale state(s)</th>
+        </tr>
+        {% for items in view_model.toDo_items %}
+          {% for item in items %}
+            <tr>
+              <td>{{ item.name }}</td>
+              <td>{{item.status}}</td>
+              {% for list in lists %}
+              <td>
+                <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
+              </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      </table>
+
+      <h2>Doing - Items</h2>
+      <table style="border: 1px solid balck;">
+        <tr>
+          <th>Task Name</th>
+          <th>Current State</th>
+          <th colspan={{lists|length}}>Availabale state(s)</th>
+        </tr>
+        {% for items in view_model.doing_items %}
+          {% for item in items %}
+            <tr>
+              <td>{{ item.name }}</td>
+              <td>{{item.status}}</td>
+              {% for list in lists %}
+              <td>
+                <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
+              </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      </table>
+
+      <h2>Done - Items</h2>
+      <table style="border: 1px solid balck;">
+        <tr>
+          <th>Task Name</th>
+          <th>Current State</th>
+          <th colspan={{lists|length}}>Availabale state(s)</th>
+        </tr>
+        {% for items in view_model.done_items %}
+          {% for item in items %}
+            <tr>
+              <td>{{ item.name }}</td>
+              <td>{{item.status}}</td>
+              {% for list in lists %}
+              <td>
+                <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
+              </td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        {% endfor %}
+      </table>
     </div>
   </div>
 {% endblock %}
