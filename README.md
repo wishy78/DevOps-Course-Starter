@@ -70,3 +70,23 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+
+## installing and running the app with ansible
+login to the Control server
+```bash
+ssh ec2-user@35.179.21.80
+```
+Copy the files in the deploy folder to the ~ directory
+Then run the following:
+```bash
+ansible-playbook playbook.yml -i inventory.ini
+```
+enter the required information for the trello token, key, board ID
+
+Once complete you can go to http://35.179.21.80:5000/ to view the page
+
+Note: to apply to another Server update the Inventory.ini file with its ip
+
+
+

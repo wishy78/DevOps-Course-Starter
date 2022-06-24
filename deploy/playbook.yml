@@ -51,14 +51,28 @@
 
     - name: install dependancys
       ansible.builtin.shell:
-        cmd: /home/ec2-user/bin/poetry install
+        cmd: /home/ec2-user/.local/bin/poetry install
       args:
-        chdir: /opt/todoapp/
+        chdir: /opt/todo_app/
       become: yes
 
     - name: Template a file to /opt/todo_app/.env.j2
       ansible.builtin.template:
-        src: /opt/todo_app/.env.j2
+        src: .env.j2
         dest: /opt/todo_app/.env
-        mode: u=rw,g=r,o=r
+        mode: u=rw,g=rw,o=rw
+        owner: ec2-user
+      become: yes
+
+    - name: Copy service file
+      ansible.builtin.copy:
+        src: todoapp.service
+        dest: /etc/systemd/system/todoapp.service
+        mode: '0644'
+      become: yes
+
+    - name: Make sure a service todoapp is running
+      ansible.builtin.systemd:
+        state: started
+        name: todoapp
       become: yes
