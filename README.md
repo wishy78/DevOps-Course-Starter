@@ -86,6 +86,7 @@ enter the required information for the trello token, key, board ID
 
 Once complete you can go to http://35.179.21.80:5000/ to view the page
 
+Note: this is pulling from Module 3 currently so change the version to master in the playbook.yml after commited to master
 Note: to apply to another Server update the Inventory.ini file with its ip
 
 
