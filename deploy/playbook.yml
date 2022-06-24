@@ -1,0 +1,64 @@
+---
+- name: myPlaybook todo app deploy
+  hosts: servers
+  remote_user: ec2-user
+  vars_prompt:
+
+    - name: TRELLO_KEY
+      prompt: Enter TRELLO KEY
+      private: no
+
+    - name: TRELLO_TOKEN
+      prompt: Enter TRELLO TOKEN
+      private: no
+
+    - name: TRELLO_BOARD_ID
+      prompt: Enter TRELLO BOARD ID
+      private: no
+
+  tasks:
+    - name: install Git
+      ansible.builtin.yum:
+        name: git
+        state: present
+      become: yes
+
+    - name: install python3
+      ansible.builtin.yum:
+        name: python3
+        state: present
+      become: yes
+
+    - name: install poetry
+      ansible.builtin.shell:
+        cmd: curl -sSL https://install.python-poetry.org | python3 -
+        creates: ~/.local/bin/poetry
+
+    - name: Create folder
+      ansible.builtin.file:
+        path: /opt/todo_app
+        state: directory
+        mode: '777'
+        owner: ec2-user
+      become: yes
+
+    - name: Git checkout
+      ansible.builtin.git:
+        repo: 'https://github.com/wishy78/DevOps-Course-Starter.git'
+        dest: /opt/todo_app/
+        version: Module3
+      become: yes
+
+    - name: install dependancys
+      ansible.builtin.shell:
+        cmd: /home/ec2-user/bin/poetry install
+      args:
+        chdir: /opt/todoapp/
+      become: yes
+
+    - name: Template a file to /opt/todo_app/.env.j2
+      ansible.builtin.template:
+        src: /opt/todo_app/.env.j2
+        dest: /opt/todo_app/.env
+        mode: u=rw,g=r,o=r
+      become: yes
