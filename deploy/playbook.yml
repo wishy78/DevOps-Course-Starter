@@ -10,7 +10,7 @@
 
     - name: TRELLO_TOKEN
       prompt: Enter TRELLO TOKEN
-      private: no
+      private: yes
 
     - name: TRELLO_BOARD_ID
       prompt: Enter TRELLO BOARD ID
@@ -38,7 +38,6 @@
       ansible.builtin.file:
         path: /opt/todo_app
         state: directory
-        mode: '777'
         owner: ec2-user
       become: yes
 
@@ -49,7 +48,7 @@
         version: Module3
       become: yes
 
-    - name: install dependancys
+    - name: install dependencies
       ansible.builtin.shell:
         cmd: /home/ec2-user/.local/bin/poetry install
       args:
