@@ -118,3 +118,21 @@ env/
 
 ### Configuration files ###
 .env
+
+### Test folder ###
+tests/
+
+### deploy folder ###
+deploy/
+
+### vscode folder ###
+.vscode/
+
+### github folder ###
+.github/
+
+### root files ###
+.gitpod.yml
+.gitignore
+Dockerfile
+README.mkdocs
