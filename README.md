@@ -89,5 +89,29 @@ Once complete you can go to http://35.179.21.80:5000/ to view the page
 Note: this is pulling from Module 3 currently so change the version to master in the playbook.yml after commited to master
 Note: to apply to another Server update the Inventory.ini file with its ip
 
+## installing and running the app with DOCKER
+Edit the .\Dockerfile ENV settings below and the relevent values replacing the question marks
+```docker
+ENV TRELLO_KEY=????????????????????????????
+ENV TRELLO_TOKEN=??????????????????????????
+ENV TRELLO_BOARD_ID=???????????????????????
+```
 
+# Build Docker Image
+Run the following in powershell teminal in VSCODE
+```powershell
+docker build -f .\Dockerfile --tag todo-app .
+```
+
+# Run Docker Image
+Run the following in powershell teminal in VSCODE
+```powershell
+docker run -p 5000:5000 todo-app
+```
+or the following replacing 'Port you want to use' with the required port number
+```powershell
+docker run -p 'Port you want to use':5000 todo-app
+```
+
+Once complete you can go to http://localhost:5000/ to view the page or http://localhost:'Port you want to use'/  replacing 'Port you want to use' with your defined port number
 
