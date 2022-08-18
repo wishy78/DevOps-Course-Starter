@@ -135,4 +135,4 @@ deploy/
 .gitpod.yml
 .gitignore
 Dockerfile
-README.mkdocs
+README.md
