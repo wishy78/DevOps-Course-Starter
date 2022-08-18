@@ -12,6 +12,8 @@ RUN pip install -r requirements.txt
 # use port 5000 from container
 EXPOSE 5000
 
+
+
 # prod image
 FROM base as production
 # install gunicorn
