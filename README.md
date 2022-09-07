@@ -133,4 +133,7 @@ You can Change the tests to tests_e2e to run the end to end tests (e2e tests not
 for example:
 ```powershell
 docker run todo-app:test tests_e2e
+#or 
+docker run -e TRELLO_KEY={Key} -e TRELLO_TOKEN={Token} -e TRELLO_BOARD_ID={BoardID} todo-app:test tests_e2e
 ```
+Replacing the {Items} with relevent data
