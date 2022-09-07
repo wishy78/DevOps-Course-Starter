@@ -90,4 +90,33 @@ Note: this is pulling from Module 3 currently so change the version to master in
 Note: to apply to another Server update the Inventory.ini file with its ip
 
 
+# Build Docker Image
+Run the following in powershell teminal in VSCODE
+```powershell
+# For Production
+docker build --target production --tag todo-app:prod .
+# For Development
+docker build --target development --tag todo-app:dev .
+```
+# docker build -f .\Dockerfile --tag todo-app .
+# docker run -p 8181:5000 --env-file .\.env todo-app
+
+# Run Docker Image
+Run the following in powershell teminal in VSCODE
+```powershell
+# For Production
+docker run -d -p 8181:5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:dev
+# for Development
+docker run -d -p 8182:5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:prod
+```
+or the following replacing 'Port you want to use' with the required port number (Note: you cant use the same port on the same machine)
+```powershell
+# for Development
+docker run -d -p 'Port you want to use':5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:dev
+# For Production
+docker run -d -p 'Port you want to use':5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:prod
+```
+
+Once complete you can go to http://localhost:5000/ to view the page or http://localhost:'Port you want to use'/  replacing 'Port you want to use' with your defined port number
+
 
