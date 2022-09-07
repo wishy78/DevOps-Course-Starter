@@ -111,9 +111,9 @@ docker run -d -p 8182:5000 --env-file .\.env --mount type=bind,source="$(pwd)"/t
 ```
 or the following replacing 'Port you want to use' with the required port number (Note: you cant use the same port on the same machine)
 ```powershell
-# For Production
-docker run -d -p 'Port you want to use':5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:dev
 # for Development
+docker run -d -p 'Port you want to use':5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:dev
+# For Production
 docker run -d -p 'Port you want to use':5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:prod
 ```
 

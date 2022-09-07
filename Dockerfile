@@ -8,7 +8,7 @@ RUN pip install poetry
 COPY . .
 # install prerequisits
 RUN poetry install --no-root --no-dev
-RUN pip install -r requirements.txt
+#RUN pip install -r requirements.txt
 # use port 5000 from container
 EXPOSE 5000
 
@@ -24,7 +24,7 @@ CMD ["gunicorn"  , "-b", "0.0.0.0:5000", "todo_app.app:create_app()"]
 # dev image
 FROM base as development
 # install flask
-RUN pip install flask
+#RUN pip install flask
 
 CMD [ "poetry", "run", "flask", "run", "--host=0.0.0.0", "--port=5000", "--debugger"] 
 
