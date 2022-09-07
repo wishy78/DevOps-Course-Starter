@@ -8,7 +8,7 @@ RUN pip install poetry
 COPY . .
 # install prerequisits
 RUN poetry install --no-root --no-dev
-RUN pip install -r requirements.txt
+#RUN pip install -r requirements.txt
 # use port 5000 from container
 EXPOSE 5000
 
