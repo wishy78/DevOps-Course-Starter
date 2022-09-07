@@ -1,5 +1,25 @@
 name: Continuous Integration
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '**.lock'
+      - '.github\**'
+      - '.idea\**'     
+      - '.pytest_cache\**'
+      - '.venv\**'
+      - '.vscode\**'
+
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - '**.lock'
+      - '.github\**'
+      - '.idea\**'     
+      - '.pytest_cache\**'
+      - '.venv\**'
+      - '.vscode\**'
+
 jobs:
   build:
     name: Build and test
