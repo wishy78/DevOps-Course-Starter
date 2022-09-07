@@ -3,7 +3,7 @@ FROM python:slim-buster as base
 # update Image
 RUN apt-get update
 # install poetry
-#RUN pip install poetry
+RUN pip install poetry
 # copy all except in dockerignore
 COPY . .
 # install prerequisits
