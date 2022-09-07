@@ -119,4 +119,7 @@ docker run -d -p 'Port you want to use':5000 --env-file .\.env --mount type=bind
 
 Once complete you can go to http://localhost:5000/ to view the page or http://localhost:'Port you want to use'/  replacing 'Port you want to use' with your defined port number
 
-
+# Run with selenium and firefox for end to end tests
+```bash
+pip install selenium
+```
