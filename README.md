@@ -104,9 +104,9 @@ docker build --target development --tag todo-app:dev .
 # Run Docker Image
 Run the following in powershell teminal in VSCODE
 ```powershell
-# For Production
-docker run -d -p 8181:5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:dev
 # for Development
+docker run -d -p 8181:5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:dev
+# For Production
 docker run -d -p 8182:5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:prod
 ```
 or the following replacing 'Port you want to use' with the required port number (Note: you cant use the same port on the same machine)
@@ -119,4 +119,21 @@ docker run -d -p 'Port you want to use':5000 --env-file .\.env --mount type=bind
 
 Once complete you can go to http://localhost:5000/ to view the page or http://localhost:'Port you want to use'/  replacing 'Port you want to use' with your defined port number
 
+# to Run with selenium and firefox for end to end tests add the following
+```bash
+poetry add selenium --dev
+```
+for testing tests in docker run the following
 
+```powershell
+docker build --target test --tag todo-app:test .
+docker run --env-file .env.test todo-app:test tests
+```
+You can Change the tests to tests_e2e to run the end to end tests (e2e tests not setup but basics are there)
+for example:
+```powershell
+docker run todo-app:test tests_e2e
+#or 
+docker run -e TRELLO_KEY={Key} -e TRELLO_TOKEN={Token} -e TRELLO_BOARD_ID={BoardID} todo-app:test tests_e2e
+```
+Replacing the {Items} with relevent data
