@@ -32,7 +32,7 @@ CMD [ "poetry", "run", "flask", "run", "--host=0.0.0.0", "--port=5000", "--debug
 FROM base as test
 RUN pip install pytest
 #RUN poetry Install
-#RUN poetry add pytest --dev
+RUN poetry add pytest --dev
 #WORKDIR /tests
 ENV GECKODRIVER_VER v0.31.0
 # Install the long-term support version of Firefox (and curl if you don't have it already)
