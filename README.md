@@ -121,7 +121,7 @@ Once complete you can go to http://localhost:5000/ to view the page or http://lo
 
 # to Run with selenium and firefox for end to end tests add the following
 ```bash
-pip install selenium
+poetry add selenium --dev
 ```
 for testing tests in docker run the following
 

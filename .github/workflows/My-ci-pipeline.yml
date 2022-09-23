@@ -13,11 +13,8 @@ on:
   pull_request:
     paths-ignore:
       - '**.md'
-      - '**.lock'
       - '.github\**'
       - '.idea\**'     
-      - '.pytest_cache\**'
-      - '.venv\**'
       - '.vscode\**'
 
 jobs:
@@ -30,5 +27,5 @@ jobs:
     - name: BuildTestImage
       run: docker build --target test --tag todo-app:test .
     
-    - name: BuildTestImage
+    - name: BuildAndTestImage
       run: docker run --env-file .env.test todo-app:test tests
