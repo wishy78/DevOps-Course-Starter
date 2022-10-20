@@ -13,7 +13,6 @@ RUN poetry install --no-root --no-dev
 EXPOSE 5000
 
 
-
 # prod image
 FROM base as production
 # install gunicorn
