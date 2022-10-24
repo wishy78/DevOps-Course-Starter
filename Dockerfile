@@ -3,7 +3,7 @@ FROM python:slim-buster as base
 # update Image
 RUN apt-get update
 # install poetry
-RUN install poetry
+RUN pip install poetry
 # copy all except in dockerignore
 COPY . .
 # install prerequisits
@@ -17,7 +17,7 @@ EXPOSE $PORT
 # prod image
 FROM base as production
 # install gunicorn
-RUN install gunicorn
+RUN pip install gunicorn
 # Cmd /entrypoint
 CMD ["gunicorn"  , "-b", "0.0.0.0:$PORT", "todo_app.app:create_app()"]
 
@@ -30,7 +30,7 @@ CMD [ "poetry", "run", "flask", "run", "--host=0.0.0.0", "--port=$PORT, "--debug
 
 # testing stage
 FROM base as test
-RUN install pytest
+RUN pip install pytest
 #RUN poetry Install
 RUN poetry add pytest --group dev
 #WORKDIR /tests
@@ -43,7 +43,7 @@ RUN curl -sSLO https://github.com/mozilla/geckodriver/releases/download/${GECKOD
    && tar zxf geckodriver-*.tar.gz \
    && mv geckodriver /usr/bin/ \
    && rm geckodriver-*.tar.gz
-RUN  install selenium   
+RUN  pip install selenium   
 ENTRYPOINT ["poetry", "run", "pytest"]
 
 # docker build -f .\Dockerfile --tag todo-app .
