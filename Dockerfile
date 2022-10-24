@@ -7,7 +7,8 @@ RUN pip install poetry
 # copy all except in dockerignore
 COPY . .
 # install prerequisits
-RUN poetry install --no-root --no-dev
+#RUN poetry install --no-root --no-dev
+RUN poetry config virtualenvs.create false --local && poetry install
 #RUN pip install -r requirements.txt
 # use port from container
 EXPOSE $PORT
