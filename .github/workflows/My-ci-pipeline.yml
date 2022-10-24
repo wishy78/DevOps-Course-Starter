@@ -53,3 +53,11 @@ jobs:
 
     - name: Publish to Docker hub
       run: docker push wishy78/module8:module8
+
+    - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      with:
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "module8jon" #Must be unique in Heroku
+        heroku_email: "wishy78@hotmail.com"
+        usedocker: true
+    - run: curl --fail https://module8jon.herokuapp.com/health 
