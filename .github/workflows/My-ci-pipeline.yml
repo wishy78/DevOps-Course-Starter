@@ -77,8 +77,9 @@ jobs:
       run: docker image ls
 
     - name: Add Heroku Tag  
-      run: docker tag registry.heroku.com/module8jon/web registry.heroku.com/module8jon/web
-  
+      #run: docker tag registry.heroku.com/module8jon/web registry.heroku.com/module8jon/web
+      run: docker tag wishy78/module8:module8 registry.heroku.com/module8jon/web
+    
     - name: Push to heroku
       run: docker push registry.heroku.com/module8jon/web
 
