@@ -65,9 +65,7 @@ jobs:
 
 # heroku login
 # heroku container:login
+# docker pull wishy78/module8
 # docker tag wishy78/module8 registry.heroku.com/module8jon/web
 # docker push registry.heroku.com/module8jon/web
-# heroku container:release web -a module8jon
-
-
-# 
+# heroku container:release web -a module8jon 

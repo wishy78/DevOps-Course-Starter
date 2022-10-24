@@ -44,7 +44,7 @@ RUN curl -sSLO https://github.com/mozilla/geckodriver/releases/download/${GECKOD
    && mv geckodriver /usr/bin/ \
    && rm geckodriver-*.tar.gz
 RUN  pip install selenium   
-ENTRYPOINT ["poetry", "run"]
+ENTRYPOINT ["poetry", "run", "pytest"]
 
 # docker build -f .\Dockerfile --tag todo-app .
 # docker run -p 8181:5000 --env-file .\.env todo-app
