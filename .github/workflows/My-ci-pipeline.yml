@@ -42,20 +42,8 @@ jobs:
     - name: publish to docker hub
       run: echo "Publishing!"
 
-    - name: Build Image
-      run: docker build --tag latest .
-
-  
-
-  cd:
-    #if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
-    if: ${{ github.ref == 'refs/heads/module8' && github.event_name == 'push' }}
-    name: Build and Deploy
-    runs-on: ubuntu-latest
-    needs: [Publish]
-    steps:
-    - uses: actions/checkout@v2
-
+    #- name: Build Image
+    #  run: docker build --tag latest .
     - name: Build Image
       run: docker build --tag moudule8 .
 
@@ -67,6 +55,16 @@ jobs:
 
     - name: Publish to Docker hub
       run: docker push wishy78/module8:latest
+  
+
+  cd:
+    #if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    if: ${{ github.ref == 'refs/heads/module8' && github.event_name == 'push' }}
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    needs: [Publish]
+    steps:
+    - uses: actions/checkout@v2
 
     - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
@@ -74,7 +72,14 @@ jobs:
         heroku_app_name: "module8jon" #Must be unique in Heroku
         heroku_email: "wishy78@hotmail.com"
         usedocker: true
-    - run: curl --fail https://module8jon.herokuapp.com/health 
+    - name: Add Heroku Tag  
+      run: docker tag wishy78/module8 registry.heroku.com/module8jon/web
+    - name: Push to heroku
+      run: docker push registry.heroku.com/module8jon/web
+    - name: Release
+      run: heroku container:release web -a module8jon 
+    - name: Test connection    
+      run: curl --fail https://module8jon.herokuapp.com/health 
 
 # heroku login
 # heroku container:login
