@@ -72,12 +72,16 @@ jobs:
         heroku_app_name: "module8jon" #Must be unique in Heroku
         heroku_email: "wishy78@hotmail.com"
         usedocker: true
-    - name: Add Heroku Tag  
-      run: docker tag wishy78/module8 registry.heroku.com/module8jon/web
+
     - name: Push to heroku
       run: docker push registry.heroku.com/module8jon/web
+
+    - name: Add Heroku Tag  
+      run: docker tag wishy78/module8 registry.heroku.com/module8jon/web
+   
     - name: Release
-      run: heroku container:release web -a module8jon 
+      run: heroku container:release web -a module8jon
+    
     - name: Test connection    
       run: curl --fail https://module8jon.herokuapp.com/health 
 
