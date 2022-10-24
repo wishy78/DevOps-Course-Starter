@@ -80,7 +80,7 @@ jobs:
       run: heroku container:release web -a module8jon 
 
     - name: Test it's up
-    - run: curl --fail https://module8jon.herokuapp.com/health 
+      run: curl --fail https://module8jon.herokuapp.com/health 
 
 # heroku login
 # heroku container:login
