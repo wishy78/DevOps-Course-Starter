@@ -73,6 +73,9 @@ jobs:
         heroku_email: "wishy78@hotmail.com"
         usedocker: true
 
+    - name: Docker image list 
+      run: docker image ls
+
     - name: Add Heroku Tag  
       run: docker tag module8 registry.heroku.com/module8jon/web
   
