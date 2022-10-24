@@ -46,7 +46,7 @@ jobs:
       run: docker build --tag moudule8 .
 
     - name: Change Tag
-      run: docker tag latest wishy78/module8:latest
+      run: docker tag module8 wishy78/module8:latest
 
     - name: Login to Docker hub
       run: docker login --username wishy78 --password "${{ secrets.DOCKER_PASSWORD }}"
