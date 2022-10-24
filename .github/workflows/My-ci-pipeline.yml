@@ -62,3 +62,12 @@ jobs:
     #    heroku_email: "wishy78@hotmail.com"
     #    usedocker: true
     #- run: curl --fail https://module8jon.herokuapp.com/health 
+
+# heroku login
+# heroku container:login
+# docker tag wishy78/module8 registry.heroku.com/module8jon/web
+# docker push registry.heroku.com/module8jon/web
+# heroku container:release web -a module8jon
+
+
+# 
