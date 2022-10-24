@@ -51,7 +51,7 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     name: Build and Deploy
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [Publish]
     steps:
     - uses: actions/checkout@v2
 
