@@ -3,8 +3,8 @@ FROM python:slim-buster as base
 # update Image
 RUN apt-get update
 # install poetry
-RUN pip3 install -U pip poetry
-#RUN pip install poetry
+# RUN pip3 install -U pip poetry
+RUN pip install poetry
 # copy all except in dockerignore
 COPY . .
 # install prerequisits
@@ -12,21 +12,21 @@ RUN poetry install --no-root --no-dev
 #RUN poetry config virtualenvs.create false --local && poetry install
 #RUN pip install -r requirements.txt
 # use port from container
-EXPOSE $PORT
+EXPOSE 5000
 
 # prod image
 FROM base as production
 # install gunicorn
 RUN pip install gunicorn
 # Cmd /entrypoint
-CMD ["gunicorn"  , "-b", "0.0.0.0:$PORT", "todo_app.app:create_app()"]
-
+#CMD ["gunicorn"  , "-b", "0.0.0.0:$PORT", "todo_app.app:create_app()"]
+CMD ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
 # dev image
 FROM base as development
 # install flask
 #RUN pip install flask
 
-CMD [ "poetry", "run", "flask", "run", "--host=0.0.0.0", "--port=$PORT, "--debugger"] 
+CMD [ "poetry", "run", "flask", "run", "--host=0.0.0.0", "--port=$PORT", "--debugger"] 
 
 # testing stage
 FROM base as test

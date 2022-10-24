@@ -45,7 +45,7 @@ jobs:
     #- name: Build Image
     #  run: docker build --tag latest .
     - name: Build Image
-      run: docker build --tag moudule8 .
+      run: docker build --target production --tag moudule8 .
 
     - name: Change Tag
       run: docker tag moudule8 wishy78/module8:module8
