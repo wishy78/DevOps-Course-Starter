@@ -43,13 +43,13 @@ jobs:
       run: echo "Publishing!"
 
     - name: Build Image
-      run: docker build --tag Module8 .
+      run: docker build --tag module8 .
 
     - name: Change Tag
-      run: docker tag Module8 wishy78/Module8:Moudle8
+      run: docker tag module8 wishy78/module8:module8
 
     - name: Login to Docker hub
       run: docker login --username wishy78 --password "${{ secrets.DOCKER_PASSWORD }}"
 
     - name: Publish to Docker hub
-      run: docker push wishy78/Module8:Module8
+      run: docker push wishy78/module8:module8
