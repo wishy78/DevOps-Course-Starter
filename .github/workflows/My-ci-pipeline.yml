@@ -43,16 +43,16 @@ jobs:
       run: echo "Publishing!"
 
     - name: Build Image
-      run: docker build --tag module8 .
+      run: docker build --tag latest .
 
     - name: Change Tag
-      run: docker tag module8 wishy78/module8:module8
+      run: docker tag latest wishy78/module8:latest
 
     - name: Login to Docker hub
       run: docker login --username wishy78 --password "${{ secrets.DOCKER_PASSWORD }}"
 
     - name: Publish to Docker hub
-      run: docker push wishy78/module8:module8
+      run: docker push wishy78/module8:latest
 
     - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
