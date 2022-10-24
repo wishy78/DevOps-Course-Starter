@@ -73,12 +73,12 @@ jobs:
         heroku_email: "wishy78@hotmail.com"
         usedocker: true
 
-    - name: Push to heroku
-      run: docker push registry.heroku.com/module8jon/web
-
     - name: Add Heroku Tag  
       run: docker tag wishy78/module8:module8 registry.heroku.com/module8jon/web
    
+    - name: Push to heroku
+      run: docker push registry.heroku.com/module8jon/web
+
     - name: Release
       run: heroku container:release web -a module8jon
     
