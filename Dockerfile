@@ -3,7 +3,7 @@ FROM python:slim-buster as base
 # update Image
 RUN apt-get update
 # install poetry
-RUN pip install poetry
+#RUN pip install poetry
 # copy all except in dockerignore
 COPY . .
 # install prerequisits
@@ -12,7 +12,6 @@ RUN poetry config virtualenvs.create false --local && poetry install
 #RUN pip install -r requirements.txt
 # use port from container
 EXPOSE $PORT
-
 
 # prod image
 FROM base as production
