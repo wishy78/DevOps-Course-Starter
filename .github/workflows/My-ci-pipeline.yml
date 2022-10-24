@@ -74,7 +74,7 @@ jobs:
         usedocker: true
 
     - name: Add Heroku Tag  
-      run: docker tag wishy78/module8:module8 registry.heroku.com/module8jon/web:latest
+      run: docker tag wishy78/module8 registry.heroku.com/module8jon/web
    
     - name: Push to heroku
       run: docker push registry.heroku.com/module8jon/web
@@ -84,6 +84,7 @@ jobs:
     
     - name: Test connection    
       run: curl --fail https://module8jon.herokuapp.com/health 
+
 
 # cli login
 # heroku login
