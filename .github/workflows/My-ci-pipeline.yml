@@ -48,13 +48,13 @@ jobs:
       run: docker build --tag moudule8 .
 
     - name: Change Tag
-      run: docker tag moudule8 wishy78/module8:latest
+      run: docker tag moudule8 wishy78/module8:module8
 
     - name: Login to Docker hub
       run: docker login --username wishy78 --password "${{ secrets.DOCKER_PASSWORD }}"
 
     - name: Publish to Docker hub
-      run: docker push wishy78/module8:latest
+      run: docker push wishy78/module8:module8
   
 
   cd:
@@ -77,7 +77,7 @@ jobs:
       run: docker push registry.heroku.com/module8jon/web
 
     - name: Add Heroku Tag  
-      run: docker tag wishy78/module8 registry.heroku.com/module8jon/web
+      run: docker tag wishy78/module8:module8 registry.heroku.com/module8jon/web
    
     - name: Release
       run: heroku container:release web -a module8jon
