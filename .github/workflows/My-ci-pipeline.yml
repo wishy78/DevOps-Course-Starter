@@ -32,7 +32,7 @@ jobs:
 
   Publish:
     #if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
-    if: ${{ github.ref == 'refs/heads/moudle8' && github.event_name == 'push' }}
+    if: ${{ github.ref == 'refs/heads/module8' && github.event_name == 'push' }}
     name: Publish
     runs-on: ubuntu-latest
     needs: [build]
@@ -43,13 +43,13 @@ jobs:
       run: echo "Publishing!"
 
     - name: Build Image
-      run: docker build --tag Moudle8 .
+      run: docker build --tag Module8 .
 
     - name: Change Tag
-      run: docker tag Moudle8 wishy78/Moudle8:Moudle8
+      run: docker tag Module8 wishy78/Module8:Moudle8
 
     - name: Login to Docker hub
       run: docker login --username wishy78 --password "${{ secrets.DOCKER_PASSWORD }}"
 
     - name: Publish to Docker hub
-      run: docker push wishy78/Moudle8:Moudle8
+      run: docker push wishy78/Module8:Module8
