@@ -4,7 +4,8 @@ FROM python:slim-buster as base
 RUN apt-get update
 # install poetry
 # RUN pip3 install -U pip poetry
-RUN pip install poetry
+#RUN pip install poetry
+RUN poetry:poetry add requests
 # copy all except in dockerignore
 COPY . .
 # install prerequisits
