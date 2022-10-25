@@ -45,9 +45,9 @@ FROM base as production
 # install gunicorn
 RUN pip install gunicorn
 # Cmd /entrypoint
-CMD poetry run gunicorn "todo_app.app:create_app()" --bind 0.0.0.0:$PORT
+#CMD poetry run gunicorn "todo_app.app:create_app()" --bind 0.0.0.0:$PORT
 #CMD ["gunicorn"  , "-b", "0.0.0.0:$PORT", "todo_app.app:create_app()"]
-
+CMD gunicorn -b 0.0.0.0:$PORT "todo_app.app:create_app()"
 #CMD ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
 #ENTRYPOINT ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
 #CMD poetry run gunicorn "todo_app.app:create_app()" --bind 0.0.0.0:$PORT
