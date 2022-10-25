@@ -5,9 +5,11 @@ RUN apt-get update
 # install poetry
 # RUN pip3 install -U pip poetry
 #RUN pip install poetry
-RUN poetry:poetry add requests
+#RUN poetry:poetry add requests
+#RUN pip3 install poetry
 # copy all except in dockerignore
 COPY . .
+RUN pip3 install poetry
 # install prerequisits
 RUN poetry install --no-root --no-dev
 #RUN poetry config virtualenvs.create false --local && poetry install
