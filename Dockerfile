@@ -23,7 +23,9 @@ FROM base as production
 RUN pip install gunicorn
 # Cmd /entrypoint
 #CMD ["gunicorn"  , "-b", "0.0.0.0:$PORT", "todo_app.app:create_app()"]
-CMD ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
+#CMD ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
+ENTRYPOINT ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
+
 # dev image
 FROM base as development
 # install flask
