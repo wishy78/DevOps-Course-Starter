@@ -4,15 +4,10 @@ FROM python:slim-buster as base
 RUN apt-get update
 # install poetry
 RUN pip install poetry
-# RUN pip3 install -U pip poetry
-#RUN poetry:poetry add requests
-#RUN pip3 install poetry
 # copy all except in dockerignore
 COPY . .
 # install prerequisits
-#RUN poetry install --no-root --only main
 RUN poetry config virtualenvs.create false --local && poetry install
-#RUN pip install -r requirements.txt
 # use port from container
 EXPOSE 5000
 
@@ -46,11 +41,8 @@ FROM base as production
 RUN pip install gunicorn
 # Cmd /entrypoint
 #CMD poetry run gunicorn "todo_app.app:create_app()" --bind 0.0.0.0:$PORT
-#CMD ["gunicorn"  , "-b", "0.0.0.0:$PORT", "todo_app.app:create_app()"]
 CMD gunicorn -b 0.0.0.0:$PORT "todo_app.app:create_app()"
-#CMD ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
-#ENTRYPOINT ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
-#CMD poetry run gunicorn "todo_app.app:create_app()" --bind 0.0.0.0:$PORT
+
 
 
 # docker build -f .\Dockerfile --tag todo-app .
