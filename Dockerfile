@@ -17,15 +17,6 @@ RUN poetry install --no-root --no-dev
 # use port from container
 EXPOSE 5000
 
-# prod image
-FROM base as production
-# install gunicorn
-RUN pip install gunicorn
-# Cmd /entrypoint
-#CMD ["gunicorn"  , "-b", "0.0.0.0:$PORT", "todo_app.app:create_app()"]
-#CMD ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
-#ENTRYPOINT ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
-CMD poetry run gunicorn "todo_app.app:create_app()" --bind 0.0.0.0:$PORT
 # dev image
 FROM base as development
 # install flask
@@ -50,6 +41,17 @@ RUN curl -sSLO https://github.com/mozilla/geckodriver/releases/download/${GECKOD
    && rm geckodriver-*.tar.gz
 RUN  pip install selenium   
 ENTRYPOINT ["poetry", "run", "pytest"]
+
+# prod image
+FROM base as production
+# install gunicorn
+RUN pip install gunicorn
+# Cmd /entrypoint
+#CMD ["gunicorn"  , "-b", "0.0.0.0:$PORT", "todo_app.app:create_app()"]
+#CMD ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
+#ENTRYPOINT ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
+CMD poetry run gunicorn "todo_app.app:create_app()" --bind 0.0.0.0:$PORT
+
 
 # docker build -f .\Dockerfile --tag todo-app .
 # docker run -p 8181:5000 --env-file .\.env todo-app
