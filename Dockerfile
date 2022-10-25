@@ -9,7 +9,7 @@ RUN apt-get update
 #RUN pip3 install poetry
 # copy all except in dockerignore
 COPY . .
-RUN pip3 install poetry
+RUN pip install poetry
 # install prerequisits
 RUN poetry install --no-root --no-dev
 #RUN poetry config virtualenvs.create false --local && poetry install
@@ -24,8 +24,8 @@ RUN pip install gunicorn
 # Cmd /entrypoint
 #CMD ["gunicorn"  , "-b", "0.0.0.0:$PORT", "todo_app.app:create_app()"]
 #CMD ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
-ENTRYPOINT ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
-
+#ENTRYPOINT ["poetry", "run", "gunicorn", "todo_app.app:create_app()", "--bind 0.0.0.0:$PORT"]
+CMD poetry run gunicorn "todo_app.app:create_app()" --bind 0.0.0.0:$PORT
 # dev image
 FROM base as development
 # install flask
