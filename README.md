@@ -137,3 +137,29 @@ docker run todo-app:test tests_e2e
 docker run -e TRELLO_KEY={Key} -e TRELLO_TOKEN={Token} -e TRELLO_BOARD_ID={BoardID} todo-app:test tests_e2e
 ```
 Replacing the {Items} with relevent data
+
+# to Run on Heroku
+Create an account on heroku.com
+Add an application called "what ever you want" i used "module8jon"
+Note: Replace "module8jon" with your application name in the .github\workflows\My-ci-pipeline.yml
+Under Settings show "config Vars" and add the following variables with relevent Values (see .env)
+FLASK_ENV
+FLASK_APP
+SECRET_KEY
+TRELLO_TOKEN
+TRELLO_KEY
+TRELLO_BOARD_ID
+
+In a terminal run:
+```powershell
+heroku authorizations:create
+```
+Copy the Key to be used in later
+Go to github, select the Project (DevOps-Course-Starter https://github.com/wishy78/DevOps-Course-Starter/settings/secrets/actions) and select settings
+on the left select secrets then actions
+Add a key called: HEROKU_API_KEY
+and add the copied Key as the value
+
+now push
+
+website will be : http://module8jon.herokuapp.com/
