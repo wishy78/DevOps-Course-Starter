@@ -142,7 +142,7 @@ Replacing the {Items} with relevent data
 Create an account on heroku.com
 Add an application called "what ever you want" i used "module8jon"
 Note: Replace "module8jon" with your application name in the .github\workflows\My-ci-pipeline.yml
-Under Settings show "config Vars" and add the following veriables with relevent Values (see .env)
+Under Settings show "config Vars" and add the following variables with relevent Values (see .env)
 FLASK_ENV
 FLASK_APP
 SECRET_KEY
