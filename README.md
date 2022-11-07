@@ -156,7 +156,7 @@ heroku authorizations:create
 ```
 Copy the Key to be used in later
 Go to github, select the Project (DevOps-Course-Starter https://github.com/wishy78/DevOps-Course-Starter/settings/secrets/actions) and select settings
-on the left select secrests then actions
+on the left select secrets then actions
 Add a key called: HEROKU_API_KEY
 and add the copied Key as the value
 
