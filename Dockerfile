@@ -21,7 +21,7 @@ CMD [ "poetry", "run", "flask", "run", "--host=0.0.0.0", "--port=5000", "--debug
 FROM base as test
 RUN pip install pytest
 #RUN poetry Install
-RUN poetry add pytest --group dev
+RUN poetry add pytest --dev
 #WORKDIR /tests
 ENV GECKODRIVER_VER v0.31.0
 # Install the long-term support version of Firefox (and curl if you don't have it already)
@@ -41,6 +41,8 @@ FROM base as production
 RUN pip install gunicorn
 # Cmd /entrypoint
 #CMD poetry run gunicorn "todo_app.app:create_app()" --bind 0.0.0.0:$PORT
+#this is a default port that can be overidden
+ENV PORT=5000
 CMD gunicorn -b 0.0.0.0:$PORT "todo_app.app:create_app()"
 
 
