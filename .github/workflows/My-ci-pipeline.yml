@@ -58,8 +58,8 @@ jobs:
   
 
   cd:
-    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'pull' }}
-    #if: ${{ github.ref == 'refs/heads/module9' && github.event_name == 'push' }}
+    #if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'pull' }}
+    if: ${{ github.ref == 'refs/heads/module9' && github.event_name == 'push' }}
     name: Build and Deploy
     runs-on: ubuntu-latest
     needs: [Publish]
@@ -68,7 +68,7 @@ jobs:
     
     - uses: satackey/action-docker-layer-caching@v0.0.11
       continue-on-error: true
-
+    
     - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
@@ -88,10 +88,15 @@ jobs:
 
     - name: Release
       run: heroku container:release web -a module8jon
-    
+
     - name: Test connection    
       run: curl --fail https://module8jon.herokuapp.com 
 
+    - name: Deploy to azure
+      run: curl -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}
+
+    - name: Test connection    
+      run: curl --fail http://wapp-to-do-mod9-jl.azurewebsites.net/ 
 
 # cli login
 # heroku login
