@@ -48,18 +48,18 @@ jobs:
     #- name: Build Image
     #  run: docker build --tag latest .
     - name: Build Image
-      run: docker build --target production --tag wishy78/module8:module8 .
+      run: docker build --target production --tag wishy78/todo-app:module9 .
 
     - name: Login to Docker hub
       run: docker login --username wishy78 --password "${{ secrets.DOCKER_PASSWORD }}"
 
     - name: Publish to Docker hub
-      run: docker push wishy78/module8:module8
+      run: docker push wishy78/todo-app:module9
   
 
   cd:
     if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
-    #if: ${{ github.ref == 'refs/heads/module8' && github.event_name == 'push' }}
+    #if: ${{ github.ref == 'refs/heads/module9' && github.event_name == 'push' }}
     name: Build and Deploy
     runs-on: ubuntu-latest
     needs: [Publish]
