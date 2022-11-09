@@ -138,28 +138,55 @@ docker run -e TRELLO_KEY={Key} -e TRELLO_TOKEN={Token} -e TRELLO_BOARD_ID={Board
 ```
 Replacing the {Items} with relevent data
 
-# to Run on Heroku
-Create an account on heroku.com
-Add an application called "what ever you want" i used "module8jon"
-Note: Replace "module8jon" with your application name in the .github\workflows\My-ci-pipeline.yml
-Under Settings show "config Vars" and add the following variables with relevent Values (see .env)
-FLASK_ENV
-FLASK_APP
-SECRET_KEY
-TRELLO_TOKEN
-TRELLO_KEY
-TRELLO_BOARD_ID
+# to Run on azure
+Create an account on azure
 
-In a terminal run:
-```powershell
-heroku authorizations:create
-```
-Copy the Key to be used in later
-Go to github, select the Project (DevOps-Course-Starter https://github.com/wishy78/DevOps-Course-Starter/settings/secrets/actions) and select settings
-on the left select secrets then actions
-Add a key called: HEROKU_API_KEY
-and add the copied Key as the value
+then run the following which will login and create a webapp (i had to use --use-device-code just follow the on screen instructions)
 
-now push
+Note: replace anything sourounded with <> bracket with the relevent info from .env file (and remove the <>)
+The top 3 represent:
+$RGName = '<Resource Group Name>'
+$WebAppName = '<Web App Name>'
+$ServicePlanName = '<Service plan Name>'
+change as apropiate for your environment
 
-website will be : http://module8jon.herokuapp.com/
+````powershell
+az login --use-device-code
+
+$RGName = 'Cohort22_JonLon_ProjectExercise'
+$WebAppName = 'Wapp-To-Do-Mod9-JL'
+$ServicePlanName = 'ASP-Mod8-JonLon'
+$FLASKAPP = '<FLASK_APP>'
+$FLASKENV = '<FLASK_ENV>'
+$SECRETKEY = '<SECRET_KEY>'
+$TRELLOKEY = '<TRELLO_KEY>'
+$TRELLOTOKEN = '<TRELLO_TOKEN>'
+$TRELLOBOARDID = '<TRELLO_BOARD_ID>'
+
+
+az appservice plan create --resource-group $RGName -n $ServicePlanName --sku B1 --is-linux
+
+az webapp create --resource-group $RGName --plan $ServicePlanName --name $WebAppName --deployment-container-image-name wishy78/todo-app:latest
+
+az webapp config appsettings set -g $RGName -n $WebAppName --settings FLASK_APP=$FLASKAPP
+az webapp config appsettings set -g $RGName -n $WebAppName --settings FLASK_ENV=$FLASKENV
+az webapp config appsettings set -g $RGName -n $WebAppName --settings SECRET_KEY=$SECRETKEY
+az webapp config appsettings set -g $RGName -n $WebAppName --settings TRELLO_KEY=$TRELLOKEY
+az webapp config appsettings set -g $RGName -n $WebAppName --settings TRELLO_TOKEN=$TRELLOTOKEN
+az webapp config appsettings set -g $RGName -n $WebAppName --settings TRELLO_BOARD_ID=$TRELLOBOARDID 
+az webapp config appsettings set -g $RGName -n $WebAppName --settings WEBSITES_PORT=5000
+az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_URL=https://hub.docker.com/repository/registry-1.docker.io
+
+
+````
+In https://portal.azure.com/ navigate to the newly created web app as defined in $WebAppName
+on the left select the "Deployment Center"
+in the main blade navigate to the bottom of the page and copy the "Webhook URL"
+
+In github secrets add/update the following with this "Webhook URL":
+AZURE_WEBHOOK_URL
+Note: you will need a / befor the $ sign before you save it
+
+website will be : https://<WebappName>.azurewebsites.net/
+for me that is https://wapp-to-do-mod9-jl.azurewebsites.net/
+
