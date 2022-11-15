@@ -70,7 +70,7 @@ jobs:
       continue-on-error: true
     
     - name: Deploy to azure
-      run: curl -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}
+      run: curl --fail -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}
 
     - name: Test connection    
       run: curl --fail http://wapp-to-do-mod9-jl.azurewebsites.net/ 
