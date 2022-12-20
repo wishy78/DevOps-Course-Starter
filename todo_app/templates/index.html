@@ -14,7 +14,6 @@
   </form>
   <div class="row">
     <div class="col-md-12">
-      
       <h2>All - Items</h2>
       <table style="border: 1px solid balck;">
         <tr>
@@ -28,7 +27,7 @@
             <td>{{item.status}}</td>
             {% for list in lists %}
             <td>
-              <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
+              <a href="./move/{{item.id}}/{{list}}">{{list}}</a>
             </td>
             {% endfor %}
           </tr>
@@ -49,7 +48,7 @@
               <td>{{item.status}}</td>
               {% for list in lists %}
               <td>
-                <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
+                <a href="./move/{{item.id}}/{{list}}">{{list}}</a>
               </td>
               {% endfor %}
             </tr>
@@ -71,7 +70,7 @@
               <td>{{item.status}}</td>
               {% for list in lists %}
               <td>
-                <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
+                <a href="./move/{{item.id}}/{{list}}">{{list}}</a>
               </td>
               {% endfor %}
             </tr>
@@ -93,7 +92,7 @@
               <td>{{item.status}}</td>
               {% for list in lists %}
               <td>
-                <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
+                <a href="./move/{{item.id}}/{{list}}">{{list}}</a>
               </td>
               {% endfor %}
             </tr>

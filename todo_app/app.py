@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request
-from todo_app.data.trello_items import add_card, get_cards, get_lists, move_card, read_env_deatils
+from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils
 from todo_app.flask_config import Config
 from todo_app.View_Class import ViewModel
 
