@@ -20,27 +20,31 @@ class StubResponse:
     def json(self):
         return self.fake_response_data
 
+import pymongo
+from json import dumps
+from os import getenv
+from todo_app.data.task_class import Task
+
 def stub(url, params = {}):
-    test_board_id = os.environ.get('TRELLO_BOARD_ID')
-    test_key = os.environ.get('TRELLO_KEY')
-    test_token = os.environ.get('TRELLO_TOKEN')
+    test_CLIENT = pymongo.MongoClient((getenv('CON_STRING')))
+    test_DB = test_CLIENT[(getenv('DB_NAME'))]
+    test_COLLECTION = test_DB[(getenv('COLLECTION_NAME'))]
     fake_response_data = None
-   
-    if url == f'https://api.trello.com/1/boards/{test_board_id}/lists?fields=id,name,idBoard&key={test_key}&token={test_token}':
+   #so we are testing connection to data and its reply 
+   #so prehaps look to make connection again with returned fake data
+    cards = []
+    for card in test_COLLECTION.find():
+        cards.append(Task.from_Mongo_card(card))
+    if cards:
         fake_response_data = [{
             'id': '456abc',
             'name': 'To Do',
-            'idBoard': '{test_board_id}',
+            'idBoard': 'To Do',
         }]
-
-    if url == f'https://api.trello.com/1/boards/{test_board_id}/cards?fields=idList,name&key={test_key}&token={test_token}':
-        fake_response_data = [{
-            'idList': '456abc', 'name': 'Test card', 'id' : '789abc'
-        }] 
 
     if fake_response_data :
         return StubResponse(fake_response_data)
-    raise Exception(f'Integration test did not expect URL "{url}"')
+    raise Exception(f'Integration test did not expect this response "{cards}"')
 
 def test_index_page(monkeypatch, client):
     monkeypatch.setattr(requests, 'get', stub)
