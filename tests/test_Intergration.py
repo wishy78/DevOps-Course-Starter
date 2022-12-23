@@ -1,10 +1,9 @@
-import os
 import pytest
 import requests
 from todo_app import app
 from dotenv import load_dotenv, find_dotenv
 import mongomock
-
+import todo_app.data.mongo_items
 #https://github.com/mongomock/mongomock
 
 @pytest.fixture
