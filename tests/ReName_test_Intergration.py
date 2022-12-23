@@ -3,14 +3,14 @@ import requests
 from todo_app import app
 from dotenv import load_dotenv, find_dotenv
 import mongomock
-import todo_app.data.mongo_items
+from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils
 #https://github.com/mongomock/mongomock
 
 @pytest.fixture
 def client():
     file_path = find_dotenv('.env.test')
     load_dotenv(file_path, override=True)
-    with mongomock.patch(servers=(('fakemongo.com', 27017),)):
+    with mongomock.patch(servers=(('fakemongo.com', 5000),)):
         test_app = app.create_app()
         with test_app.test_client() as client:
             yield client
