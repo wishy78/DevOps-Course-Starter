@@ -19,20 +19,20 @@ CMD [ "poetry", "run", "flask", "run", "--host=0.0.0.0", "--port=5000", "--debug
 
 # testing Image
 FROM base as test
-RUN pip install pytest
+#RUN pip install pytest
 #RUN poetry Install
 RUN poetry add pytest --dev
 #WORKDIR /tests
 ENV GECKODRIVER_VER v0.31.0
 # Install the long-term support version of Firefox (and curl if you don't have it already)
-RUN apt-get update && apt-get install -y firefox-esr curl
+##RUN apt-get update && apt-get install -y firefox-esr curl
 # Download geckodriver and put it in the usr/bin folder
-RUN curl -sSLO https://github.com/mozilla/geckodriver/releases/download/${GECKODRIVER_VER}/geckodriver-${GECKODRIVER_VER}-linux64.tar.gz \
-   && tar zxf geckodriver-*.tar.gz \
-   && mv geckodriver /usr/bin/ \
-   && rm geckodriver-*.tar.gz
+# #RUN curl -sSLO https://github.com/mozilla/geckodriver/releases/download/${GECKODRIVER_VER}/geckodriver-${GECKODRIVER_VER}-linux64.tar.gz \
+# #   && tar zxf geckodriver-*.tar.gz \
+# #   && mv geckodriver /usr/bin/ \
+# #   && rm geckodriver-*.tar.gz
 # install Selenium
-RUN  pip install selenium   
+# RUN  pip install selenium   
 ENTRYPOINT ["poetry", "run", "pytest"]
 
 # production image
