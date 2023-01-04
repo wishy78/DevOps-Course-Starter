@@ -1,9 +1,10 @@
 import pytest
-import requests
 from todo_app import app
 from dotenv import load_dotenv, find_dotenv
 import mongomock
-from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils
+import pymongo
+from os import getenv
+
 #https://github.com/mongomock/mongomock
 
 @pytest.fixture
@@ -14,11 +15,6 @@ def client():
         test_app = app.create_app()
         with test_app.test_client() as client:
             yield client
-
-import pymongo
-from json import dumps
-from os import getenv
-from todo_app.data.task_class import Task
 
 def createfakedata():
     test_CLIENT = pymongo.MongoClient((getenv('CON_STRING')))
