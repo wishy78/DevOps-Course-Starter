@@ -73,7 +73,7 @@ jobs:
       run: curl --fail -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}
 
     - name: Test connection    
-      run: curl --fail http://wapp-to-do-mod9-jl.azurewebsites.net/ 
+      run: curl --fail https://wapp-to-do-mod9-jl.azurewebsites.net/ 
 
 
 
