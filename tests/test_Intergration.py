@@ -5,8 +5,6 @@ import mongomock
 import pymongo
 from os import getenv
 
-#https://github.com/mongomock/mongomock
-
 @pytest.fixture
 def client():
     file_path = find_dotenv('.env.test')

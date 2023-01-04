@@ -45,8 +45,6 @@ jobs:
     - name: publish to docker hub
       run: echo "Publishing!"
 
-    #- name: Build Image
-    #  run: docker build --tag latest .
     - name: Build Image
       run: docker build --target production --tag wishy78/todo-app:latest .
 
@@ -74,16 +72,3 @@ jobs:
 
     - name: Test connection    
       run: curl --fail https://wapp-to-do-mod9-jl.azurewebsites.net/ 
-
-
-
-
-# for training reference 
-# cli login
-# heroku login
-# heroku container:login
-# docker pull wishy78/module8
-# docker tag wishy78/module8 registry.heroku.com/module8jon/web
-# docker push registry.heroku.com/module8jon/web
-# heroku container:release web -a module8jon 
-# heroku logs --tail -a module8jon

@@ -4,16 +4,16 @@
   remote_user: ec2-user
   vars_prompt:
 
-    - name: TRELLO_KEY
-      prompt: Enter TRELLO KEY
+    - name: CON_STRING
+      prompt: Enter CONECTION STRING
       private: no
 
-    - name: TRELLO_TOKEN
-      prompt: Enter TRELLO TOKEN
+    - name: DB_NAME
+      prompt: Enter DATABASE NAME
       private: yes
 
-    - name: TRELLO_BOARD_ID
-      prompt: Enter TRELLO BOARD ID
+    - name: COLLECTION_NAME
+      prompt: Enter COLLECTION NAME
       private: no
 
   tasks:

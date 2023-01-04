@@ -12,7 +12,6 @@ def read_env_deatils():
     COLLECTION = DB[(getenv('COLLECTION_NAME'))]
     
 def get_lists():
-    #return ["To Do","Doing","Done"]
     return [{"id":"To Do","name":"To Do"},{"id":"Doing","name":"Doing"},{"id":"Done","name":"Done"}]
 
 def get_cards():
