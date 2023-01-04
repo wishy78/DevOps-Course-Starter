@@ -145,9 +145,9 @@ $ServicePlanName = 'ASP-Mod8-JonLon'
 $FLASKAPP = '<FLASK_APP>'
 $FLASKENV = '<FLASK_ENV>'
 $SECRETKEY = '<SECRET_KEY>'
-$TRELLOKEY = '<TRELLO_KEY>'
-$TRELLOTOKEN = '<TRELLO_TOKEN>'
-$TRELLOBOARDID = '<TRELLO_BOARD_ID>'
+$CON_STRING = '<mongodb://ConnectionString>'
+$DB_NAME = '<CosmosDBName>'
+$COLLECTION_NAME = '<CollectionNamet>'
 
 
 az appservice plan create --resource-group $RGName -n $ServicePlanName --sku B1 --is-linux
@@ -157,11 +157,13 @@ az webapp create --resource-group $RGName --plan $ServicePlanName --name $WebApp
 az webapp config appsettings set -g $RGName -n $WebAppName --settings FLASK_APP=$FLASKAPP
 az webapp config appsettings set -g $RGName -n $WebAppName --settings FLASK_ENV=$FLASKENV
 az webapp config appsettings set -g $RGName -n $WebAppName --settings SECRET_KEY=$SECRETKEY
-az webapp config appsettings set -g $RGName -n $WebAppName --settings TRELLO_KEY=$TRELLOKEY
-az webapp config appsettings set -g $RGName -n $WebAppName --settings TRELLO_TOKEN=$TRELLOTOKEN
-az webapp config appsettings set -g $RGName -n $WebAppName --settings TRELLO_BOARD_ID=$TRELLOBOARDID 
+az webapp config appsettings set -g $RGName -n $WebAppName --settings CON_STRING=$CON_STRING
+az webapp config appsettings set -g $RGName -n $WebAppName --settings DB_NAME=$DB_NAME
+az webapp config appsettings set -g $RGName -n $WebAppName --settings COLLECTION_NAME=$COLLECTION_NAME
 az webapp config appsettings set -g $RGName -n $WebAppName --settings WEBSITES_PORT=5000
 az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_URL=https://hub.docker.com/repository/registry-1.docker.io
+
+
 
 
 ````
