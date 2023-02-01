@@ -3,7 +3,7 @@ from todo_app import app
 from dotenv import load_dotenv, find_dotenv
 import mongomock
 import pymongo
-from os import getenv
+from os import getenv, environ
 
 @pytest.fixture
 def client():

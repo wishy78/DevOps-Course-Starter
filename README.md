@@ -134,6 +134,8 @@ The top 3 represent:
 $RGName = '<Resource Group Name>'
 $WebAppName = '<Web App Name>'
 $ServicePlanName = '<Service plan Name>'
+
+
 change as apropiate for your environment
 
 ````powershell
@@ -149,9 +151,15 @@ $CON_STRING = 'mongodb://ConnectionString'
 $DB_NAME = 'CosmosDBName'
 $COLLECTION_NAME = 'CollectionNamet'
 
+$ClientID = '<CLIENTID>'
+$ClientSecret = '<CLIENTSECRET>'
+$STATE = '<AnUnguessableRandomString.ItIsUsedToProtectAgainstCross-SiteRequestForgeryAttacks>'
+
 az appservice plan create --resource-group $RGName -n $ServicePlanName --sku B1 --is-linux
 
 az webapp create --resource-group $RGName --plan $ServicePlanName --name $WebAppName --deployment-container-image-name wishy78/todo-app:latest
+$WebAppURL = az webapp list -g $RGName --query "[].{hostName: defaultHostName}" -o tsv
+$URL="http://$WebAppURL"
 
 az webapp config appsettings set -g $RGName -n $WebAppName --settings FLASK_APP=$FLASKAPP
 az webapp config appsettings set -g $RGName -n $WebAppName --settings FLASK_ENV=$FLASKENV
@@ -161,6 +169,10 @@ az webapp config appsettings set -g $RGName -n $WebAppName --settings DB_NAME=$D
 az webapp config appsettings set -g $RGName -n $WebAppName --settings COLLECTION_NAME=$COLLECTION_NAME
 az webapp config appsettings set -g $RGName -n $WebAppName --settings WEBSITES_PORT=5000
 az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_URL=https://hub.docker.com/repository/registry-1.docker.io
+az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTID=$ClientID
+az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTSECRET=$ClientSecret
+az webapp config appsettings set -g $RGName -n $WebAppName --settings STATE=$STATE
+az webapp config appsettings set -g $RGName -n $WebAppName --settings URL=$URL
 
 ````
 
@@ -174,4 +186,6 @@ Note: you will need a / befor the $ sign before you save it
 
 website will be : https://<WebappName>.azurewebsites.net/
 for me that is https://wapp-to-do-mod9-jl.azurewebsites.net/
+
+
 

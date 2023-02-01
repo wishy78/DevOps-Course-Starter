@@ -8,6 +8,7 @@ import requests
 from todo_app.data.user_class import User
 
 
+
 def create_app():
     read_env_deatils()
     app = Flask(__name__)
@@ -17,6 +18,7 @@ def create_app():
     CLIENTSECRET = getenv('CLIENTSECRET')
     BASEURL = getenv('URL')
     STATE = getenv('STATE')
+    app.config['LOGIN_DISABLED'] = getenv('LOGIN_DISABLED') == 'True'
 
     @login_manager.unauthorized_handler
     def unauthenticated():
