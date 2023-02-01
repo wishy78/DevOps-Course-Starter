@@ -34,20 +34,6 @@ $ cp .env.template .env  # (first time only)
 
 The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [SECRET_KEY](https://flask.palletsprojects.com/en/1.1.x/config/#SECRET_KEY) variable which is used to encrypt the flask session cookie.
 
-## Trello setup
-
-go to https://trello.com/ and create an account if not already have one
-collect the "key" and "tokens" from here https://trello.com/app-key
-create / choese the board you want to use (must have a "To Do" List as minimum)
-run the following "GET" in postman to obtain the Board ID, replacing the relevent {feilds}
-https://api.trello.com/1/search?query={Board Name}&modelTypes=boards&key={Trello KEY}&token={Trello TOKEN}&search
-
-Add the following to the .env file replacing the {feild} items with the above you have obtained
-# Creds for trello
-TRELLO_KEY={Trello KEY}
-TRELLO_TOKEN={Trello TOKEN}
-TRELLO_BOARD_ID={Trello BOARD ID}
-
 ## Running the App
 
 Once the all dependencies have been installed, start the Flask app in development mode within the Poetry environment by running:
@@ -82,7 +68,7 @@ Then run the following:
 ```bash
 ansible-playbook playbook.yml -i inventory.ini
 ```
-enter the required information for the trello token, key, board ID
+enter the required information for the Azure connection string, Database name and Collection Name
 
 Once complete you can go to http://35.179.21.80:5000/ to view the page
 
@@ -134,7 +120,7 @@ for example:
 ```powershell
 docker run todo-app:test tests_e2e
 #or 
-docker run -e TRELLO_KEY={Key} -e TRELLO_TOKEN={Token} -e TRELLO_BOARD_ID={BoardID} todo-app:test tests_e2e
+docker run -e CON_STRING={CON_STRING} -e DB_NAME={DB_NAME} -e COLLECTION_NAME={COLLECTION_NAME} todo-app:test tests_e2e
 ```
 Replacing the {Items} with relevent data
 
@@ -159,10 +145,9 @@ $ServicePlanName = 'ASP-Mod8-JonLon'
 $FLASKAPP = '<FLASK_APP>'
 $FLASKENV = '<FLASK_ENV>'
 $SECRETKEY = '<SECRET_KEY>'
-$TRELLOKEY = '<TRELLO_KEY>'
-$TRELLOTOKEN = '<TRELLO_TOKEN>'
-$TRELLOBOARDID = '<TRELLO_BOARD_ID>'
-
+$CON_STRING = 'mongodb://ConnectionString'
+$DB_NAME = 'CosmosDBName'
+$COLLECTION_NAME = 'CollectionNamet'
 
 az appservice plan create --resource-group $RGName -n $ServicePlanName --sku B1 --is-linux
 
@@ -171,14 +156,14 @@ az webapp create --resource-group $RGName --plan $ServicePlanName --name $WebApp
 az webapp config appsettings set -g $RGName -n $WebAppName --settings FLASK_APP=$FLASKAPP
 az webapp config appsettings set -g $RGName -n $WebAppName --settings FLASK_ENV=$FLASKENV
 az webapp config appsettings set -g $RGName -n $WebAppName --settings SECRET_KEY=$SECRETKEY
-az webapp config appsettings set -g $RGName -n $WebAppName --settings TRELLO_KEY=$TRELLOKEY
-az webapp config appsettings set -g $RGName -n $WebAppName --settings TRELLO_TOKEN=$TRELLOTOKEN
-az webapp config appsettings set -g $RGName -n $WebAppName --settings TRELLO_BOARD_ID=$TRELLOBOARDID 
+az webapp config appsettings set -g $RGName -n $WebAppName --settings CON_STRING=$CON_STRING
+az webapp config appsettings set -g $RGName -n $WebAppName --settings DB_NAME=$DB_NAME
+az webapp config appsettings set -g $RGName -n $WebAppName --settings COLLECTION_NAME=$COLLECTION_NAME
 az webapp config appsettings set -g $RGName -n $WebAppName --settings WEBSITES_PORT=5000
 az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_URL=https://hub.docker.com/repository/registry-1.docker.io
 
-
 ````
+
 In https://portal.azure.com/ navigate to the newly created web app as defined in $WebAppName
 on the left select the "Deployment Center"
 in the main blade navigate to the bottom of the page and copy the "Webhook URL"

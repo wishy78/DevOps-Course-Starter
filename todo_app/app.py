@@ -1,11 +1,12 @@
 from flask import Flask, redirect, render_template, request
-from todo_app.data.trello_items import add_card, get_cards, get_lists, move_card, read_env_deatils
+from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils
 from todo_app.flask_config import Config
 from todo_app.View_Class import ViewModel
 from flask_login import LoginManager, login_required, login_user
 from os import getenv
 import requests
 from todo_app.data.user_class import User
+
 
 def create_app():
     read_env_deatils()
@@ -72,4 +73,3 @@ def create_app():
 #{'login': 'wishy78', 'id': 65459782, 'node_id': 'MDQ6VXNlcjY1NDU5Nzgy', 'avatar_url': 'https://avatars.githubusercontent.com/u/65459782?v=4', 'gravatar_id': '', 'url': 'https://api.github.com/users/wishy78', 
 #'html_url': 'https://github.com/wishy78', 'followers_url': 'https://api.github.com/users/wishy78/followers', 'following_url': 'https://api.github.com/users/wishy78/following{/other_user}', 'gists_url': 'https://api.github.com/users/wishy78/gists{/gist_id}', 'starred_url': 'https://api.github.com/users/wishy78/starred{/owner}{/repo}', 'subscriptions_url': 'https://api.github.com/users/wishy78/subscriptions', 'organizations_url': 'https://api.github.com/users/wishy78/orgs', 'repos_url': 'https://api.github.com/users/wishy78/repos', 'events_url': 'https://api.github.com/users/wishy78/events{/privacy}', 'received_events_url': 'https://api.github.com/users/wishy78/received_events', 'type': 'User', 'site_admin': False, 'name': None, 'company': None, 'blog': '', 'location': None, 'email': None, 'hireable': None, 'bio': None, 'twitter_username': None, 'public_repos': 9, 'public_gists': 0, 'followers': 0, 'following': 0, 'created_at': '2020-05-16T16:23:41Z', 'updated_at': '2022-09-29T09:36:17Z'}
     return app
-
