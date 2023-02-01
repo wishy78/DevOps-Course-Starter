@@ -24,7 +24,7 @@ def create_app():
     
     @login_manager.user_loader
     def load_user(user_id):
-        pass # We will return to this later
+       #pass # We will return to this later
         thisuser = User(user_id)
         return (thisuser)
     login_manager.init_app(app)
