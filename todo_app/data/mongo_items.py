@@ -1,5 +1,4 @@
 import pymongo
-from json import dumps
 from os import getenv
 from todo_app.data.task_class import Task
 from flask_login import current_user
@@ -32,7 +31,7 @@ def add_card(title):
 
 def get_myrole(ClientID):
     #Authorised Writers
-    if ClientID in {'65459782','2'}:
+    if ClientID.strip() in {'65459782'}:
         return ""
     # default readers
     else:

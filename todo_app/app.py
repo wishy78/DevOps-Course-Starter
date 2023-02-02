@@ -2,12 +2,12 @@ from flask import Flask, redirect, render_template, request
 from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils, get_myrole, get_currentuser
 from todo_app.flask_config import Config
 from todo_app.View_Class import ViewModel
-from flask_login import LoginManager, login_required, login_user, current_user
+from flask_login import LoginManager, login_required, login_user
 from os import getenv
 import requests
 from todo_app.data.user_class import User
 from datetime import timedelta
-
+from json import loads, dumps
 
 
 def create_app():
@@ -28,8 +28,9 @@ def create_app():
     
     @login_manager.user_loader
     def load_user(user_id):
-       #pass # We will return to this later
-        thisuser = User(user_id)
+        user_name = user_id.split(",")[0].split(":")[1].replace("'","")
+        user_id = user_id.split(",")[1].split(":")[1].replace("'","")
+        thisuser = User(user_id,user_name)
         return (thisuser)
     login_manager.init_app(app)
 
@@ -53,35 +54,24 @@ def create_app():
 
     @app.route('/role/<UserID>')
     @login_required
-    def myrole(UserID):
-        myroles(UserID)
+    def myroles(UserID):
+        get_myrole(UserID)
         return redirect('/')
 
     @app.route('/login/callback')
-    #@login_required
     def callback():
-        #args = request.args
-        #recivedCode = args.get('code')
         recivedCode = request.args.get('code')
-         
         url = f'https://github.com/login/oauth/access_token?client_id={CLIENTID}&redirect_uri={BASEURL}/login/callback&client_secret={CLIENTSECRET}&code={recivedCode}'
         headers = {'Accept': 'application/json'}
-        #resp = requests.post(url=url, headers=headers)
-        #data = resp.json()
-        #access_token = data['access_token']
-        access_token = requests.post(url=url, headers=headers).json()['access_token']
-        #print(requests.post(url=url, headers=headers).json())
-        tempAT = 'Bearer '+access_token
+        accesstoken = requests.post(url=url, headers=headers).json()['access_token']
+        accesstokenstr = 'Bearer '+accesstoken
         url2 = 'https://api.github.com/user'
-        headers2 = {"Authorization": tempAT}
-        #resp2 = requests.get(url=url2, headers=headers2)
-        #user_data = resp2.json()
-        #thisuser = User(user_data['id']) 
-        #thisuser = User(requests.get(url=url2, headers=headers2).json()['id']) 
-        thisuser = User(requests.get(url=url2, headers=headers2).json()) 
+        headers2 = {"Authorization": accesstokenstr}
+        response = requests.get(url=url2, headers=headers2).json()
+        thisuser = User(response,response['login']) 
         duration1 = timedelta(seconds=60)
-        login_user(thisuser['id'], remember=False, duration=duration1, force=True, fresh=True)
-        who = load_user(thisuser['name'])
-        print(who)
+        #print(thisuser.id['id'])
+        #print(thisuser.id['login'])
+        login_user(thisuser, remember=False, duration=duration1, force=True, fresh=True)
         return redirect('/')
     return app
