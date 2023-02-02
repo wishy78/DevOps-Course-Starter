@@ -5,11 +5,12 @@
   <div class="jumbotron">
     <h1 class="display-4">To-Do App</h1>
     <p class="lead">Just another to-do app.</p>
+    <p class="lead">Current Loged in user: {{user1.id}}</p>
   </div>
   <form action=".\new" method="POST" >
     <div>
       <label for="name">Title: </label>
-      <input type="text" name="title" id="title" required> <input type="submit" value="Add Item">
+      <input type="text" name="title" id="title" required> <input type="submit" value="Add Item" {{role}}>
     </div>
   </form>
   <div class="row">
@@ -20,17 +21,21 @@
         <tr>
           <th>Task Name</th>
           <th>Current State</th>
+          {% if role != 'disabled':%}
           <th colspan={{lists|length}}>Availabale state(s)</th>
+          {% endif %}
         </tr>
         {% for item in view_model.items %}
           <tr>
             <td>{{ item.name }}</td>
             <td>{{item.status}}</td>
+            {% if role != 'disabled':%}
             {% for list in lists %}
             <td>
-              <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
+              <a href="./move/{{item.id}}/{{list.id}}" {{role}}>{{list.name}}</a>
             </td>
             {% endfor %}
+            {% endif %}
           </tr>
         {% endfor %}
       </table>
@@ -40,18 +45,22 @@
         <tr>
           <th>Task Name</th>
           <th>Current State</th>
+          {% if role != 'disabled':%}
           <th colspan={{lists|length}}>Availabale state(s)</th>
+          {% endif %}
         </tr>
         {% for items in view_model.toDo_items %}
           {% for item in items %}
             <tr>
               <td>{{ item.name }}</td>
               <td>{{item.status}}</td>
-              {% for list in lists %}
-              <td>
-                <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
-              </td>
-              {% endfor %}
+              {% if role != 'disabled': %}
+                {% for list in lists %}
+                <td>
+                  <a href="./move/{{item.id}}/{{list.id}}" {{role}}>{{list.name}}</a>
+                </td>
+                {% endfor %}
+              {% endif %}
             </tr>
           {% endfor %}
         {% endfor %}
@@ -62,18 +71,22 @@
         <tr>
           <th>Task Name</th>
           <th>Current State</th>
+          {% if role != 'disabled':%}
           <th colspan={{lists|length}}>Availabale state(s)</th>
+          {% endif %}
         </tr>
         {% for items in view_model.doing_items %}
           {% for item in items %}
             <tr>
               <td>{{ item.name }}</td>
               <td>{{item.status}}</td>
-              {% for list in lists %}
-              <td>
-                <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
-              </td>
-              {% endfor %}
+              {% if role != 'disabled':%}
+                {% for list in lists %}
+                <td>
+                  <a href="./move/{{item.id}}/{{list.id}}" {{role}}>{{list.name}}</a>
+                </td>
+                {% endfor %}
+              {% endif %}
             </tr>
           {% endfor %}
         {% endfor %}
@@ -84,18 +97,22 @@
         <tr>
           <th>Task Name</th>
           <th>Current State</th>
+          {% if role != 'disabled':%}
           <th colspan={{lists|length}}>Availabale state(s)</th>
+          {% endif %}
         </tr>
         {% for items in view_model.done_items %}
           {% for item in items %}
             <tr>
               <td>{{ item.name }}</td>
               <td>{{item.status}}</td>
-              {% for list in lists %}
-              <td>
-                <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
-              </td>
-              {% endfor %}
+              {% if role != 'disabled':%}
+                {% for list in lists %}
+                <td>
+                  <a href="./move/{{item.id}}/{{list.id}}" {{role}}>{{list.name}}</a>
+                </td>
+                {% endfor %}
+              {% endif %}
             </tr>
           {% endfor %}
         {% endfor %}

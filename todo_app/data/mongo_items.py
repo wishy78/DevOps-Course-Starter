@@ -2,6 +2,7 @@ import pymongo
 from json import dumps
 from os import getenv
 from todo_app.data.task_class import Task
+from flask_login import current_user
 
 def read_env_deatils():
     global CLIENT
@@ -28,3 +29,14 @@ def add_card(title):
     card = {"name": title, "state": "To Do"}
     COLLECTION.insert_one(card)
     return 0
+
+def get_myrole(ClientID):
+    #Authorised Writers
+    if ClientID in {'65459782','2'}:
+        return ""
+    # default readers
+    else:
+        return "disabled"
+
+def get_currentuser():
+    return current_user
