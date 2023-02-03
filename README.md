@@ -159,7 +159,8 @@ az appservice plan create --resource-group $RGName -n $ServicePlanName --sku B1 
 
 az webapp create --resource-group $RGName --plan $ServicePlanName --name $WebAppName --deployment-container-image-name wishy78/todo-app:latest
 $WebAppURL = az webapp list -g $RGName --query "[].{hostName: defaultHostName}" -o tsv
-$URL="http://$WebAppURL"
+#Note: this could be http or https so please check in azure
+$URL="https://$WebAppURL"
 
 az webapp config appsettings set -g $RGName -n $WebAppName --settings FLASK_APP=$FLASKAPP
 az webapp config appsettings set -g $RGName -n $WebAppName --settings FLASK_ENV=$FLASKENV
