@@ -38,22 +38,26 @@ def create_app():
     @login_required
     def index():
         item_view_model = ViewModel(get_cards())
-        return render_template('index.html', view_model=item_view_model, lists=get_lists(), user1=get_currentuser(), role=get_myrole(get_currentuser().id))
+        ThisUser = get_currentuser()
+        return render_template('index.html', view_model=item_view_model, lists=get_lists(), user1=ThisUser, role=get_myrole(ThisUser.id))
 
     @app.route('/new', methods=['POST'])
     @login_required
+    @get_myrole
     def new():
         add_card(request.form.get('title'))
         return redirect('/')
 
     @app.route('/move/<cardID>/<newList>')
     @login_required
+    @get_myrole
     def move(cardID, newList):
         move_card(cardID, newList)
         return redirect('/')
 
     @app.route('/role/<UserID>')
     @login_required
+    @get_myrole
     def myroles(UserID):
         get_myrole(UserID)
         return redirect('/')
@@ -73,5 +77,9 @@ def create_app():
         #print(thisuser.id['id'])
         #print(thisuser.id['login'])
         login_user(thisuser, remember=False, duration=duration1, force=True, fresh=True)
+        
+
+        
+
         return redirect('/')
     return app

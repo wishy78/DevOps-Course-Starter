@@ -1,7 +1,7 @@
 import pymongo
 from os import getenv
 from todo_app.data.task_class import Task
-from flask_login import current_user
+from flask_login import current_user, AnonymousUserMixin
 
 def read_env_deatils():
     global CLIENT
@@ -31,11 +31,16 @@ def add_card(title):
 
 def get_myrole(ClientID):
     #Authorised Writers
-    if ClientID.strip() in {'65459782'}:
+    if ClientID.strip() in {'65459782','1'}:
         return ""
     # default readers
     else:
         return "disabled"
 
 def get_currentuser():
+    if not isinstance(current_user._get_current_object(), AnonymousUserMixin):
+        returnUser = current_user
+    else:
+        current_user.login='Anonymous_User'
+        current_user.id='1'
     return current_user
