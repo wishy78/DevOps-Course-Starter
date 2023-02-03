@@ -45,6 +45,8 @@ def create_app():
     @login_required
     #@role_required('writer')
     def new():
+        if role_required('writer') :
+            exit
         add_card(request.form.get('title'))
         return redirect('/')
 
@@ -52,6 +54,8 @@ def create_app():
     @login_required
     #@role_required('writer')
     def move(cardID, newList):
+        if role_required('writer') :
+            exit
         move_card(cardID, newList)
         return redirect('/')
 
