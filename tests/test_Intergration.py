@@ -6,7 +6,6 @@ import pymongo
 from os import getenv, environ
 from flask_login import login_user, AnonymousUserMixin, current_user
 from todo_app.data.user_class import User
-from todo_app.data.mongo_items import get_currentuser
 
 @pytest.fixture
 def client():
@@ -23,7 +22,6 @@ def createfakedata():
     test_COLLECTION = test_DB[(getenv('COLLECTION_NAME'))]
     test_card = {"name": 'Test card', "state": "To Do"}
     test_COLLECTION.insert_one(test_card)
-    test_user = get_currentuser()
 
 def test_index_page(client):
     createfakedata()

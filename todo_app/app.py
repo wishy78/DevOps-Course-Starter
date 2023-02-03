@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request
-from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils, get_myrole, get_currentuser
+from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils, get_myrole, get_currentuser, role_required
 from todo_app.flask_config import Config
 from todo_app.View_Class import ViewModel
 from flask_login import LoginManager, login_required, login_user
@@ -43,23 +43,16 @@ def create_app():
 
     @app.route('/new', methods=['POST'])
     @login_required
-    @get_myrole
+    #@role_required('writer')
     def new():
         add_card(request.form.get('title'))
         return redirect('/')
 
     @app.route('/move/<cardID>/<newList>')
     @login_required
-    @get_myrole
+    #@role_required('writer')
     def move(cardID, newList):
         move_card(cardID, newList)
-        return redirect('/')
-
-    @app.route('/role/<UserID>')
-    @login_required
-    @get_myrole
-    def myroles(UserID):
-        get_myrole(UserID)
         return redirect('/')
 
     @app.route('/login/callback')
@@ -77,9 +70,5 @@ def create_app():
         #print(thisuser.id['id'])
         #print(thisuser.id['login'])
         login_user(thisuser, remember=False, duration=duration1, force=True, fresh=True)
-        
-
-        
-
         return redirect('/')
     return app

@@ -39,8 +39,18 @@ def get_myrole(ClientID):
 
 def get_currentuser():
     if not isinstance(current_user._get_current_object(), AnonymousUserMixin):
-        returnUser = current_user
+        return current_user
     else:
         current_user.login='Anonymous_User'
         current_user.id='1'
+        return current_user
     return current_user
+
+def role_required(role):
+    ThisUser = get_currentuser()
+    UserRole = get_myrole(ThisUser.id)
+    if UserRole == '':
+        if role == 'writer':
+            return True
+    return False
+
