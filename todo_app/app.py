@@ -7,8 +7,6 @@ from os import getenv
 import requests
 from todo_app.data.user_class import User
 from datetime import timedelta
-from json import loads, dumps
-
 
 def create_app():
     read_env_deatils()

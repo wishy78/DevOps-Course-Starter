@@ -3,9 +3,7 @@ from todo_app import app
 from dotenv import load_dotenv, find_dotenv
 import mongomock
 import pymongo
-from os import getenv, environ
-from flask_login import login_user, AnonymousUserMixin, current_user
-from todo_app.data.user_class import User
+from os import getenv
 
 @pytest.fixture
 def client():
@@ -25,9 +23,6 @@ def createfakedata():
 
 def test_index_page(client):
     createfakedata()
-    #response = {'login': 'test_User', 'id':1}
-    #thisuser = User(response,response['login']) 
-    #login_user(thisuser, remember=False, duration=None, force=True, fresh=True)
     response = client.get('/')
     assert response.status_code == 200
     assert 'Test card' in response.data.decode()
