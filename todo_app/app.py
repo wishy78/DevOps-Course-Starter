@@ -62,7 +62,8 @@ def create_app():
         recivedCode = request.args.get('code')
         url = f'https://github.com/login/oauth/access_token?client_id={CLIENTID}&redirect_uri={BASEURL}/login/callback&client_secret={CLIENTSECRET}&code={recivedCode}'
         headers = {'Accept': 'application/json'}
-        accesstoken = requests.post(url=url, headers=headers).json()['access_token']
+        response1 = requests.post(url=url, headers=headers).json()
+        accesstoken = response1['access_token']
         accesstokenstr = 'Bearer '+accesstoken
         url2 = 'https://api.github.com/user'
         headers2 = {"Authorization": accesstokenstr}
