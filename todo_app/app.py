@@ -39,11 +39,16 @@ def create_app():
         ThisUser = get_currentuser()
         return render_template('index.html', view_model=item_view_model, lists=get_lists(), user1=ThisUser, role=get_myrole(ThisUser.id))
 
+    def is_writer():
+        ThisUser = get_currentuser()
+        UserRole = get_myrole(ThisUser.id)
+        return UserRole == "writer"
+
     @app.route('/new', methods=['POST'])
     @login_required
     #@role_required('writer')
     def new():
-        if role_required('writer') :
+        if not is_writer():
             exit
         add_card(request.form.get('title'))
         return redirect('/')
@@ -69,7 +74,7 @@ def create_app():
         headers2 = {"Authorization": accesstokenstr}
         response = requests.get(url=url2, headers=headers2).json()
         thisuser = User(response,response['login']) 
-        duration1 = timedelta(seconds=60)
+        duration1 = timedelta(seconds=3600)
         #print(thisuser.id['id'])
         #print(thisuser.id['login'])
         login_user(thisuser, remember=False, duration=duration1, force=True, fresh=True)

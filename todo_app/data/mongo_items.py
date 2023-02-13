@@ -32,7 +32,7 @@ def add_card(title):
 def get_myrole(ClientID):
     #Authorised Writers
     if ClientID.strip() in {'65459782','1'}:
-        return ""
+        return "writer"
     # default readers
     else:
         return "disabled"

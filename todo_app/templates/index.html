@@ -10,7 +10,9 @@
   <form action=".\new" method="POST" >
     <div>
       <label for="name">Title: </label>
-      <input type="text" name="title" id="title" required> <input type="submit" value="Add Item" {{role}}>
+      <input type="text" name="title" id="title" required> <input type="submit" value="Add Item" {% if role != "writer" %}
+      disabled
+  {% endif %}>
     </div>
   </form>
   <div class="row">
@@ -21,7 +23,7 @@
         <tr>
           <th>Task Name</th>
           <th>Current State</th>
-          {% if role != 'disabled':%}
+          {% if role == "writer" %}
           <th colspan={{lists|length}}>Availabale state(s)</th>
           {% endif %}
         </tr>
@@ -29,10 +31,10 @@
           <tr>
             <td>{{ item.name }}</td>
             <td>{{item.status}}</td>
-            {% if role != 'disabled':%}
+            {% if role == "writer" %}
             {% for list in lists %}
             <td>
-              <a href="./move/{{item.id}}/{{list.id}}" {{role}}>{{list.name}}</a>
+              <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
             </td>
             {% endfor %}
             {% endif %}
@@ -45,7 +47,7 @@
         <tr>
           <th>Task Name</th>
           <th>Current State</th>
-          {% if role != 'disabled':%}
+          {% if role == "writer" %}
           <th colspan={{lists|length}}>Availabale state(s)</th>
           {% endif %}
         </tr>
@@ -54,10 +56,10 @@
             <tr>
               <td>{{ item.name }}</td>
               <td>{{item.status}}</td>
-              {% if role != 'disabled': %}
+              {% if role == "writer" %}
                 {% for list in lists %}
                 <td>
-                  <a href="./move/{{item.id}}/{{list.id}}" {{role}}>{{list.name}}</a>
+                  <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
                 </td>
                 {% endfor %}
               {% endif %}
@@ -71,7 +73,7 @@
         <tr>
           <th>Task Name</th>
           <th>Current State</th>
-          {% if role != 'disabled':%}
+          {% if role == "writer" %}
           <th colspan={{lists|length}}>Availabale state(s)</th>
           {% endif %}
         </tr>
@@ -80,10 +82,10 @@
             <tr>
               <td>{{ item.name }}</td>
               <td>{{item.status}}</td>
-              {% if role != 'disabled':%}
+              {% if role == "writer" %}
                 {% for list in lists %}
                 <td>
-                  <a href="./move/{{item.id}}/{{list.id}}" {{role}}>{{list.name}}</a>
+                  <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
                 </td>
                 {% endfor %}
               {% endif %}
@@ -97,7 +99,7 @@
         <tr>
           <th>Task Name</th>
           <th>Current State</th>
-          {% if role != 'disabled':%}
+          {% if role == "writer" %}
           <th colspan={{lists|length}}>Availabale state(s)</th>
           {% endif %}
         </tr>
@@ -106,10 +108,10 @@
             <tr>
               <td>{{ item.name }}</td>
               <td>{{item.status}}</td>
-              {% if role != 'disabled':%}
+              {% if role == "writer" %}
                 {% for list in lists %}
                 <td>
-                  <a href="./move/{{item.id}}/{{list.id}}" {{role}}>{{list.name}}</a>
+                  <a href="./move/{{item.id}}/{{list.id}}">{{list.name}}</a>
                 </td>
                 {% endfor %}
               {% endif %}
