@@ -2,6 +2,8 @@ import pymongo
 from os import getenv
 from todo_app.data.task_class import Task
 from flask_login import current_user, AnonymousUserMixin
+import random 
+import string
 
 def read_env_deatils():
     global CLIENT
@@ -44,7 +46,6 @@ def get_currentuser():
         current_user.login='Anonymous_User'
         current_user.id='1'
         return current_user
-    return current_user
 
 def role_required(role):
     ThisUser = get_currentuser()
@@ -54,3 +55,5 @@ def role_required(role):
             return True
     return False
 
+def randStr(chars = string.ascii_letters + string.digits, N=10):
+	return ''.join(random.choice(chars) for _ in range(N))

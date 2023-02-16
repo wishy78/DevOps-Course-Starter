@@ -1,5 +1,5 @@
-from flask import Flask, redirect, render_template, request
-from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils, get_myrole, get_currentuser, role_required
+from flask import Flask, redirect, render_template, request, session
+from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils, get_myrole, get_currentuser, role_required, randStr
 from todo_app.flask_config import Config
 from todo_app.View_Class import ViewModel
 from flask_login import LoginManager, login_required, login_user
@@ -16,12 +16,13 @@ def create_app():
     CLIENTID = getenv('CLIENTID')
     CLIENTSECRET = getenv('CLIENTSECRET')
     BASEURL = getenv('URL')
-    STATE = getenv('STATE')
     app.config['LOGIN_DISABLED'] = getenv('LOGIN_DISABLED') == 'True'
 
     @login_manager.unauthorized_handler
     def unauthenticated():
-        url = f"https://github.com/login/oauth/authorize?client_id={CLIENTID}&state={STATE}&redirect_uri={BASEURL}/login/callback&allow_signup=true"
+        state = randStr(N=20)
+        session['state'] =state
+        url = f"https://github.com/login/oauth/authorize?client_id={CLIENTID}&state={state}&redirect_uri={BASEURL}/login/callback&allow_signup=true"
         return redirect(url)
     
     @login_manager.user_loader
@@ -49,7 +50,7 @@ def create_app():
     #@role_required('writer')
     def new():
         if not is_writer():
-            exit
+            raise Exception("You dont have write access")
         add_card(request.form.get('title'))
         return redirect('/')
 
@@ -58,13 +59,16 @@ def create_app():
     #@role_required('writer')
     def move(cardID, newList):
         if role_required('writer') :
-            exit
+            raise Exception("You dont have write access")
         move_card(cardID, newList)
         return redirect('/')
 
     @app.route('/login/callback')
     def callback():
         recivedCode = request.args.get('code')
+        state = request.args.get('state')
+        if (session['state'] != state):
+            raise Exception("State does not match; indicates referral from a different hostname")
         url = f'https://github.com/login/oauth/access_token?client_id={CLIENTID}&redirect_uri={BASEURL}/login/callback&client_secret={CLIENTSECRET}&code={recivedCode}'
         headers = {'Accept': 'application/json'}
         response1 = requests.post(url=url, headers=headers).json()
@@ -72,11 +76,11 @@ def create_app():
         accesstokenstr = 'Bearer '+accesstoken
         url2 = 'https://api.github.com/user'
         headers2 = {"Authorization": accesstokenstr}
-        response = requests.get(url=url2, headers=headers2).json()
-        thisuser = User(response,response['login']) 
+        response = requests.get(url=url2, headers=headers2)
+        response.raise_for_status()
+        Jsonresponse = response.json()
+        thisuser = User(Jsonresponse,Jsonresponse['login']) 
         duration1 = timedelta(seconds=3600)
-        #print(thisuser.id['id'])
-        #print(thisuser.id['login'])
         login_user(thisuser, remember=False, duration=duration1, force=True, fresh=True)
         return redirect('/')
     return app

@@ -153,7 +153,6 @@ $COLLECTION_NAME = 'CollectionNamet'
 
 $ClientID = '<CLIENTID>'
 $ClientSecret = '<CLIENTSECRET>'
-$STATE = '<AnUnguessableRandomString.ItIsUsedToProtectAgainstCross-SiteRequestForgeryAttacks>'
 
 az appservice plan create --resource-group $RGName -n $ServicePlanName --sku B1 --is-linux
 
@@ -172,7 +171,6 @@ az webapp config appsettings set -g $RGName -n $WebAppName --settings WEBSITES_P
 az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_URL=https://hub.docker.com/repository/registry-1.docker.io
 az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTID=$ClientID
 az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTSECRET=$ClientSecret
-az webapp config appsettings set -g $RGName -n $WebAppName --settings STATE=$STATE
 az webapp config appsettings set -g $RGName -n $WebAppName --settings URL=$URL
 
 ````
