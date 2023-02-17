@@ -5,7 +5,8 @@ from todo_app import app
 from dotenv import load_dotenv, find_dotenv
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
-    
+os.environ['LOGIN_DISABLED'] = 'True'
+
 @pytest.fixture
 def client():
     file_path = find_dotenv('.env.test')
