@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request, session
-from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils, get_myrole, get_currentuser, role_required, randStr
+from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils, get_myrole, get_currentuser, randStr
 from todo_app.flask_config import Config
 from todo_app.View_Class import ViewModel
 from flask_login import LoginManager, login_required, login_user
@@ -47,7 +47,6 @@ def create_app():
 
     @app.route('/new', methods=['POST'])
     @login_required
-    #@role_required('writer')
     def new():
         if not is_writer():
             raise Exception("You dont have write access")
@@ -56,9 +55,8 @@ def create_app():
 
     @app.route('/move/<cardID>/<newList>')
     @login_required
-    #@role_required('writer')
     def move(cardID, newList):
-        if role_required('writer') :
+        if not is_writer():
             raise Exception("You dont have write access")
         move_card(cardID, newList)
         return redirect('/')

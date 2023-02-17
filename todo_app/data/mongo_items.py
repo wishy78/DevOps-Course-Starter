@@ -47,13 +47,5 @@ def get_currentuser():
         current_user.id='1'
         return current_user
 
-def role_required(role):
-    ThisUser = get_currentuser()
-    UserRole = get_myrole(ThisUser.id)
-    if UserRole == '':
-        if role == 'writer':
-            return True
-    return False
-
 def randStr(chars = string.ascii_letters + string.digits, N=10):
 	return ''.join(random.choice(chars) for _ in range(N))
