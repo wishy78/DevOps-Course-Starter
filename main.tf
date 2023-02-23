@@ -16,7 +16,7 @@ data "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_service_plan" "main" {
-  name = "terraformed-asp"
+  name = "terraformed-mod12-asp"
   location = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   os_type = "Linux"
@@ -31,18 +31,19 @@ resource "azurerm_linux_web_app" "main" {
   
   site_config {
     application_stack {
-      docker_image = "appsvcsample/python-helloworld"
+      docker_image = "wishy78/todo-app"
       docker_image_tag = "latest"
     }
   }
   app_settings = {
     "DOCKER_REGISTRY_SERVER_URL" = "https://index.docker.io"
+    "MONGODB_CONNECTION_STRING" = azurerm_cosmosdb_account.db.connection_strings[0]
+    
   }
 }
 
-
 resource "azurerm_cosmosdb_account" "db" {
-  name                = "cosmos-to-do-mod10-jl"
+  name                = "cosmos-to-do-mod12-jl"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   offer_type          = "Standard"
@@ -81,3 +82,15 @@ resource "azurerm_cosmosdb_account" "db" {
     failover_priority = 0
   }
 }
+
+resource "azurerm_cosmosdb_mongo_database" "collection" {
+  name                = "to-do-list"
+  resource_group_name = data.azurerm_resource_group.main.name
+  account_name        = azurerm_cosmosdb_account.db.name
+  throughput          = 400
+}
+
+
+
+ 
+ 
