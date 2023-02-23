@@ -26,6 +26,10 @@ variable "CLIENTSECRET" {
   sensitive   = true
 }
 
+variable "URL" {
+  sensitive   = false
+}
+
 variable "WEBSITES_PORT" {
   sensitive   = false
 }

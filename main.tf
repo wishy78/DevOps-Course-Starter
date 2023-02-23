@@ -46,7 +46,7 @@ resource "azurerm_linux_web_app" "main" {
  
     "CLIENTID"="${var.CLIENTID}"
     "CLIENTSECRET"="${var.CLIENTSECRET}"
-    "URL"="${azurerm_linux_web_app.main.default_hostname}"
+    "URL"="${var.URL}"
 
     "WEBSITES_PORT" = "${var.WEBSITES_PORT}"
     "DOCKER_REGISTRY_SERVER_URL" = "${var.DOCKER_REGISTRY_SERVER_URL}"
@@ -63,7 +63,10 @@ resource "azurerm_cosmosdb_account" "db" {
   kind                = "MongoDB"
 
   enable_automatic_failover = true
-
+  lifecycle { 
+    prevent_destroy = true 
+    }
+    
   capabilities {
     name = "EnableAggregationPipeline"
   }
