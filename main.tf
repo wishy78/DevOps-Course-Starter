@@ -39,3 +39,45 @@ resource "azurerm_linux_web_app" "main" {
     "DOCKER_REGISTRY_SERVER_URL" = "https://index.docker.io"
   }
 }
+
+
+resource "azurerm_cosmosdb_account" "db" {
+  name                = "cosmos-to-do-mod10-jl"
+  location            = data.azurerm_resource_group.main.location
+  resource_group_name = data.azurerm_resource_group.main.name
+  offer_type          = "Standard"
+  kind                = "MongoDB"
+
+  enable_automatic_failover = true
+
+  capabilities {
+    name = "EnableAggregationPipeline"
+  }
+
+  capabilities {
+    name = "mongoEnableDocLevelTTL"
+  }
+
+  capabilities {
+    name = "MongoDBv3.4"
+  }
+
+  capabilities {
+    name = "EnableMongo"
+  }
+  
+  capabilities { 
+    name = "EnableServerless" 
+  }
+
+  consistency_policy {
+    consistency_level       = "BoundedStaleness"
+    max_interval_in_seconds = 300
+    max_staleness_prefix    = 100000
+  }
+
+  geo_location {
+    location          = data.azurerm_resource_group.main.location
+    failover_priority = 0
+  }
+}
