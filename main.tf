@@ -16,7 +16,7 @@ data "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_service_plan" "main" {
-  name = "sp-terraformed-mod12-asp"
+  name = "terraformed-asp"
   location = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   os_type = "Linux"
@@ -66,7 +66,7 @@ resource "azurerm_cosmosdb_account" "db" {
   lifecycle { 
     prevent_destroy = true 
     }
-    
+
   capabilities {
     name = "EnableAggregationPipeline"
   }
