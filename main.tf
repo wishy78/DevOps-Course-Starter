@@ -16,7 +16,7 @@ data "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_service_plan" "main" {
-  name = "terraformed-mod12-asp"
+  name = "sp-terraformed-mod12-asp"
   location = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   os_type = "Linux"
@@ -36,14 +36,27 @@ resource "azurerm_linux_web_app" "main" {
     }
   }
   app_settings = {
-    "DOCKER_REGISTRY_SERVER_URL" = "https://index.docker.io"
-    "MONGODB_CONNECTION_STRING" = azurerm_cosmosdb_account.db.connection_strings[0]
-    
+    "FLASK_APP" = "${var.FLASK_APP}"
+    "FLASK_ENV" = "${var.FLASK_ENV}"
+    "SECRET_KEY"="${var.SECRET_KEY}"
+
+    "CON_STRING"="${azurerm_cosmosdb_account.db.connection_strings[0]}"
+    "DB_NAME"="${var.DB_NAME}"
+    "COLLECTION_NAME"="${var.COLLECTION_NAME}"
+ 
+    "CLIENTID"="${var.CLIENTID}"
+    "CLIENTSECRET"="${var.CLIENTSECRET}"
+    "URL"="${azurerm_linux_web_app.main.default_hostname}"
+
+    "WEBSITES_PORT" = "${var.WEBSITES_PORT}"
+    "DOCKER_REGISTRY_SERVER_URL" = "${var.DOCKER_REGISTRY_SERVER_URL}"
+    "DOCKER_REGISTRY_SERVER_PASSWORD" = "${var.DOCKER_REGISTRY_SERVER_PASSWORD}" 
+    "DOCKER_REGISTRY_SERVER_USERNAME" ="${var.DOCKER_REGISTRY_SERVER_USERNAME}"
   }
 }
 
 resource "azurerm_cosmosdb_account" "db" {
-  name                = "cosmos-to-do-mod12-jl"
+  name                = "${var.DB_NAME}"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   offer_type          = "Standard"
@@ -84,7 +97,7 @@ resource "azurerm_cosmosdb_account" "db" {
 }
 
 resource "azurerm_cosmosdb_mongo_database" "collection" {
-  name                = "to-do-list"
+  name                = "${var.COLLECTION_NAME}"
   resource_group_name = data.azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.db.name
   throughput          = 400
