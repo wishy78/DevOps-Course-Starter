@@ -61,19 +61,18 @@ resource "azurerm_cosmosdb_account" "db" {
   resource_group_name = data.azurerm_resource_group.main.name
   offer_type          = "Standard"
   kind                = "MongoDB"
+  
+#  lifecycle { 
+#    prevent_destroy = true 
+#    }
 
-  enable_automatic_failover = true
-  lifecycle { 
-    prevent_destroy = true 
-    }
+#  capabilities {
+#    name = "EnableAggregationPipeline"
+#  }
 
-  capabilities {
-    name = "EnableAggregationPipeline"
-  }
-
-  capabilities {
-    name = "mongoEnableDocLevelTTL"
-  }
+#  capabilities {
+#    name = "mongoEnableDocLevelTTL"
+#  }
 
   capabilities {
     name = "MongoDBv3.4"
@@ -103,7 +102,7 @@ resource "azurerm_cosmosdb_mongo_database" "collection" {
   name                = "${var.COLLECTION_NAME}"
   resource_group_name = data.azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.db.name
-  throughput          = 400
+  #throughput          = 400
 }
 
 
