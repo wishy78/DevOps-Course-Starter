@@ -218,4 +218,4 @@ add following to the Sercrets in Github
 AZURE_SECRET
 AZURE_SERVICE_PRINCIPAL_NAME
 AZURE_TENANT
-AZURE_WEBHOOK_URL
+AZURE_WEBHOOK_URL = $(terraform output -raw web_hook)
