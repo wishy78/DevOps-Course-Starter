@@ -98,3 +98,4 @@ jobs:
     - name: Test connection    
       run: curl --fail https://dev-app-jonl-ex12.azurewebsites.net 
 
+# https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
