@@ -24,7 +24,7 @@ resource "azurerm_service_plan" "main" {
 }
 
 resource "azurerm_linux_web_app" "main" {
-  name = "${var.PREFIX}-APP-JonL-Ex12"
+  name = "${var.PREFIX}-${var.APP_NAME}"
   location = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   service_plan_id = azurerm_service_plan.main.id
@@ -46,7 +46,7 @@ resource "azurerm_linux_web_app" "main" {
  
     "CLIENTID"="${var.CLIENTID}"
     "CLIENTSECRET"="${var.CLIENTSECRET}"
-    "URL"="${var.URL}"
+    "URL"="${var.URL_PREFIX}${var.PREFIX}-${var.APP_NAME}.${var.URL_DOMAIN}"
 
     "WEBSITES_PORT" = "${var.WEBSITES_PORT}"
     "DOCKER_REGISTRY_SERVER_URL" = "${var.DOCKER_REGISTRY_SERVER_URL}"
@@ -56,7 +56,7 @@ resource "azurerm_linux_web_app" "main" {
 }
 
 resource "azurerm_cosmosdb_account" "db" {
-  name                = "${var.PREFIX}.${var.DB_NAME}"
+  name                = "${var.DB_NAME}"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   offer_type          = "Standard"
@@ -99,7 +99,7 @@ resource "azurerm_cosmosdb_account" "db" {
 }
 
 resource "azurerm_cosmosdb_mongo_database" "collection" {
-  name                = "${var.PREFIX}-${var.COLLECTION_NAME}"
+  name                = "${var.COLLECTION_NAME}"
   resource_group_name = data.azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.db.name
   #throughput          = 400

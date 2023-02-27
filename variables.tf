@@ -1,14 +1,27 @@
 variable "PREFIX" {
   description = "The prefix used for all resources in this environment"
-  default = "DEV"
+  default = "dev"
+  sensitive   = false
 }
 
 variable "WEBSITES_PORT" {
   sensitive   = false
-  default = [5000]
+  default = 5000
 }
 
-variable "URL" {
+variable "URL_PREFIX" {
+    sensitive   = false
+    default = "https://"
+}
+
+variable "URL_DOMAIN" {
+    sensitive   = false
+    default = "azurewebsites.net"
+}
+
+variable "APP_NAME" {
+    sensitive   = false
+    default = "app-jonl-ex12"
 }
 
 variable "DB_NAME" {
