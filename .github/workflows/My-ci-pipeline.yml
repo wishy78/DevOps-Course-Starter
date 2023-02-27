@@ -22,7 +22,7 @@ jobs:
     name: Build and test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     - name: BuildTestImage
       run: docker build --target test --tag todo-app:test .
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     - uses: satackey/action-docker-layer-caching@v0.0.11
       continue-on-error: true
@@ -65,11 +65,13 @@ jobs:
     
     - uses: satackey/action-docker-layer-caching@v0.0.11
       continue-on-error: true
+    
+    - uses: Azure/login@v1
+      with:
+      creds: '{"clientId":"${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }} ","clientSecret":"${{ secrets.AZURE_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT }}"}'
 
-    - name: Azure Login
-      run: #az login --service-principal -u ${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }} -p ${{ secrets.AZURE_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}
-           $AzCred = Get-Credential -UserName ${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }}
-           az login --service-principal -u $AzCred.UserName -p $AzCred.GetNetworkCredential().Password --tenant ${{ secrets.AZURE_TENANT }}
+    #- name: Azure Login
+    #  run: az login --service-principal -u ${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }} -p ${{ secrets.AZURE_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}
 
     - name: initiate Terraform
       run: terraform init
