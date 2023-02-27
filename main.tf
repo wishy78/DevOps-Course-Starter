@@ -62,9 +62,9 @@ resource "azurerm_cosmosdb_account" "db" {
   offer_type          = "Standard"
   kind                = "MongoDB"
   
-#  lifecycle { 
-#    prevent_destroy = true 
-#    }
+  lifecycle { 
+    prevent_destroy = true 
+    }
 
 #  capabilities {
 #    name = "EnableAggregationPipeline"
