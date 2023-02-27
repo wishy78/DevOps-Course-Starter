@@ -67,7 +67,7 @@ jobs:
       continue-on-error: true
 
     - name: Azure Login
-      run: az login --service-principal -u ${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }} -p ${{ secrets.AZURE_SECRET --tenant ${{ secrets.AZURE_TENANT }}"
+      run: az login --service-principal -u ${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }} -p ${{ secrets.AZURE_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}"
     
     - name: initiate Terraform
       run: terraform init
