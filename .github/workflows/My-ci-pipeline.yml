@@ -66,8 +66,15 @@ jobs:
     - uses: satackey/action-docker-layer-caching@v0.0.11
       continue-on-error: true
 
+    - name: Azure Login
+      run: az login --service-principal -u ${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }} -p ${{ secrets.AZURE_SECRET --tenant ${{ secrets.AZURE_TENANT }}"
+    
     - name: initiate Terraform
       run: terraform init
+
+    - name: Apply Infastucture via Terraform
+      run: terraform init
+      needs: [initiate Terraform]
 
   cd:
     #if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'pull_request' }}
