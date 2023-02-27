@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [Publish]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     - uses: satackey/action-docker-layer-caching@v0.0.11
       continue-on-error: true
@@ -70,7 +70,8 @@ jobs:
       with:
         creds: '{"clientId":"${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }} ","clientSecret":"${{ secrets.AZURE_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT }}"}'
 
-    #- name: Azure Login
+    - name: Azure Login
+      run: az login 
     #  run: az login --service-principal -u ${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }} -p ${{ secrets.AZURE_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}
 
     - name: initiate Terraform
@@ -86,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [Infastucture]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     - uses: satackey/action-docker-layer-caching@v0.0.11
       continue-on-error: true
