@@ -16,7 +16,7 @@ data "azurerm_resource_group" "main" {
 }
 
 resource "azurerm_service_plan" "main" {
-  name = "terraformed-asp"
+  name = "${var.PREFIX}-terraformed-asp"
   location = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   os_type = "Linux"
@@ -24,7 +24,7 @@ resource "azurerm_service_plan" "main" {
 }
 
 resource "azurerm_linux_web_app" "main" {
-  name = "APP-JonL-Ex12"
+  name = "${var.PREFIX}-APP-JonL-Ex12"
   location = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   service_plan_id = azurerm_service_plan.main.id
@@ -56,7 +56,7 @@ resource "azurerm_linux_web_app" "main" {
 }
 
 resource "azurerm_cosmosdb_account" "db" {
-  name                = "${var.DB_NAME}"
+  name                = "${var.PREFIX}.${var.DB_NAME}"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
   offer_type          = "Standard"
@@ -99,7 +99,7 @@ resource "azurerm_cosmosdb_account" "db" {
 }
 
 resource "azurerm_cosmosdb_mongo_database" "collection" {
-  name                = "${var.COLLECTION_NAME}"
+  name                = "${var.PREFIX}-${var.COLLECTION_NAME}"
   resource_group_name = data.azurerm_resource_group.main.name
   account_name        = azurerm_cosmosdb_account.db.name
   #throughput          = 400
