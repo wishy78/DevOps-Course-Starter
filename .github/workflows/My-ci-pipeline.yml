@@ -92,3 +92,4 @@ jobs:
 
     - name: Test connection    
       run: curl --fail https://dev-app-jonl-ex12.azurewebsites.net 
+
