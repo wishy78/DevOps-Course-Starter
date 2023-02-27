@@ -210,3 +210,6 @@ $TERRAFORM_STATE_KEY=(Get-AzStorageAccountKey -ResourceGroupName $RESOURCE_GROUP
 $env:ARM_ACCESS_KEY=$TERRAFORM_STATE_KEY
 
 ````
+
+az account set --subscription= "d33b95c7-af3c-4247-9661-aa96d47fccc0"
+az ad sp create-for-rbac --name "Dev-SP-User" --role Contributor --scopes /subscriptions/d33b95c7-af3c-4247-9661-aa96d47fccc0/resourceGroups/Cohort22_JonLon_ProjectExercise

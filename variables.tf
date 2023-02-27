@@ -66,3 +66,16 @@ variable "DOCKER_REGISTRY_SERVER_USERNAME" {
 variable "TERRAFORM_STATE_KEY" {
   sensitive   = true
 }
+
+variable "ARM_CLIENT_ID" {
+  sensitive   = true
+}
+variable "ARM_CLIENT_SECRET" {
+  sensitive   = true
+}
+variable "ARM_TENANT_ID" {
+  sensitive   = true
+}
+variable "ARM_SUBSCRIPTION_ID" {
+  sensitive   = true
+}
