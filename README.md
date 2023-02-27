@@ -188,3 +188,25 @@ for me that is https://wapp-to-do-mod9-jl.azurewebsites.net/
 
 
 
+Add a Store for the State in azurre
+
+````powershell
+az login --use-device-code
+
+$RESOURCE_GROUP_NAME='Cohort22_JonLon_ProjectExercise'
+$STORAGE_ACCOUNT_NAME="tfstate$(Get-Random)"
+$CONTAINER_NAME='tfstate'
+
+# Create resource group if group dosnt exsit
+#New-AzResourceGroup -Name $RESOURCE_GROUP_NAME -Location UKsouth
+
+# Create storage account
+$storageAccount = New-AzStorageAccount -ResourceGroupName $RESOURCE_GROUP_NAME -Name $STORAGE_ACCOUNT_NAME -SkuName Standard_LRS -Location UKsouth -AllowBlobPublicAccess $false
+
+# Create blob container
+New-AzStorageContainer -Name $CONTAINER_NAME -Context $storageAccount.context
+
+$TERRAFORM_STATE_KEY=(Get-AzStorageAccountKey -ResourceGroupName $RESOURCE_GROUP_NAME -Name $STORAGE_ACCOUNT_NAME)[0].value
+$env:ARM_ACCESS_KEY=$TERRAFORM_STATE_KEY
+
+````

@@ -5,6 +5,12 @@ terraform {
         version = ">= 3.8"
         }
     }
+    backend "azurerm" {
+        resource_group_name  = "Cohort22_JonLon_ProjectExercise"
+        storage_account_name = "tfstate1147207684"
+        container_name       = "tfstate"
+        key                  = "$env:ARM_ACCESS_KEY"
+    }
 }
 
 provider "azurerm" {
@@ -62,17 +68,9 @@ resource "azurerm_cosmosdb_account" "db" {
   offer_type          = "Standard"
   kind                = "MongoDB"
   
-  lifecycle { 
-    prevent_destroy = true 
-    }
-
-#  capabilities {
-#    name = "EnableAggregationPipeline"
-#  }
-
-#  capabilities {
-#    name = "mongoEnableDocLevelTTL"
-#  }
+#  lifecycle { 
+#    prevent_destroy = true 
+#    }
 
   capabilities {
     name = "MongoDBv3.4"

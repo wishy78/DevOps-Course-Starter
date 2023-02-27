@@ -62,3 +62,7 @@ variable "DOCKER_REGISTRY_SERVER_PASSWORD" {
 variable "DOCKER_REGISTRY_SERVER_USERNAME" {
   sensitive   = true
 }
+
+variable "TERRAFORM_STATE_KEY" {
+  sensitive   = true
+}
