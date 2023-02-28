@@ -72,7 +72,7 @@ jobs:
 
     - name: Azure Login
     #  run: az login --service-principal 
-   #   run: |
+       run: |
         az login --service-principal --username ${{ var.ARM_CLIENT_ID }} --password ${{ var.ARM_CLIENT_SECRET }} --tenant ${{ var.ARM_TENANT_ID }}
         terraform init
         #terraform -auto-approve
