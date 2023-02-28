@@ -69,6 +69,7 @@ jobs:
     - uses: azure/login@v1
       with:
         creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }} ","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID}}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
+        enable-AzPSSession: true
 
     - name: Azure Login
     #  run: az login --service-principal 
@@ -81,6 +82,7 @@ jobs:
       run: terraform init
 
    # - name: Apply Infastucture via Terraform
+   #   if: github.ref == 'refs/heads/"master"' && github.event_name == 'push'
    #   run: terraform -auto-approve
 
   cd:

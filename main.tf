@@ -9,7 +9,7 @@ terraform {
         resource_group_name  = "Cohort22_JonLon_ProjectExercise"
         storage_account_name = "tfstate1147207684"
         container_name       = "tfstate"
-        key                  = "var.TERRAFORM_STATE_KEY"
+        key                  = "env.TERRAFORM_STATE_KEY"
     }
 }
 
