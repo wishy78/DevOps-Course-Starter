@@ -70,12 +70,12 @@ jobs:
       with:
         creds: '{"clientId":"${{ var.ARM_CLIENT_ID }} ","clientSecret":"${{ var.ARM_CLIENT_SECRET }}","subscriptionId":"${{ var.ARM_SUBSCRIPTION_ID}}","tenantId":"${{ var.ARM_TENANT_ID }}"}'
 
-   # - name: Azure Login
+    - name: Azure Login
     #  run: az login --service-principal 
    #   run: |
-   #     az login --service-principal --username ${{ secrets.ARM_CLIENT_ID }} --password ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }}
-   #     terraform init
-   #     terraform -auto-approve
+        az login --service-principal --username ${{ var.ARM_CLIENT_ID }} --password ${{ var.ARM_CLIENT_SECRET }} --tenant ${{ var.ARM_TENANT_ID }}
+        terraform init
+        terraform -auto-approve
 
     - name: initiate Terraform
       run: terraform init
