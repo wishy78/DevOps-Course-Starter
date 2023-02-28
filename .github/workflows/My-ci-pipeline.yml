@@ -70,18 +70,18 @@ jobs:
       with:
         creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }} ","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID}}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
 
-    - name: Azure Login
+   # - name: Azure Login
     #  run: az login --service-principal 
-      run: |
-        az login --service-principal --username ${{ secrets.ARM_CLIENT_ID }} --password ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }}
-        terraform init
-        terraform -auto-approve
+   #   run: |
+   #     az login --service-principal --username ${{ secrets.ARM_CLIENT_ID }} --password ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }}
+   #     terraform init
+   #     terraform -auto-approve
 
-  #  - name: initiate Terraform
-  #    run: terraform init
+    - name: initiate Terraform
+      run: terraform init
 
-  #  - name: Apply Infastucture via Terraform
-  #    run: terraform -auto-approve
+    - name: Apply Infastucture via Terraform
+      run: terraform -auto-approve
 
   cd:
     #if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'pull_request' }}
