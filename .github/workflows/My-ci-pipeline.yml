@@ -72,13 +72,16 @@ jobs:
 
     - name: Azure Login
     #  run: az login --service-principal 
-      run: az login --service-principal --username ${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }} --password ${{ secrets.AZURE_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}
+      run: |
+        az login --service-principal --username ${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }} --password ${{ secrets.AZURE_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}
+        terraform init
+        terraform -auto-approve
 
-    - name: initiate Terraform
-      run: terraform init
+  #  - name: initiate Terraform
+  #    run: terraform init
 
-    - name: Apply Infastucture via Terraform
-      run: terraform -auto-approve
+  #  - name: Apply Infastucture via Terraform
+  #    run: terraform -auto-approve
 
   cd:
     #if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'pull_request' }}
