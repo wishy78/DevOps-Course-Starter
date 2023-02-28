@@ -68,12 +68,12 @@ jobs:
     
     - uses: azure/login@v1
       with:
-        creds: '{"clientId":"${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }} ","clientSecret":"${{ secrets.AZURE_SECRET }}","subscriptionId":"${{ secrets.SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT }}"}'
+        creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }} ","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID}}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
 
     - name: Azure Login
     #  run: az login --service-principal 
       run: |
-        az login --service-principal --username ${{ secrets.AZURE_SERVICE_PRINCIPAL_NAME }} --password ${{ secrets.AZURE_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}
+        az login --service-principal --username ${{ secrets.ARM_CLIENT_ID }} --password ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }}
         terraform init
         terraform -auto-approve
 
