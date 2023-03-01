@@ -53,15 +53,15 @@ variable "CLIENTSECRET" {
   sensitive   = true
 }
 
-variable "TF_VAR_CLIENT_ID" {
+variable "CLIENT_ID" {
   sensitive   = true
 }
-variable "TF_VAR_CLIENT_SECRET" {
+variable "CLIENT_SECRET" {
   sensitive   = true
 }
-variable "TF_VAR_TENANT_ID" {
+variable "TENANT_ID" {
   sensitive   = true
 }
-variable "TF_VAR_SUBSCRIPTION_ID" {
+variable "SUBSCRIPTION_ID" {
   sensitive   = true
 }
