@@ -68,16 +68,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
-    - uses: satackey/action-docker-layer-caching@v0.0.11
-      continue-on-error: true
    
     - name: initiate Terraform
       run: terraform init
 
-   # - name: Apply Infastucture via Terraform
-   #   if: github.ref == 'refs/heads/"master"' && github.event_name == 'push'
-   #   run: terraform -auto-approve
+    - name: Apply Infastucture via Terraform
+      #if: github.ref == 'refs/heads/"master"' && github.event_name == 'push'
+      run: terraform apply -auto-approve
 
   cd:
     #if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'pull_request' }}
@@ -87,9 +84,6 @@ jobs:
     needs: [Infastucture]
     steps:
     - uses: actions/checkout@v3
-    
-    - uses: satackey/action-docker-layer-caching@v0.0.11
-      continue-on-error: true
     
     - name: Deploy to azure
       run: curl --fail -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}
