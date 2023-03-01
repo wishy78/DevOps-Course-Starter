@@ -28,18 +28,20 @@ variable "DB_NAME" {
   sensitive   = true
 }
 
-variable "COLLECTION_NAME" {
-  sensitive   = true
-}
-
 variable "FLASK_ENV" {
   sensitive   = false
+  default = "development"
 }
+
 variable "FLASK_APP" {
-  sensitive   = true
+  sensitive   = false
+  default = "todo_app/app"
 }
 
 variable "SECRET_KEY" {
+  sensitive   = true
+}
+variable "COLLECTION_NAME" {
   sensitive   = true
 }
 
@@ -51,31 +53,15 @@ variable "CLIENTSECRET" {
   sensitive   = true
 }
 
-variable "DOCKER_REGISTRY_SERVER_URL" {
+variable "TF_VAR_CLIENT_ID" {
   sensitive   = true
 }
-
-variable "DOCKER_REGISTRY_SERVER_PASSWORD" {
+variable "TF_VAR_CLIENT_SECRET" {
   sensitive   = true
 }
-
-variable "DOCKER_REGISTRY_SERVER_USERNAME" {
+variable "TF_VAR_TENANT_ID" {
   sensitive   = true
 }
-
-variable "TERRAFORM_STATE_KEY" {
-  sensitive   = true
-}
-
-variable "ARM_CLIENT_ID" {
-  sensitive   = true
-}
-variable "ARM_CLIENT_SECRET" {
-  sensitive   = true
-}
-variable "ARM_TENANT_ID" {
-  sensitive   = true
-}
-variable "ARM_SUBSCRIPTION_ID" {
+variable "TF_VAR_SUBSCRIPTION_ID" {
   sensitive   = true
 }

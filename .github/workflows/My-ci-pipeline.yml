@@ -54,10 +54,10 @@ jobs:
     - name: Publish to Docker hub
       run: docker push wishy78/todo-app:latest
   
-  Infastucture:
+  Infrastucture:
     #if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'pull_request' }}
     #if: ${{ github.ref == 'refs/heads/module10' && github.event_name == 'push' }}
-    name: Infastucture with Terraform
+    name: Infrastucture with Terraform
     runs-on: ubuntu-latest
     needs: [Publish]
     env:
@@ -66,13 +66,21 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
 
+        TF_VAR_FLASK_APP: ${{ secrets.TF_VAR_FLASK_APP }}
+        TF_VAR_SECRET_KEY: ${{ secrets.TF_VAR_FLASK_APP }}
+        TF_VAR_DB_NAME: ${{ secrets.TF_VAR_FLASK_APP }}
+        TF_VAR_COLLECTION_NAME: ${{ secrets.TF_VAR_FLASK_APP }}
+        TF_VAR_CLIENTID: ${{ secrets.TF_VAR_CLIENTID }}
+        TF_VAR_CLIENTSECRET: ${{ secrets.TF_VAR_CLIENTSECRET }}
+
+
     steps:
     - uses: actions/checkout@v3
    
     - name: initiate Terraform
       run: terraform init
 
-    - name: Apply Infastucture via Terraform
+    - name: Apply Infrastucture via Terraform
       #if: github.ref == 'refs/heads/"master"' && github.event_name == 'push'
       run: terraform apply -auto-approve
 
@@ -81,7 +89,7 @@ jobs:
     #if: ${{ github.ref == 'refs/heads/module10' && github.event_name == 'push' }}
     name: Build and Deploy
     runs-on: ubuntu-latest
-    needs: [Infastucture]
+    needs: [Infrastucture]
     steps:
     - uses: actions/checkout@v3
     
