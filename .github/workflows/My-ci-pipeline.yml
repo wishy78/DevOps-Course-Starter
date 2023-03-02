@@ -89,7 +89,7 @@ jobs:
     #    terraform init
 
     - name: initiate Terraform
-      run: terraform init
+      run: terraform init 
 
     - name: Apply Infrastucture via Terraform
       #if: github.ref == 'refs/heads/"master"' && github.event_name == 'push'
