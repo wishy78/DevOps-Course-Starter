@@ -73,14 +73,14 @@ jobs:
 
         TF_VAR_CLIENTID: ${{ secrets.TF_VAR_CLIENTID }}
         TF_VAR_CLIENTSECRET: ${{ secrets.TF_VAR_CLIENTSECRET }}
-
+#https://learn.microsoft.com/en-us/azure/developer/terraform/authenticate-to-azure?tabs=bash#specify-service-principal-credentials-in-environment-variables
 
     steps:
     - uses: actions/checkout@v3
    
-    - uses: azure/login@v1
-      with:
-        creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }} ","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID}}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
+   # - uses: azure/login@v1
+   #   with:
+   #     creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }} ","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID}}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
         
     #- name: Azure Login
     #  run: az login --service-principal 
