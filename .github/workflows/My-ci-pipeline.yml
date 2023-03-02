@@ -82,7 +82,7 @@ jobs:
       run: terraform init 
 
     - id: terraform_output
-      displayname: Apply_Infrastucture_via_Terraform
+      name: Apply_Infrastucture_via_Terraform
       run: terraform apply -auto-approve
       
       env:
