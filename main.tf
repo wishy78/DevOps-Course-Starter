@@ -17,10 +17,14 @@ terraform {
 provider "azurerm" {
     features {}
     
-    subscription_id   = "$env.SUBSCRIPTION_ID"
-    tenant_id         = "$env.TENANT_ID"
-    client_id         = "$env.CLIENT_ID"
-    client_secret     = "$env.SUBSCRIPTION_ID"
+    subscription_id   = "${env.SUBSCRIPTION_ID}"
+    tenant_id         = "${env.TENANT_ID}"
+    client_id         = "${env.CLIENT_ID}"
+    client_secret     = "${env.SUBSCRIPTION_ID}"
+    #subscription_id   = "${var.SUBSCRIPTION_ID}"
+    #tenant_id         = "${var.TENANT_ID}"
+    #client_id         = "${var.CLIENT_ID}"
+    #client_secret     = "${var.SUBSCRIPTION_ID}"
 }
 
 data "azurerm_resource_group" "main" {
@@ -112,4 +116,12 @@ resource "azurerm_cosmosdb_mongo_database" "collection" {
 
 
  
- 
+#variable "DB_NAME"
+#variable "SECRET_KEY"
+#variable "COLLECTION_NAME"
+#variable "CLIENTID" 
+#variable "CLIENTSECRET"
+#variable "CLIENT_ID"
+#variable "CLIENT_SECRET"
+#variable "TENANT_ID"
+#variable "SUBSCRIPTION_ID"
