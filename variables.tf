@@ -53,15 +53,15 @@ variable "CLIENTSECRET" {
   sensitive   = true
 }
 
-variable "CLIENT_ID" {
-  sensitive   = true
-}
-variable "CLIENT_SECRET" {
-  sensitive   = true
-}
-variable "TENANT_ID" {
-  sensitive   = true
-}
-variable "SUBSCRIPTION_ID" {
-  sensitive   = true
-}
+#variable "CLIENT_ID" {
+#  sensitive   = true
+#}
+#variable "CLIENT_SECRET" {
+#  sensitive   = true
+#}
+#variable "TENANT_ID" {
+#  sensitive   = true
+#}
+#variable "SUBSCRIPTION_ID" {
+#  sensitive   = true
+#}
