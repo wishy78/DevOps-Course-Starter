@@ -89,7 +89,7 @@ jobs:
         TF_VAR_COLLECTION_NAME: ${{ secrets.TF_VAR_COLLECTION_NAME }}
         TF_VAR_SECRET_KEY: ${{ secrets.TF_VAR_SECRET_KEY }}
         
-        https://dev-app-jonl-ex12.azurewebsites.net
+        #https://dev-app-jonl-ex12.azurewebsites.net
        
 #https://learn.microsoft.com/en-us/azure/developer/terraform/authenticate-to-azure?tabs=bash#specify-service-principal-credentials-in-environment-variables
 
