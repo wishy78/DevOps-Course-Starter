@@ -21,14 +21,21 @@ provider "azurerm" {
     #tenant_id         = "${env.TENANT_ID}"
     #client_id         = "${env.CLIENT_ID}"
     #client_secret     = "${env.SUBSCRIPTION_ID}"
-    subscription_id   = "${env.ARM_SUBSCRIPTION_ID}"
-    tenant_id         = "${env.ARM_TENANT_ID}"
-    client_id         = "${env.ARM_CLIENT_ID}"
-    client_secret     = "${env.ARM_SUBSCRIPTION_ID}"
+    
+    #subscription_id   = "${env.ARM_SUBSCRIPTION_ID}"
+    #tenant_id         = "${env.ARM_TENANT_ID}"
+    #client_id         = "${env.ARM_CLIENT_ID}"
+    #client_secret     = "${env.ARM_SUBSCRIPTION_ID}"
+    
     #subscription_id   = "${var.SUBSCRIPTION_ID}"
     #tenant_id         = "${var.TENANT_ID}"
     #client_id         = "${var.CLIENT_ID}"
     #client_secret     = "${var.SUBSCRIPTION_ID}"
+    
+    subscription_id   = "${secret.ARM_SUBSCRIPTION_ID}"
+    tenant_id         = "${secret.ARM_TENANT_ID}"
+    client_id         = "${secret.ARM_CLIENT_ID}"
+    client_secret     = "${secret.ARM_SUBSCRIPTION_ID}"
 }
 
 data "azurerm_resource_group" "main" {
