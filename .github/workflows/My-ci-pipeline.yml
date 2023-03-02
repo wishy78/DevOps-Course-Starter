@@ -61,15 +61,27 @@ jobs:
     runs-on: ubuntu-latest
     needs: [Publish]
     env:
-        ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        #ARM_CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        #ARM_TENANT_ID: ${{ secrets.TENANT_ID }}
+        #ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION_ID }}
+        #ARM_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
 
-        TF_VAR_SECRET_KEY: ${{ secrets.TF_VAR_SECRET_KEY }}
-        TF_VAR_DB_NAME: ${{ secrets.TF_VAR_DB_NAME }}
-        TF_VAR_COLLECTION_NAME: ${{ secrets.TF_VAR_COLLECTION_NAME }}
+        #TF_VAR_SECRET_KEY: ${{ secrets.TF_VAR_SECRET_KEY }}
+        #TF_VAR_DB_NAME: ${{ secrets.TF_VAR_DB_NAME }}
+        #TF_VAR_COLLECTION_NAME: ${{ secrets.TF_VAR_COLLECTION_NAME }}
 
+        #TF_VAR_CLIENTID: ${{ secrets.TF_VAR_CLIENTID }}
+        #TF_VAR_CLIENTSECRET: ${{ secrets.TF_VAR_CLIENTSECRET }}
+
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+
+        TF_VAR_FLASK_APP: ${{ secrets.TF_VAR_FLASK_APP }}
+        TF_VAR_SECRET_KEY: ${{ secrets.TF_VAR_FLASK_APP }}
+        TF_VAR_DB_NAME: ${{ secrets.TF_VAR_FLASK_APP }}
+        TF_VAR_COLLECTION_NAME: ${{ secrets.TF_VAR_FLASK_APP }}
         TF_VAR_CLIENTID: ${{ secrets.TF_VAR_CLIENTID }}
         TF_VAR_CLIENTSECRET: ${{ secrets.TF_VAR_CLIENTSECRET }}
         
