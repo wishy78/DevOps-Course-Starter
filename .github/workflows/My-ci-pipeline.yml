@@ -89,6 +89,9 @@ jobs:
         TF_VAR_COLLECTION_NAME: ${{ secrets.TF_VAR_FLASK_APP }}
         TF_VAR_CLIENTID: ${{ secrets.TF_VAR_CLIENTID }}
         TF_VAR_CLIENTSECRET: ${{ secrets.TF_VAR_CLIENTSECRET }}
+        TF_VAR_DB_NAME: ${{ secrets.TF_VAR_DB_NAME }}
+        TF_VAR_COLLECTION_NAME: ${{ secrets.TF_VAR_COLLECTION_NAME }}
+        
       
 #https://learn.microsoft.com/en-us/azure/developer/terraform/authenticate-to-azure?tabs=bash#specify-service-principal-credentials-in-environment-variables
 
