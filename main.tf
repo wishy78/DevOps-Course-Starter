@@ -1,8 +1,8 @@
 terraform {
     required_providers {
         azurerm = {
-        source = "hashicorp/azurerm"
-        version = ">= 3.8"
+          source = "hashicorp/azurerm"
+          version = ">= 3.8"
         }
     }
     backend "azurerm" {
@@ -17,10 +17,10 @@ terraform {
 provider "azurerm" {
     features {}
     
-    subscription_id   = "${env.SUBSCRIPTION_ID}"
-    tenant_id         = "${env.TENANT_ID}"
-    client_id         = "${env.CLIENT_ID}"
-    client_secret     = "${env.SUBSCRIPTION_ID}"
+    subscription_id   = "$env.SUBSCRIPTION_ID"
+    tenant_id         = "$env.TENANT_ID"
+    client_id         = "$env.CLIENT_ID"
+    client_secret     = "$env.SUBSCRIPTION_ID"
 }
 
 data "azurerm_resource_group" "main" {
