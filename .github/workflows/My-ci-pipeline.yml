@@ -122,6 +122,8 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     needs: [Infrastucture]
+    variables:
+      WEB_HOOK_FROM_INFRA: $[ stagedependencies.Infrastucture.outputs[env.WEB_HOOK] ]
     steps:
     - uses: actions/checkout@v3
     
@@ -135,7 +137,8 @@ jobs:
 #${{ steps.terraform-version-check.outputs.TERRAFORM_VERSION }} $terraformOutput
 
     - name: Deploy to azure
-      run: curl --fail -dH -X POST $[env.WEB_HOOK]
+      run: curl --fail -dH -X POST $(WEB_HOOK_FROM_INFRA)
+      #$[Infrastucture.env.WEB_HOOK]
       #${terraformOutput.web_hook}
       # ${{secrets.AZURE_WEBHOOK_URL}}
 
