@@ -88,7 +88,9 @@ jobs:
         TF_VAR_DB_NAME: ${{ secrets.TF_VAR_DB_NAME }}
         TF_VAR_COLLECTION_NAME: ${{ secrets.TF_VAR_COLLECTION_NAME }}
         TF_VAR_SECRET_KEY: ${{ secrets.TF_VAR_SECRET_KEY }}
-      
+        
+        https://dev-app-jonl-ex12.azurewebsites.net
+       
 #https://learn.microsoft.com/en-us/azure/developer/terraform/authenticate-to-azure?tabs=bash#specify-service-principal-credentials-in-environment-variables
 
     steps:
@@ -121,9 +123,11 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Deploy to azure
-      run: curl --fail -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}
+      run: curl --fail -dH -X POST $(web_hook)
+      # ${{secrets.AZURE_WEBHOOK_URL}}
 
     - name: Test connection    
-      run: curl --fail https://dev-app-jonl-ex12.azurewebsites.net 
+      run: curl --fail $(webapp_url)
+      #https://dev-app-jonl-ex12.azurewebsites.net 
 
 # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
