@@ -101,9 +101,9 @@ jobs:
 
     - name: Apply_Infrastucture_via_Terraform
       run: terraform apply -auto-approve
-      env:
-        WEB_HOOK: $(terraform output web_hook)
-        WEBAPP_URL: $(terraform output webapp_url)
+        env:
+          WEB_HOOK: $(terraform output web_hook)
+          WEBAPP_URL: $(terraform output webapp_url)
 
   cd:
     #if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'pull_request' }}
