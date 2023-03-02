@@ -135,12 +135,12 @@ jobs:
 #${{ steps.terraform-version-check.outputs.TERRAFORM_VERSION }} $terraformOutput
 
     - name: Deploy to azure
-      run: curl --fail -dH -X POST $(WEB_HOOK)
+      run: curl --fail -dH -X POST ${{env.WEB_HOOK}}
       #${terraformOutput.web_hook}
       # ${{secrets.AZURE_WEBHOOK_URL}}
 
     - name: Test connection    
-      run: curl --fail ${Infrastucture.webapp_url}
+      run: curl --fail ${env.WEBAPP_URL}
       #https://dev-app-jonl-ex12.azurewebsites.net 
 
 # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
