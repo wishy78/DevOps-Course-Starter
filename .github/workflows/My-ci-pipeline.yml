@@ -123,11 +123,11 @@ jobs:
     - uses: actions/checkout@v3
     
     - name: Deploy to azure
-      run: curl --fail -dH -X POST $(web_hook)
+      run: curl --fail -dH -X POST ${terraform.web_hook}
       # ${{secrets.AZURE_WEBHOOK_URL}}
 
     - name: Test connection    
-      run: curl --fail $(webapp_url)
+      run: curl --fail ${terraform.webapp_url}
       #https://dev-app-jonl-ex12.azurewebsites.net 
 
 # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#environment-files
