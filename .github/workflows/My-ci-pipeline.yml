@@ -124,10 +124,7 @@ jobs:
 #${{ steps.terraform-version-check.outputs.TERRAFORM_VERSION }} $terraformOutput
 
     - name: Deploy to azure
-      run: |
-      echo $[Infrastucture]
-      echo $[Infrastucture].WEB_HOOK
-      curl --fail -dH -X POST $[Infrastucture].WEB_HOOK
+      run: curl --fail -dH -X POST $[Infrastucture].WEB_HOOK
       #$[Infrastucture.env.WEB_HOOK]
       #${terraformOutput.web_hook}
       # ${{secrets.AZURE_WEBHOOK_URL}}
