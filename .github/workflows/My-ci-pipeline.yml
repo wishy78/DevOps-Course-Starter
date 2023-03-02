@@ -73,6 +73,18 @@ jobs:
 
         TF_VAR_CLIENTID: ${{ secrets.TF_VAR_CLIENTID }}
         TF_VAR_CLIENTSECRET: ${{ secrets.TF_VAR_CLIENTSECRET }}
+        
+        ARM_CLIENT_ID: ${{ var.CLIENT_ID }}
+        ARM_TENANT_ID: ${{ var.TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ var.SUBSCRIPTION_ID }}
+        ARM_CLIENT_SECRET: ${{ var.CLIENT_SECRET }}
+
+        TF_VAR_SECRET_KEY: ${{ var.SECRET_KEY }}
+        TF_VAR_DB_NAME: ${{ var.DB_NAME }}
+        TF_VAR_COLLECTION_NAME: ${{ var.COLLECTION_NAME }}
+
+        TF_VAR_CLIENTID: ${{ var.CLIENTID }}
+        TF_VAR_CLIENTSECRET: ${{ var.CLIENTSECRET }}
 #https://learn.microsoft.com/en-us/azure/developer/terraform/authenticate-to-azure?tabs=bash#specify-service-principal-credentials-in-environment-variables
 
     steps:
