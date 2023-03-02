@@ -81,8 +81,8 @@ jobs:
     - name: initiate Terraform
       run: terraform init 
 
-    - name: Apply_Infrastucture_via_Terraform
-      id: terraform_output
+    - id: terraform_output
+      displayname: Apply_Infrastucture_via_Terraform
       run: terraform apply -auto-approve
       
       env:
