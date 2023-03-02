@@ -93,10 +93,11 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     needs: [Infrastucture]
-    steps:
     - env:
         output1: ${{needs.Infrastructure.outputs.output1}}
         output2: ${{needs.Infrastructure.outputs.output2}}
+        
+    steps:
     - uses: actions/checkout@v3
 
     - name: Deploy to azure
