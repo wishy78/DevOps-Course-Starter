@@ -54,17 +54,12 @@ jobs:
     - name: Publish to Docker hub
       run: docker push wishy78/todo-app:latest
   
-  Infrastucture:
+  build:
     #if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'pull_request' }}
     #if: ${{ github.ref == 'refs/heads/module10' && github.event_name == 'push' }}
-    name: Infrastucture_with_Terraform
+    name: Build and Deploy
     runs-on: ubuntu-latest
     needs: [Publish]
-    outputs:
-      OUTPUT1: ${{ steps.terraform_output.outputs.env.WEB_HOOK }}
-      OUTPUT2: ${{ steps.terraform_output.outputs.env.WEBAPP_URL }}
-      WEB_HOOK: $(terraform output -raw web_hook)
-      WEBAPP_URL: $(terraform output -raw webapp_url)
     env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
@@ -83,53 +78,13 @@ jobs:
     - name: initiate Terraform
       run: terraform init 
 
-    - id: terraform_output
-      name: Apply_Infrastucture_via_Terraform
-      run: |
-        terraform apply -auto-approve
-        echo "$WEB_HOOK"
-        echo "$(WEB_HOOK)"
-
-  cd:
-    name: Build and Deploy
-    runs-on: ubuntu-latest
-    needs: [Infrastucture]
-    
-    env:
-      varFromA1: $[ stageDependencies.outputs['Apply_Infrastucture_via_Terraform.web_hook'] ]
-      varFromA2: $[ dependencies.outputs['Apply_Infrastucture_via_Terraform.web_hook'] ]
-      varFromA3: $[TF_OUT_WEB_HOOK]
-      OUTPUT1: ${{needs.Infrastucture.outputs.output1}}
-      OUTPUT2: ${{needs.Infrastucture.outputs.output2}}
-      OUTPUT3: ${{needs.Infrastucture.outputs.WEB_HOOK}}
-      OUTPUT4: ${{needs.Infrastucture.outputs.WEBAPP_URL}}
-     # varFromA4: ${{ Infrastucture.terraform_output.outputs.TF_OUT_WEB_HOOK }}
-     # varFromA5: ${{ Infrastucture.steps.terraform_output.outputs.TF_OUT_WEB_HOOK }}
+    - name: Apply Infrastucture via Terraform
+      run: terraform apply -auto-approve
+ 
     #https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch
-    steps:
-    - run: |
-       echo "qqqqqqqqqqqqqqqqqqqqq1 - $OUTPUT1"
-       echo "qqqqqqqqqqqqqqqqqqqqq2 - $OUTPUT2"
-       echo "qqqqqqqqqqqqqqqqqqqqq3 - $OUTPUT3 ---- $(OUTPUT3)"
-       echo "qqqqqqqqqqqqqqqqqqqqq4 - $OUTPUT4 ---- $(env.OUTPUT4)"
-    - env:
-        OUTPUT1: ${{needs.job1.outputs.WEB_HOOK}}
-        OUTPUT2: ${{needs.job1.outputs.WEBAPP_URL}}
-        OUTPUT3: ${{needs.job1.outputs.output1}}
-        OUTPUT4: ${{needs.job1.outputs.output2}}
-      run: echo "$OUTPUT1 $OUTPUT2 $OUTPUT3 $OUTPUT4"
-
-    - uses: actions/checkout@v3
 
     - name: Deploy to azure
-      run: |
-       echo "- output_webhook_url - $(terraform output -raw webhook_url)"
-       curl --fail -dH -X POST "$(terraform output -raw webhook_url)"
-      # ${{secrets.AZURE_WEBHOOK_URL}}"
-      # $(output1)
-      #$[Infrastucture.env.WEB_HOOK]
-      #${terraformOutput.web_hook}
-      # ${{secrets.AZURE_WEBHOOK_URL}}
+      run: curl --fail -dH -X POST "$(terraform output -raw webhook_url)"
 
     - name: Test connection    
-      run: curl --fail ${env.WEBAPP_URL}
+      run: curl --fail "$(terraform output -raw webapp_url)"
