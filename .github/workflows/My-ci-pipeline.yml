@@ -54,7 +54,7 @@ jobs:
     - name: Publish to Docker hub
       run: docker push wishy78/todo-app:latest
   
-  build:
+  cd:
     #if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'pull_request' }}
     #if: ${{ github.ref == 'refs/heads/module10' && github.event_name == 'push' }}
     name: Build and Deploy
