@@ -79,15 +79,13 @@ jobs:
       run: terraform init 
 
     - name: Apply Infrastucture via Terraform
-      run: |
-        terraform apply -auto-approve
-        curl --fail -dH -X POST "$(terraform output -raw webhook_url)"
-        curl --fail "$(terraform output -raw webapp_url)"
+      run: terraform apply -auto-approve
+      
  
     #https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch
 
-    #- name: Deploy to azure
-    #  run: curl --fail -dH -X POST "$(terraform output -raw webhook_url)"
+    - name: Deploy to azure
+      run: curl --fail -dH -X POST "$(terraform output -raw web_hook)"
 
-    #- name: Test connection    
-    #  run: curl --fail "$(terraform output -raw webapp_url)"
+    - name: Test connection    
+      run: curl --fail "$(terraform output -raw webapp_url)"
