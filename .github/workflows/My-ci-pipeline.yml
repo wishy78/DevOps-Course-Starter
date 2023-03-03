@@ -107,11 +107,10 @@ jobs:
 
     - name: Deploy to azure
       run: |
-       echo "- outputA - $(varFromA1)
-       echo "- outputB - $(varFromA2)
-       echo "- outputC - $(varFromA3)
-       echo "- outputD - $(varFromA4)
-       echo "- outputE - $(varFromA5)
+       echo "- outputA - $GITHUB_OUTPUT"
+       echo "- outputA - $(varFromA1)"
+       echo "- outputB - $(varFromA2)"
+       echo "- outputC - $(varFromA3)"
        echo "- output0 - $(terraform output webapp_url)"
        echo "- output1 - $[Infrastucture].web_hook"
        echo "- output2 - $[Infrastucture.web_hook]"
