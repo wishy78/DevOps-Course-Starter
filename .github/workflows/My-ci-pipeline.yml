@@ -106,7 +106,7 @@ jobs:
        echo "qqqqqqqqqqqqqqqqqqqqq1 - $OUTPUT1"
        echo "qqqqqqqqqqqqqqqqqqqqq2 - $OUTPUT2"
        echo "qqqqqqqqqqqqqqqqqqqqq3 - $OUTPUT3 ---- $(OUTPUT3)"
-       echo "qqqqqqqqqqqqqqqqqqqqq4 - $OUTPUT4"
+       echo "qqqqqqqqqqqqqqqqqqqqq4 - $OUTPUT4 ---- $(env.OUTPUT4)"
 
     - uses: actions/checkout@v3
 
