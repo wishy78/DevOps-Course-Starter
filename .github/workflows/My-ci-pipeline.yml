@@ -103,13 +103,15 @@ jobs:
 
     - name: Deploy to azure
       run: |
-       echo "- output1 - $output1"
-       echo "- output2 - $output2"
+       echo "- output1 - ${Infrastucture.web_hook}"
+       echo "- output2 - ${{Infrastucture.web_hook}}"
+       echo "- output3 - ${Infrastucture.outputs.web_hook}"
+       echo "- output4 - ${{Infrastucture.outputs.web_hook}}"
        echo "- secret - ${{secrets.AZURE_WEBHOOK_URL}}"
        echo "- env local - $AZURE_WEBHOOK_URL"
        echo "- env not local - ${{env.AZURE_WEBHOOK_URL}}"
        echo "- ouput from infra step - ${{needs.Infrastructure.outputs.output2}}"
-       curl --fail -dH -X POST ${{env.AZURE_WEBHOOK_URL}}
+       curl --fail -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}
       # $(output1)
       #$[Infrastucture.env.WEB_HOOK]
       #${terraformOutput.web_hook}
