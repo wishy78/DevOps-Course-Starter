@@ -85,7 +85,10 @@ jobs:
 
     - id: terraform_output
       name: Apply_Infrastucture_via_Terraform
-      run: terraform apply -auto-approve
+      run: |
+        terraform apply -auto-approve
+        echo "$WEB_HOOK"
+        echo "$(WEB_HOOK)"
 
   cd:
     name: Build and Deploy
@@ -102,6 +105,7 @@ jobs:
       OUTPUT4: ${{needs.Infrastucture.outputs.WEBAPP_URL}}
      # varFromA4: ${{ Infrastucture.terraform_output.outputs.TF_OUT_WEB_HOOK }}
      # varFromA5: ${{ Infrastucture.steps.terraform_output.outputs.TF_OUT_WEB_HOOK }}
+    #https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch
     steps:
     - run: |
        echo "qqqqqqqqqqqqqqqqqqqqq1 - $OUTPUT1"
