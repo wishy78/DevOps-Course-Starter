@@ -102,10 +102,10 @@ jobs:
 
     - name: Deploy to azure
       run: |
-       echo "- output1 - $[Infrastucture.outputs].web_hook"
-       echo "- output2 - $[Infrastucture.outputs.web_hook]"
-       echo "- output3 - $Infrastucture.outputs.web_hook"       
-       echo "- output5 - $[Infrastucture].outputs.web_hook"       
+       echo "- output1 - $[Infrastucture].web_hook"
+       echo "- output2 - $[Infrastucture.web_hook]"
+       echo "- output3 - $Infrastucture.web_hook"       
+       echo "- output5 - $[Infrastucture].outputs"       
        echo "- secret - ${{secrets.AZURE_WEBHOOK_URL}}"
        echo "- env not local - ${{env.AZURE_WEBHOOK_URL}}"
        curl --fail -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}
