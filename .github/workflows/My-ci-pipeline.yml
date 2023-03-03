@@ -83,7 +83,10 @@ jobs:
 
     - id: terraform_output
       name: Apply_Infrastucture_via_Terraform
-      run: terraform apply -auto-approve
+      run: |
+        terraform apply -auto-approve
+        echo "Oooooooooooooooooooooooo - $(terraform output web_hook)"
+        echo "Oooooooooooooooooooooooo - $(terraform output webapp_url)"
       env:
         WEB_HOOK: $(terraform output web_hook)
         WEBAPP_URL: $(terraform output webapp_url)
@@ -102,6 +105,7 @@ jobs:
 
     - name: Deploy to azure
       run: |
+       echo "- output0 - $(terraform output webapp_url)"
        echo "- output1 - $[Infrastucture].web_hook"
        echo "- output2 - $[Infrastucture.web_hook]"
        echo "- output3 - $Infrastucture.web_hook"       
