@@ -103,10 +103,10 @@ jobs:
      # varFromA5: ${{ Infrastucture.steps.terraform_output.outputs.TF_OUT_WEB_HOOK }}
     steps:
     - run: |
-       echo "qqqqqqqqqqqqqqqqqqqqq1 - OUTPUT1"
-       echo "qqqqqqqqqqqqqqqqqqqqq2 - OUTPUT2"
-       echo "qqqqqqqqqqqqqqqqqqqqq3 - OUTPUT3"
-       echo "qqqqqqqqqqqqqqqqqqqqq4 - OUTPUT4"
+       echo "qqqqqqqqqqqqqqqqqqqqq1 - $OUTPUT1"
+       echo "qqqqqqqqqqqqqqqqqqqqq2 - $OUTPUT2"
+       echo "qqqqqqqqqqqqqqqqqqqqq3 - $OUTPUT3 ---- $(OUTPUT3)"
+       echo "qqqqqqqqqqqqqqqqqqqqq4 - $OUTPUT4"
 
     - uses: actions/checkout@v3
 
