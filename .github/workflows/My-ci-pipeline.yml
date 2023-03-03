@@ -95,16 +95,18 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     needs: [Infrastucture]
-    env:
-      output1: ${{needs.Infrastructure.outputs.output1}}
-      output2: ${{needs.Infrastructure.outputs.output2}}
-      AZURE_WEBHOOK_URL: ${{secrets.AZURE_WEBHOOK_URL}}
+    dependsOn: [Infrastucture]
+    variables:
+      varFromA1: $[ stageDependencies.outputs['Apply_Infrastucture_via_Terraform.web_hook'] ]
+      varFromA2: $[ dependencies.outputs['Apply_Infrastucture_via_Terraform.web_hook'] ]
 
     steps:
     - uses: actions/checkout@v3
 
     - name: Deploy to azure
       run: |
+       echo "- output0 - $(varFromA1)
+       echo "- output0 - $(varFromA2)
        echo "- output0 - $(terraform output webapp_url)"
        echo "- output1 - $[Infrastucture].web_hook"
        echo "- output2 - $[Infrastucture.web_hook]"
@@ -112,7 +114,7 @@ jobs:
        echo "- output5 - $[Infrastucture].outputs"       
        echo "- secret - ${{secrets.AZURE_WEBHOOK_URL}}"
        echo "- env not local - ${{env.AZURE_WEBHOOK_URL}}"
-       curl --fail -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}
+       curl --fail -dH -X POST $(varFromA1)
       # $(output1)
       #$[Infrastucture.env.WEB_HOOK]
       #${terraformOutput.web_hook}
