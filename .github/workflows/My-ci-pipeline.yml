@@ -80,15 +80,14 @@ jobs:
    
     - name: initiate Terraform
       run: terraform init 
-      
-    - name: Apply_Infrastucture_via_Terraform
-      id: terraform_output
+
+    - id: terraform_output
+      name: Apply_Infrastucture_via_Terraform
       run: |
         terraform apply -auto-approve
         echo "TF_OUT_WEB_HOOK=$(terraform output web_hook)" >> $GITHUB_OUTPUT
         echo "TF_OUT_WEBAPP_URL=$(terraform output webapp_url)" >> $GITHUB_OUTPUT
-      - name: Get color
-        run: echo "The selected color is ${{ steps.terraform_output.outputs.TF_OUT_WEB_HOOK }}"
+      
       env:
         WEB_HOOK: $(terraform output web_hook)
         WEBAPP_URL: $(terraform output webapp_url)
