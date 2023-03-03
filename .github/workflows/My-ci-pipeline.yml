@@ -96,7 +96,7 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     needs: [Infrastucture]
-    variables:
+    env:
       varFromA1: $[ stageDependencies.outputs['Apply_Infrastucture_via_Terraform.web_hook'] ]
       varFromA2: $[ dependencies.outputs['Apply_Infrastucture_via_Terraform.web_hook'] ]
       varFromA3: ${{ steps.terraform_output.outputs.TF_OUT_WEB_HOOK }}
