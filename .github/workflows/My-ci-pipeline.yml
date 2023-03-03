@@ -63,6 +63,8 @@ jobs:
     outputs:
       output1: ${{ steps.terraform_output.outputs.env.WEB_HOOK }}
       output2: ${{ steps.terraform_output.outputs.env.WEBAPP_URL }}
+      WEB_HOOK: $(terraform output web_hook)
+      WEBAPP_URL: $(terraform output webapp_url)
     env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
@@ -83,14 +85,7 @@ jobs:
 
     - id: terraform_output
       name: Apply_Infrastucture_via_Terraform
-      run: |
-        terraform apply -auto-approve
-        echo "TF_OUT_WEB_HOOK=$(terraform output web_hook)" >> $GITHUB_OUTPUT
-        echo "TF_OUT_WEBAPP_URL=$(terraform output webapp_url)" >> $GITHUB_OUTPUT
-      
-      env:
-        WEB_HOOK: $(terraform output web_hook)
-        WEBAPP_URL: $(terraform output webapp_url)
+      run: terraform apply -auto-approve
 
   cd:
     name: Build and Deploy
@@ -103,6 +98,17 @@ jobs:
      # varFromA4: ${{ Infrastucture.terraform_output.outputs.TF_OUT_WEB_HOOK }}
      # varFromA5: ${{ Infrastucture.steps.terraform_output.outputs.TF_OUT_WEB_HOOK }}
     steps:
+      - env:
+          OUTPUT1: ${{needs.Infrastucture.outputs.output1}}
+          OUTPUT2: ${{needs.Infrastucture.outputs.output2}}
+          OUTPUT3: ${{needs.Infrastucture.outputs.WEB_HOOK}}
+          OUTPUT4: ${{needs.Infrastucture.outputs.WEBAPP_URL}}
+        run: |
+          echo "qqqqqqqqqqqqqqqqqqqqq1 - OUTPUT1"
+          echo "qqqqqqqqqqqqqqqqqqqqq2 - OUTPUT2"
+          echo "qqqqqqqqqqqqqqqqqqqqq3 - OUTPUT3"
+          echo "qqqqqqqqqqqqqqqqqqqqq4 - OUTPUT4"
+
     - uses: actions/checkout@v3
 
     - name: Deploy to azure
