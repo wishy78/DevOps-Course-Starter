@@ -81,8 +81,8 @@ jobs:
     - name: initiate Terraform
       run: terraform init 
 
-    - id: terraform_output
-      name: Apply_Infrastucture_via_Terraform
+    - name: Apply_Infrastucture_via_Terraform
+      id: terraform_output
       run: |
         terraform apply -auto-approve
         echo "TF_OUT_WEB_HOOK=$(terraform output web_hook)" >> $GITHUB_OUTPUT
