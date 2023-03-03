@@ -96,12 +96,20 @@ jobs:
     env:
       output1: ${{needs.Infrastructure.outputs.output1}}
       output2: ${{needs.Infrastructure.outputs.output2}}
+      AZURE_WEBHOOK_URL: ${{secrets.AZURE_WEBHOOK_URL}}
 
     steps:
     - uses: actions/checkout@v3
 
     - name: Deploy to azure
-      run: curl --fail -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}
+      run: |
+       echo "- output1 - $output1"
+       echo "- output2 - $output2"
+       echo "- secret - ${{secrets.AZURE_WEBHOOK_URL}}"
+       echo "- env local - $AZURE_WEBHOOK_URL"
+       echo "- env not local - ${{env.AZURE_WEBHOOK_URL}}"
+       echo "- ouput from infra step - ${{needs.Infrastructure.outputs.output2}}"
+       curl --fail -dH -X POST ${{env.AZURE_WEBHOOK_URL}}
       # $(output1)
       #$[Infrastucture.env.WEB_HOOK]
       #${terraformOutput.web_hook}
