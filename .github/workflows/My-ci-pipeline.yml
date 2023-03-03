@@ -85,8 +85,10 @@ jobs:
       name: Apply_Infrastucture_via_Terraform
       run: |
         terraform apply -auto-approve
-        echo "Oooooooooooooooooooooooo - $(terraform output web_hook)"
-        echo "Oooooooooooooooooooooooo - $(terraform output webapp_url)"
+        echo "TF_OUT_WEB_HOOK=$(terraform output web_hook)" >> $GITHUB_OUTPUT
+        echo "TF_OUT_WEBAPP_URL=$(terraform output webapp_url)" >> $GITHUB_OUTPUT
+      - name: Get color
+        run: echo "The selected color is ${{ steps.terraform_output.outputs.TF_OUT_WEB_HOOK }}"
       env:
         WEB_HOOK: $(terraform output web_hook)
         WEBAPP_URL: $(terraform output webapp_url)
@@ -95,18 +97,22 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     needs: [Infrastucture]
-    dependsOn: [Infrastucture]
     variables:
       varFromA1: $[ stageDependencies.outputs['Apply_Infrastucture_via_Terraform.web_hook'] ]
       varFromA2: $[ dependencies.outputs['Apply_Infrastucture_via_Terraform.web_hook'] ]
-
+      varFromA3: ${{ steps.terraform_output.outputs.TF_OUT_WEB_HOOK }}
+      varFromA4: ${{ stage.Infrastucture.terraform_output.outputs.TF_OUT_WEB_HOOK }}
+      varFromA5: ${{ stage.Infrastucture.steps.terraform_output.outputs.TF_OUT_WEB_HOOK }}
     steps:
     - uses: actions/checkout@v3
 
     - name: Deploy to azure
       run: |
-       echo "- output0 - $(varFromA1)
-       echo "- output0 - $(varFromA2)
+       echo "- outputA - $(varFromA1)
+       echo "- outputB - $(varFromA2)
+       echo "- outputC - $(varFromA3)
+       echo "- outputD - $(varFromA4)
+       echo "- outputE - $(varFromA5)
        echo "- output0 - $(terraform output webapp_url)"
        echo "- output1 - $[Infrastucture].web_hook"
        echo "- output2 - $[Infrastucture.web_hook]"
