@@ -99,9 +99,9 @@ jobs:
     env:
       varFromA1: $[ stageDependencies.outputs['Apply_Infrastucture_via_Terraform.web_hook'] ]
       varFromA2: $[ dependencies.outputs['Apply_Infrastucture_via_Terraform.web_hook'] ]
-      varFromA3: ${TF_OUT_WEB_HOOK}
-      varFromA4: ${{ Infrastucture.terraform_output.outputs.TF_OUT_WEB_HOOK }}
-      varFromA5: ${{ Infrastucture.steps.terraform_output.outputs.TF_OUT_WEB_HOOK }}
+      varFromA3: $[TF_OUT_WEB_HOOK]
+     # varFromA4: ${{ Infrastucture.terraform_output.outputs.TF_OUT_WEB_HOOK }}
+     # varFromA5: ${{ Infrastucture.steps.terraform_output.outputs.TF_OUT_WEB_HOOK }}
     steps:
     - uses: actions/checkout@v3
 
