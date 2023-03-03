@@ -121,7 +121,8 @@ jobs:
       run: |
        echo "- output0 - $(terraform output webapp_url)"
        echo "- env not local - ${{env.AZURE_WEBHOOK_URL}}"
-       curl --fail -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}"
+       curl --fail -dH -X POST "$(terraform output -raw webhook_url)"
+      # ${{secrets.AZURE_WEBHOOK_URL}}"
       # $(output1)
       #$[Infrastucture.env.WEB_HOOK]
       #${terraformOutput.web_hook}
