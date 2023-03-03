@@ -84,7 +84,6 @@ jobs:
     - id: terraform_output
       name: Apply_Infrastucture_via_Terraform
       run: terraform apply -auto-approve
-      
       env:
         WEB_HOOK: $(terraform output web_hook)
         WEBAPP_URL: $(terraform output webapp_url)
@@ -103,13 +102,12 @@ jobs:
 
     - name: Deploy to azure
       run: |
-
-       echo "- output5 - $[Infrastucture].outputs.web_hook"
-       echo "- output6 - $[Infrastucture].web_hook"
+       echo "- output1 - $[Infrastucture.outputs].web_hook"
+       echo "- output2 - $[Infrastucture.outputs.web_hook]"
+       echo "- output3 - $Infrastucture.outputs.web_hook"       
+       echo "- output5 - $[Infrastucture].outputs.web_hook"       
        echo "- secret - ${{secrets.AZURE_WEBHOOK_URL}}"
-       echo "- env local - $AZURE_WEBHOOK_URL"
        echo "- env not local - ${{env.AZURE_WEBHOOK_URL}}"
-       echo "- ouput from infra step - ${{needs.Infrastructure.outputs.output2}}"
        curl --fail -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}
       # $(output1)
       #$[Infrastucture.env.WEB_HOOK]
