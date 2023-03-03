@@ -63,8 +63,8 @@ jobs:
     outputs:
       OUTPUT1: ${{ steps.terraform_output.outputs.env.WEB_HOOK }}
       OUTPUT2: ${{ steps.terraform_output.outputs.env.WEBAPP_URL }}
-      WEB_HOOK: $(terraform output web_hook)
-      WEBAPP_URL: $(terraform output webapp_url)
+      WEB_HOOK: $(terraform output -raw web_hook)
+      WEBAPP_URL: $(terraform output -raw webapp_url)
     env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
@@ -119,8 +119,7 @@ jobs:
 
     - name: Deploy to azure
       run: |
-       echo "- output0 - $(terraform output webapp_url)"
-       echo "- env not local - ${{env.AZURE_WEBHOOK_URL}}"
+       echo "- output_webhook_url - $(terraform output -raw webhook_url)"
        curl --fail -dH -X POST "$(terraform output -raw webhook_url)"
       # ${{secrets.AZURE_WEBHOOK_URL}}"
       # $(output1)
