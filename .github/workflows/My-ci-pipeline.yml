@@ -103,10 +103,7 @@ jobs:
 
     - name: Deploy to azure
       run: |
-       echo "- output1 - ${[Infrastucture].web_hook}"
-       echo "- output2 - ${{[Infrastucture].web_hook}}"
-       echo "- output3 - ${[Infrastucture].outputs.web_hook}"
-       echo "- output4 - ${{[Infrastucture].outputs.web_hook}}"
+
        echo "- output5 - $[Infrastucture].outputs.web_hook"
        echo "- output6 - $[Infrastucture].web_hook"
        echo "- secret - ${{secrets.AZURE_WEBHOOK_URL}}"
