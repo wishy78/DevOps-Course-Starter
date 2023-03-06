@@ -42,9 +42,6 @@ jobs:
     - uses: satackey/action-docker-layer-caching@v0.0.11
       continue-on-error: true
 
-    #- name: publish to docker hub
-    #  run: echo "Publishing!"
-
     - name: Build Image
       run: docker build --target production --tag wishy78/todo-app:latest .
 
@@ -80,9 +77,6 @@ jobs:
 
     - name: Apply Infrastucture via Terraform
       run: terraform apply -auto-approve
-      
- 
-    #https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables?view=azure-devops&tabs=yaml%2Cbatch
 
     - name: Deploy to azure
       run: curl --fail -dH -X POST "$(terraform output -raw web_hook)"
