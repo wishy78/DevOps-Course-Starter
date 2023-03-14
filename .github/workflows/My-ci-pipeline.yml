@@ -22,7 +22,7 @@ jobs:
     name: Build and test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     - name: BuildTestImage
       run: docker build --target test --tag todo-app:test .
@@ -37,13 +37,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     - uses: satackey/action-docker-layer-caching@v0.0.11
       continue-on-error: true
-
-    - name: publish to docker hub
-      run: echo "Publishing!"
 
     - name: Build Image
       run: docker build --target production --tag wishy78/todo-app:latest .
@@ -54,21 +51,35 @@ jobs:
     - name: Publish to Docker hub
       run: docker push wishy78/todo-app:latest
   
-
   cd:
     #if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'pull_request' }}
     #if: ${{ github.ref == 'refs/heads/module10' && github.event_name == 'push' }}
     name: Build and Deploy
     runs-on: ubuntu-latest
     needs: [Publish]
+    env:
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      
+        TF_VAR_CLIENTID: ${{ secrets.TF_VAR_CLIENTID }}
+        TF_VAR_CLIENTSECRET: ${{ secrets.TF_VAR_CLIENTSECRET }}
+        TF_VAR_DB_NAME: ${{ secrets.TF_VAR_DB_NAME }}
+        TF_VAR_COLLECTION_NAME: ${{ secrets.TF_VAR_COLLECTION_NAME }}
+        TF_VAR_SECRET_KEY: ${{ secrets.TF_VAR_SECRET_KEY }}
+        
     steps:
-    - uses: actions/checkout@v2
-    
-    - uses: satackey/action-docker-layer-caching@v0.0.11
-      continue-on-error: true
-    
+    - uses: actions/checkout@v3
+   
+    - name: initiate Terraform
+      run: terraform init 
+
+    - name: Apply Infrastucture via Terraform
+      run: terraform apply -auto-approve
+
     - name: Deploy to azure
-      run: curl --fail -dH -X POST ${{secrets.AZURE_WEBHOOK_URL}}
+      run: curl --fail -dH -X POST "$(terraform output -raw web_hook)"
 
     - name: Test connection    
-      run: curl --fail https://wapp-to-do-mod9-jl.azurewebsites.net/ 
+      run: curl --fail "$(terraform output -raw webapp_url)"

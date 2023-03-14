@@ -8,45 +8,45 @@ The project uses poetry for Python to create an isolated environment and manage 
 
 ### Poetry installation (Bash)
 
-```bash
+````bash
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
-```
+````
 
 ### Poetry installation (PowerShell)
 
-```powershell
+````powershell
 (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py -UseBasicParsing).Content | python -
-```
+````
 
 ## Dependencies
 
 The project uses a virtual environment to isolate package dependencies. To create the virtual environment and install required packages, run the following from your preferred shell:
 
-```bash
+````bash
 $ poetry install
-```
+````
 
 You'll also need to clone a new `.env` file from the `.env.template` to store local configuration options. This is a one-time operation on first setup:
 
-```bash
+````bash
 $ cp .env.template .env  # (first time only)
-```
+````
 
 The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [SECRET_KEY](https://flask.palletsprojects.com/en/1.1.x/config/#SECRET_KEY) variable which is used to encrypt the flask session cookie.
 
 ## Running the App
 
 Once the all dependencies have been installed, start the Flask app in development mode within the Poetry environment by running:
-```bash
+````bash
 $ poetry run flask run
-```
+````
 To run Tests
-```bash
+````bash
  * Run 'poetry add pytest --dev'
  * Run 'poetry run pytest'
-```
+````
 You should see output similar to the following:
-```bash
+````bash
  * Serving Flask app "app" (lazy loading)
  * Environment: development
  * Debug mode: on
@@ -54,20 +54,20 @@ You should see output similar to the following:
  * Restarting with fsevents reloader
  * Debugger is active!
  * Debugger PIN: 226-556-590
-```
+````
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
 
 
 ## installing and running the app with ansible
 login to the Control server
-```bash
+````bash
 ssh ec2-user@35.179.21.80
-```
+````
 Copy the files in the deploy folder to the ~ directory
 Then run the following:
-```bash
+````bash
 ansible-playbook playbook.yml -i inventory.ini
-```
+````
 enter the required information for the Azure connection string, Database name and Collection Name
 
 Once complete you can go to http://35.179.21.80:5000/ to view the page
@@ -78,18 +78,18 @@ Note: to apply to another Server update the Inventory.ini file with its ip
 
 # Build Docker Image
 Run the following in powershell teminal in VSCODE
-```powershell
+````powershell
 # For Production
 docker build --target production --tag todo-app:prod .
 # For Development
 docker build --target development --tag todo-app:dev .
-```
+````
 # docker build -f .\Dockerfile --tag todo-app .
 # docker run -p 8181:5000 --env-file .\.env todo-app
 
 # Run Docker Image
 Run the following in powershell teminal in VSCODE
-```powershell
+````powershell
 # for Development
 docker run -d -p 8181:5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:dev
 # For Production
@@ -101,27 +101,27 @@ or the following replacing 'Port you want to use' with the required port number 
 docker run -d -p 'Port you want to use':5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:dev
 # For Production
 docker run -d -p 'Port you want to use':5000 --env-file .\.env --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:prod
-```
+````
 
 Once complete you can go to http://localhost:5000/ to view the page or http://localhost:'Port you want to use'/  replacing 'Port you want to use' with your defined port number
 
 # to Run with selenium and firefox for end to end tests add the following
-```bash
+````bash
 poetry add selenium --dev
-```
+````
 for testing tests in docker run the following
 
-```powershell
+````powershell
 docker build --target test --tag todo-app:test .
 docker run --env-file .env.test todo-app:test tests
-```
+````
 You can Change the tests to tests_e2e to run the end to end tests (e2e tests not setup but basics are there)
 for example:
-```powershell
+````powershell
 docker run todo-app:test tests_e2e
 #or 
 docker run -e CON_STRING={CON_STRING} -e DB_NAME={DB_NAME} -e COLLECTION_NAME={COLLECTION_NAME} todo-app:test tests_e2e
-```
+````
 Replacing the {Items} with relevent data
 
 # to Run on azure
@@ -188,3 +188,72 @@ for me that is https://wapp-to-do-mod9-jl.azurewebsites.net/
 
 
 
+Add a Store for the State in azurre
+
+````powershell
+az login --use-device-code
+
+$RESOURCE_GROUP_NAME='Cohort22_JonLon_ProjectExercise'
+$STORAGE_ACCOUNT_NAME="tfstate$(Get-Random)"
+$CONTAINER_NAME='tfstate'
+
+# Create resource group if group dosnt exsit
+#New-AzResourceGroup -Name $RESOURCE_GROUP_NAME -Location UKsouth
+
+# Create storage account
+$storageAccount = New-AzStorageAccount -ResourceGroupName $RESOURCE_GROUP_NAME -Name $STORAGE_ACCOUNT_NAME -SkuName Standard_LRS -Location UKsouth -AllowBlobPublicAccess $false
+
+# Create blob container
+New-AzStorageContainer -Name $CONTAINER_NAME -Context $storageAccount.context
+
+$TERRAFORM_STATE_KEY=(Get-AzStorageAccountKey -ResourceGroupName $RESOURCE_GROUP_NAME -Name $STORAGE_ACCOUNT_NAME)[0].value
+$env:ARM_ACCESS_KEY=$TERRAFORM_STATE_KEY
+
+````
+
+To run on the pipeline we need some secrests setting up
+
+update the following with your required values
+$RGName = '<Resource Group Name>'
+$SubScriptionID = "<Subscription ID>"
+$WebAppName = '<Web App Name>'
+$ServicePrincipleName = "<Service Principle Name>"
+
+````powershell
+
+$RGName = 'Cohort22_JonLon_ProjectExercise'
+$SubScriptionID = "d33b95c7-af3c-4247-9661-aa96d47fccc0"
+$WebAppName = 'Wapp-To-Do-Mod9-JL'
+$ServicePrincipleName = "Dev-SP-User"
+
+az login
+az account set --subscription=$SubScriptionID
+$spJson = az ad sp create-for-rbac --name $ServicePrincipleName --role Contributor --scopes /subscriptions/$SubScriptionID/resourceGroups/$RGName
+$spDetails = $spJson | convertFrom-Json
+$spJson=''
+
+#Azure Login
+# removed as needed by terraform not by application
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings ARM_CLIENT_SECRET=$spDetails.password
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings ARM_SUBSCRIPTION_ID=$SubScriptionID
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings ARM_TENANT_ID=$spDetails.tenant
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings ARM_CLIENT_ID=$spDetails.appID
+$spDetails=''
+
+````
+
+To run locally run the following replacing the relevent data in <>
+
+Add the following values to the .env file 
+ARM_CLIENT_SECRET=<Service principle Password>
+ARM_SUBSCRIPTION_ID=<Subscription ID>
+ARM_TENANT_ID=<Tenant ID>
+ARM_CLIENT_ID=<Service principle ID>
+
+````powershell
+az login
+
+terarform apply
+# on prompt if successfull type 'yes'
+
+````
