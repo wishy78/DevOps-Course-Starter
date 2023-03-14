@@ -9,7 +9,7 @@ terraform {
         resource_group_name  = "Cohort22_JonLon_ProjectExercise"
         storage_account_name = "tfstate1147207684"
         container_name       = "tfstate"
-        key                  = "$env:ARM_ACCESS_KEY"
+        FileName             = "$env:ARM_ACCESS_KEY"
     }
 }
 
@@ -43,11 +43,11 @@ resource "azurerm_linux_web_app" "main" {
     }
   }
   app_settings = {
-    "FLASK_APP" = "${var.FLASK_APP}"
+    "FLASK_APP" = var.FLASK_APP
     "FLASK_ENV" = "${var.FLASK_ENV}"
     "SECRET_KEY"="${var.SECRET_KEY}"
 
-    "CON_STRING"="${azurerm_cosmosdb_account.db.connection_strings[0]}"
+    "CON_STRING"="${azurerm_cosmosdb_account.dbServer.connection_strings[0]}"
     "DB_NAME"="${var.DB_NAME}"
     "COLLECTION_NAME"="${var.COLLECTION_NAME}"
  
@@ -59,7 +59,7 @@ resource "azurerm_linux_web_app" "main" {
   }
 }
 
-resource "azurerm_cosmosdb_account" "db" {
+resource "azurerm_cosmosdb_account" "dbServer" {
   name                = "${var.DB_NAME}"
   location            = data.azurerm_resource_group.main.location
   resource_group_name = data.azurerm_resource_group.main.name
@@ -94,8 +94,8 @@ resource "azurerm_cosmosdb_account" "db" {
   }
 }
 
-resource "azurerm_cosmosdb_mongo_database" "collection" {
+resource "azurerm_cosmosdb_mongo_database" "DB" {
   name                = "${var.COLLECTION_NAME}"
   resource_group_name = data.azurerm_resource_group.main.name
-  account_name        = azurerm_cosmosdb_account.db.name
+  account_name        = azurerm_cosmosdb_account.dbServer.name
 }

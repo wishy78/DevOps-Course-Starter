@@ -233,10 +233,11 @@ $spDetails = $spJson | convertFrom-Json
 $spJson=''
 
 #Azure Login
-az webapp config appsettings set -g $RGName -n $WebAppName --settings ARM_CLIENT_SECRET=$spDetails.password
-az webapp config appsettings set -g $RGName -n $WebAppName --settings ARM_SUBSCRIPTION_ID=$SubScriptionID
-az webapp config appsettings set -g $RGName -n $WebAppName --settings ARM_TENANT_ID=$spDetails.tenant
-az webapp config appsettings set -g $RGName -n $WebAppName --settings ARM_CLIENT_ID=$spDetails.appID
+# removed as needed by terraform not by application
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings ARM_CLIENT_SECRET=$spDetails.password
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings ARM_SUBSCRIPTION_ID=$SubScriptionID
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings ARM_TENANT_ID=$spDetails.tenant
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings ARM_CLIENT_ID=$spDetails.appID
 $spDetails=''
 
 ````
