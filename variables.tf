@@ -1,3 +1,8 @@
+variable "LOG_LEVEL" {
+  description = "Log level"
+  default = "DEBUG"
+  sensitive   = false
+}
 variable "PREFIX" {
   description = "The prefix used for all resources in this environment"
   default = "dev"
