@@ -20,7 +20,6 @@ def createfakedata():
     test_COLLECTION = test_DB[(getenv('COLLECTION_NAME'))]
     test_card = {"name": 'Test card', "state": "To Do"}
     test_COLLECTION.insert_one(test_card)
-    test_LOG_LEVEL = 'DEBUG'
 
 def test_index_page(client):
     createfakedata()
