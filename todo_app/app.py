@@ -17,6 +17,7 @@ def create_app():
     CLIENTSECRET = getenv('CLIENTSECRET')
     BASEURL = getenv('URL')
     app.config['LOGIN_DISABLED'] = getenv('LOGIN_DISABLED') == 'True'
+    app.logger.setLevel(app.config['LOG_LEVEL'])
 
     @login_manager.unauthorized_handler
     def unauthenticated():
@@ -49,6 +50,8 @@ def create_app():
     @login_required
     def new():
         if not is_writer():
+            ThisUser = get_currentuser()
+            app.logger.warning("User %s denied adding new card", ThisUser.name )
             raise Exception("You dont have write access")
         add_card(request.form.get('title'))
         return redirect('/')
@@ -57,8 +60,10 @@ def create_app():
     @login_required
     def move(cardID, newList):
         if not is_writer():
+            app.logger.warning("Card %s denied State change to %s", cardID, newList)
             raise Exception("You dont have write access")
         move_card(cardID, newList)
+        app.logger.info("Card %s State change to %s", cardID, newList)
         return redirect('/')
 
     @app.route('/login/callback')
@@ -80,5 +85,6 @@ def create_app():
         thisuser = User(Jsonresponse,Jsonresponse['login']) 
         duration1 = timedelta(seconds=3600)
         login_user(thisuser, remember=False, duration=duration1, force=True, fresh=True)
+        app.logger.info("User %s Logged in with %s access", thisuser.name, get_myrole(thisuser.id))
         return redirect('/')
     return app
