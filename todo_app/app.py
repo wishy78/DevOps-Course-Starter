@@ -18,7 +18,7 @@ def create_app():
     BASEURL = getenv('URL')
     app.config['LOGIN_DISABLED'] = getenv('LOGIN_DISABLED') == 'True'
     #app.logger.setLevel(app.config[getenv('LOG_LEVEL')])
-    app.logger.setLevel(app.config['LOG_LEVEL'])
+    #app.logger.setLevel(app.config['LOG_LEVEL'])
 
     @login_manager.unauthorized_handler
     def unauthenticated():
