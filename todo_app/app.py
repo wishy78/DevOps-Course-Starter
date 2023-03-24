@@ -49,11 +49,12 @@ def create_app():
     @app.route('/new', methods=['POST'])
     @login_required
     def new():
+        ThisUser = get_currentuser()
         if not is_writer():
-            ThisUser = get_currentuser()
             app.logger.warning("User %s denied adding new card", ThisUser.name )
             raise Exception("You dont have write access")
         add_card(request.form.get('title'))
+        app.logger.info("User %s adding new card", ThisUser.name )
         return redirect('/')
 
     @app.route('/move/<cardID>/<newList>')
@@ -85,6 +86,6 @@ def create_app():
         thisuser = User(Jsonresponse,Jsonresponse['login']) 
         duration1 = timedelta(seconds=3600)
         login_user(thisuser, remember=False, duration=duration1, force=True, fresh=True)
-        app.logger.info("User %s Logged in with %s access", thisuser.name, get_myrole(thisuser.id))
+        app.logger.info("User %s Logged in with ?? access", thisuser.name)
         return redirect('/')
     return app
