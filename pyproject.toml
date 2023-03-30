@@ -12,6 +12,7 @@ requests = "^2.27.1"
 Flask-Login = "^0.6.2"
 mongomock = "^4.1.2"
 pymongo = "^4.3.3"
+loggly-python-handler = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
