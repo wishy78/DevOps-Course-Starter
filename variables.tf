@@ -69,3 +69,8 @@ variable "CLIENTSECRET" {
   description = "Azure Service principle secret/password"
   sensitive   = true
 }
+
+variable "LOGGLY_TOKEN" {
+  description = "LOGGLY TOKEN"
+  sensitive   = true
+}
