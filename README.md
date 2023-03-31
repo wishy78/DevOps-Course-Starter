@@ -153,7 +153,7 @@ $COLLECTION_NAME = 'CollectionNamet'
 
 $ClientID = '<CLIENTID>'
 $ClientSecret = '<CLIENTSECRET>'
-
+$LOGGLY_TOKEN = '<A Loggly Token>'
 az appservice plan create --resource-group $RGName -n $ServicePlanName --sku B1 --is-linux
 
 az webapp create --resource-group $RGName --plan $ServicePlanName --name $WebAppName --deployment-container-image-name wishy78/todo-app:latest
@@ -172,7 +172,8 @@ az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REG
 az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTID=$ClientID
 az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTSECRET=$ClientSecret
 az webapp config appsettings set -g $RGName -n $WebAppName --settings URL=$URL
-
+az webapp config appsettings set -g $RGName -n $WebAppName --settings LOG_LEVEL=DEBUG
+az webapp config appsettings set -g $RGName -n $WebAppName --settings LOGGLY_TOKEN=$LOGGLY_TOKEN
 ````
 
 In https://portal.azure.com/ navigate to the newly created web app as defined in $WebAppName
