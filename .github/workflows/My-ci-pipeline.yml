@@ -63,7 +63,7 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         
-        TF_LOGGLY_TOKEN: ${{ secrets.LOGGLY_TOKEN }}
+        TF_VAR_LOGGLY_TOKEN: ${{ secrets.LOGGLY_TOKEN }}
         TF_VAR_CLIENTID: ${{ secrets.TF_VAR_CLIENTID }}
         TF_VAR_CLIENTSECRET: ${{ secrets.TF_VAR_CLIENTSECRET }}
         TF_VAR_DB_NAME: ${{ secrets.TF_VAR_DB_NAME }}
