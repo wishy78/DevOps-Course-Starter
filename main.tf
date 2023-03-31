@@ -56,6 +56,7 @@ resource "azurerm_linux_web_app" "main" {
     "URL"="${var.URL_PREFIX}${var.PREFIX}-${var.APP_NAME}.${var.URL_DOMAIN}"
 
     "WEBSITES_PORT" = "${var.WEBSITES_PORT}"
+    "LOGGLY_TOKEN" = "${var.LOGGLY_TOKEN}"
   }
 }
 
