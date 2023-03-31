@@ -20,8 +20,8 @@ def create_app():
     BASEURL = getenv('URL')
     LOGGLY_TOKEN = getenv('LOGGLY_TOKEN')
     app.config['LOGIN_DISABLED'] = getenv('LOGIN_DISABLED') == 'True'
-    app.logger.setLevel(app.config[getenv('LOG_LEVEL')])
     #app.logger.setLevel(app.config[getenv('LOG_LEVEL')])
+    #app.logger.setLevel(app.config['LOG_LEVEL'])
     #if app.config['LOGGLY_TOKEN'] is not None:
     if LOGGLY_TOKEN is not None:
         #handler = HTTPSHandler(f'https://logs-01.loggly.com/inputs/{app.config["LOGGLY_TOKEN"]}/tag/todo-app')
