@@ -14,6 +14,7 @@ terraform {
 }
 
 provider "azurerm" {
+    skip_provider_registration = true
     features {}
     # ARM_ environmets are use from Pipeline to login automatically
 }
