@@ -1,7 +1,7 @@
 terraform {
     required_providers {
+        skip_provider_registration = "true"
         azurerm = {
-          skip_provider_registration = "true"
           source = "hashicorp/azurerm"
           version = ">= 3.8"
         }
