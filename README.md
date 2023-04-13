@@ -150,6 +150,8 @@ $SECRETKEY = '<SECRET_KEY>'
 $CON_STRING = 'mongodb://ConnectionString'
 $DB_NAME = 'CosmosDBName'
 $COLLECTION_NAME = 'CollectionNamet'
+$DockRegUsername = '<Docker Regitry Server username>'
+$DockRegPassword = '<Docker Regitry Server password>'
 
 $ClientID = '<CLIENTID>'
 $ClientSecret = '<CLIENTSECRET>'
@@ -169,6 +171,8 @@ az webapp config appsettings set -g $RGName -n $WebAppName --settings DB_NAME=$D
 az webapp config appsettings set -g $RGName -n $WebAppName --settings COLLECTION_NAME=$COLLECTION_NAME
 az webapp config appsettings set -g $RGName -n $WebAppName --settings WEBSITES_PORT=5000
 az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_URL=https://hub.docker.com/repository/registry-1.docker.io
+az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_USERNAME=$DockRegUsername
+az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_PASSWORD=$DockRegPassword
 az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTID=$ClientID
 az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTSECRET=$ClientSecret
 az webapp config appsettings set -g $RGName -n $WebAppName --settings URL=$URL
