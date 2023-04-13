@@ -3,6 +3,13 @@ variable "LOG_LEVEL" {
   default = "DEBUG"
   sensitive   = false
 }
+
+variable "DOCKER_REGISTRY_SERVER_URL" {
+  description = "DOCKER_REGISTRY_SERVER_URL"
+  default = "https://hub.docker.com/repository/registry-1.docker.io"
+  sensitive   = false
+}
+
 variable "PREFIX" {
   description = "The prefix used for all resources in this environment"
   default = "dev"
@@ -72,5 +79,15 @@ variable "CLIENTSECRET" {
 
 variable "LOGGLY_TOKEN" {
   description = "LOGGLY TOKEN"
+  sensitive   = true
+}
+
+variable "DOCKER_REGISTRY_SERVER_PASSWORD" {
+  description = "DOCKER_REGISTRY_SERVER_PASSWORD"
+  sensitive   = true
+}
+
+variable "DOCKER_REGISTRY_SERVER_USERNAME" {
+  description = "DOCKER_REGISTRY_SERVER_USERNAME"
   sensitive   = true
 }
