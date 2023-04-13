@@ -1,6 +1,5 @@
 terraform {
     required_providers {
-        #skip_provider_registration = "true"
         azurerm = {
           source = "hashicorp/azurerm"
           version = ">= 3.8"
@@ -16,7 +15,7 @@ terraform {
 
 provider "azurerm" {
     features {}
-# ARM_ environmets are use from Pipeline to login automatically
+    # ARM_ environmets are use from Pipeline to login automatically
 }
 
 data "azurerm_resource_group" "main" {
