@@ -171,13 +171,13 @@ az webapp config appsettings set -g $RGName -n $WebAppName --settings DB_NAME=$D
 az webapp config appsettings set -g $RGName -n $WebAppName --settings COLLECTION_NAME=$COLLECTION_NAME
 az webapp config appsettings set -g $RGName -n $WebAppName --settings WEBSITES_PORT=5000
 az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_URL=https://hub.docker.com/repository/registry-1.docker.io
-az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_USERNAME=$DockRegUsername
-az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_PASSWORD=$DockRegPassword
-az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTID=$ClientID
-az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTSECRET=$ClientSecret
-az webapp config appsettings set -g $RGName -n $WebAppName --settings URL=$URL
-az webapp config appsettings set -g $RGName -n $WebAppName --settings LOG_LEVEL=DEBUG
-az webapp config appsettings set -g $RGName -n $WebAppName --settings LOGGLY_TOKEN=$LOGGLY_TOKEN
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_USERNAME=$DockRegUsername
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_PASSWORD=$DockRegPassword
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTID=$ClientID
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTSECRET=$ClientSecret
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings URL=$URL
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings LOG_LEVEL=DEBUG
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings LOGGLY_TOKEN=$LOGGLY_TOKEN
 ````
 
 In https://portal.azure.com/ navigate to the newly created web app as defined in $WebAppName
