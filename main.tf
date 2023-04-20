@@ -14,8 +14,9 @@ terraform {
 }
 
 provider "azurerm" {
+    skip_provider_registration = true
     features {}
-# ARM_ environmets are use from Pipeline to login automatically
+    # ARM_ environmets are use from Pipeline to login automatically
 }
 
 data "azurerm_resource_group" "main" {
@@ -56,6 +57,12 @@ resource "azurerm_linux_web_app" "main" {
     "URL"="${var.URL_PREFIX}${var.PREFIX}-${var.APP_NAME}.${var.URL_DOMAIN}"
 
     "WEBSITES_PORT" = "${var.WEBSITES_PORT}"
+    "LOGGLY_TOKEN" = "${var.LOGGLY_TOKEN}"
+
+    "LOG_LEVEL" = "${var.LOG_LEVEL}"
+    "DOCKER_REGISTRY_SERVER_PASSWORD" = "${var.DOCKER_REGISTRY_SERVER_PASSWORD}"
+    "DOCKER_REGISTRY_SERVER_URL" = "${var.DOCKER_REGISTRY_SERVER_URL}"
+    "DOCKER_REGISTRY_SERVER_USERNAME" = "${var.DOCKER_REGISTRY_SERVER_USERNAME}"
   }
 }
 

@@ -7,6 +7,8 @@ from os import getenv
 import requests
 from todo_app.data.user_class import User
 from datetime import timedelta
+from loggly.handlers import HTTPSHandler
+from logging import Formatter
 
 def create_app():
     read_env_deatils()
@@ -16,8 +18,20 @@ def create_app():
     CLIENTID = getenv('CLIENTID')
     CLIENTSECRET = getenv('CLIENTSECRET')
     BASEURL = getenv('URL')
+    LOGGLY_TOKEN = getenv('LOGGLY_TOKEN')
     app.config['LOGIN_DISABLED'] = getenv('LOGIN_DISABLED') == 'True'
-
+    #app.logger.setLevel(app.config[getenv('LOG_LEVEL')])
+    LOGLEVEL = getenv('LOG_LEVEL')
+    app.logger.setLevel(LOGLEVEL)
+    #if app.config['LOGGLY_TOKEN'] is not None:
+    if LOGGLY_TOKEN is not None:
+        #handler = HTTPSHandler(f'https://logs-01.loggly.com/inputs/{app.config["LOGGLY_TOKEN"]}/tag/todo-app')
+        handler = HTTPSHandler(f'https://logs-01.loggly.com/inputs/{LOGGLY_TOKEN}/tag/todo-app')
+        handler.setFormatter(
+        Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
+    )
+    app.logger.addHandler(handler)
+    
     @login_manager.unauthorized_handler
     def unauthenticated():
         state = randStr(N=20)
@@ -48,17 +62,22 @@ def create_app():
     @app.route('/new', methods=['POST'])
     @login_required
     def new():
+        ThisUser = get_currentuser()
         if not is_writer():
+            app.logger.warning("User %s denied adding new card", ThisUser.name )
             raise Exception("You dont have write access")
         add_card(request.form.get('title'))
+        app.logger.info("User %s adding new card", ThisUser.name )
         return redirect('/')
 
     @app.route('/move/<cardID>/<newList>')
     @login_required
     def move(cardID, newList):
         if not is_writer():
+            app.logger.warning("Card %s denied State change to %s", cardID, newList)
             raise Exception("You dont have write access")
         move_card(cardID, newList)
+        app.logger.info("Card %s State change to %s", cardID, newList)
         return redirect('/')
 
     @app.route('/login/callback')
@@ -80,5 +99,6 @@ def create_app():
         thisuser = User(Jsonresponse,Jsonresponse['login']) 
         duration1 = timedelta(seconds=3600)
         login_user(thisuser, remember=False, duration=duration1, force=True, fresh=True)
+        app.logger.info("User %s Logged in with ?? access", thisuser.name)
         return redirect('/')
     return app
