@@ -14,8 +14,8 @@ spec:
         app: module-14
     spec:
       containers:
-        - name: nginx
-          image: nginx:latest
-          #imagePullPolicy: never
+        - name: todo-app
+          image: todo-app:prod
+          imagePullPolicy: never
           ports:
           - containerPort: 80
