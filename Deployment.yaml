@@ -14,7 +14,7 @@ spec:
         app: module-14
     spec:
       containers:
-        - name: todo-app
-          image: todo-app:prod
+        - name: nginx
+          image: nginx
           ports:
           - containerPort: 80
