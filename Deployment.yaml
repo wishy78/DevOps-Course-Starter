@@ -16,6 +16,6 @@ spec:
       containers:
         - name: todo-app
           image: todo-app:prod
-          imagePullPolicy: never
+          imagePullPolicy: Never
           ports:
           - containerPort: 80
