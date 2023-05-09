@@ -18,7 +18,7 @@ spec:
           image: todo-app:prod
           imagePullPolicy: Never
           ports:
-          - containerPort: 80
+          - containerPort: 5000
           env:
 #          envFrom:
 #          - secretRef:
