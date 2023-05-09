@@ -48,3 +48,33 @@ spec:
               secretKeyRef: 
                 name: app-secret4 
                 key: LOGGLY_TOKEN
+          - name:  SECRET_KEY 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret4 
+                key:  SECRET_KEY       
+          - name:  FLASK_APP 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret4 
+                key:  FLASK_APP
+          - name:  FLASK_ENV 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret4 
+                key:  FLASK_ENV
+          - name:  LOG_LEVEL
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret4 
+                key:  LOG_LEVEL
+          - name:  LOGGLY_TOKEN 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret4 
+                key:  LOGGLY_TOKEN
+          - name:  URL 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret4 
+                key:  URL
