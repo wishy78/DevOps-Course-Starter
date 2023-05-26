@@ -1,5 +1,6 @@
+##import logging
 from flask import Flask, redirect, render_template, request, session
-from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils, get_myrole, get_currentuser, randStr
+from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils, get_myrole, get_currentuser, randStr, test_connection
 from todo_app.flask_config import Config
 from todo_app.View_Class import ViewModel
 from flask_login import LoginManager, login_required, login_user
@@ -22,7 +23,7 @@ def create_app():
     app.config['LOGIN_DISABLED'] = getenv('LOGIN_DISABLED') == 'True'
     #app.logger.setLevel(app.config[getenv('LOG_LEVEL')])
     LOGLEVEL = getenv('LOG_LEVEL')
-    app.logger.setLevel(LOGLEVEL)
+    ##app.logger.setLevel(logging.DEBUG)
     #if app.config['LOGGLY_TOKEN'] is not None:
     if LOGGLY_TOKEN is not None:
         #handler = HTTPSHandler(f'https://logs-01.loggly.com/inputs/{app.config["LOGGLY_TOKEN"]}/tag/todo-app')
@@ -30,7 +31,7 @@ def create_app():
         handler.setFormatter(
         Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
     )
-    app.logger.addHandler(handler)
+    ##app.logger.addHandler(logging.Handler)
     
     @login_manager.unauthorized_handler
     def unauthenticated():
@@ -50,6 +51,8 @@ def create_app():
     @app.route('/')
     @login_required
     def index():
+        app.logger.info("Database Check: %s ??", test_connection())
+        
         item_view_model = ViewModel(get_cards())
         ThisUser = get_currentuser()
         return render_template('index.html', view_model=item_view_model, lists=get_lists(), user1=ThisUser, role=get_myrole(ThisUser.id))
@@ -84,16 +87,20 @@ def create_app():
     def callback():
         recivedCode = request.args.get('code')
         state = request.args.get('state')
+    ##    app.logger.info("Sending State is:   %s", state )
+    ##    app.logger.info("Returning State is: %s", session['state'] )
         if (session['state'] != state):
             raise Exception("State does not match; indicates referral from a different hostname")
         url = f'https://github.com/login/oauth/access_token?client_id={CLIENTID}&redirect_uri={BASEURL}/login/callback&client_secret={CLIENTSECRET}&code={recivedCode}'
         headers = {'Accept': 'application/json'}
         response1 = requests.post(url=url, headers=headers).json()
+    ##    app.logger.info("Github response Json: %s", response1 )
         accesstoken = response1['access_token']
         accesstokenstr = 'Bearer '+accesstoken
         url2 = 'https://api.github.com/user'
         headers2 = {"Authorization": accesstokenstr}
         response = requests.get(url=url2, headers=headers2)
+     ##   app.logger.info("Github Autherisation Json: %s", response )
         response.raise_for_status()
         Jsonresponse = response.json()
         thisuser = User(Jsonresponse,Jsonresponse['login']) 
