@@ -256,9 +256,19 @@ ARM_TENANT_ID=<Tenant ID>
 ARM_CLIENT_ID=<Service principle ID>
 
 ````powershell
-az login
+az login --use-device-code
 
 terarform apply
 # on prompt if successfull type 'yes'
 
 ````
+
+docker build --target production --tag todo-app1:prod .
+minikube start
+minikube image load todo-app1:prod
+kubectl delete secret app-secret5
+kubectl create secret generic app-secret5 --from-env-file=.env # run once or delete and recreate - kubectl delete secret app-secret5
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+kubectl port-forward service/module-14 5000:5000
+

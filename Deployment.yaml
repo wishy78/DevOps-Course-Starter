@@ -22,59 +22,66 @@ spec:
           env:
 #          envFrom:
 #          - secretRef:
-#              name: app-secret4
+#              name: app-secret5
           - name: DB_NAME  
             valueFrom: 
               secretKeyRef: 
-                name: app-secret4 
+                name: app-secret5 
                 key: DB_NAME  
           - name: COLLECTION_NAME 
             valueFrom: 
               secretKeyRef: 
-                name: app-secret4 
+                name: app-secret5 
                 key: COLLECTION_NAME 
           - name: CLIENTID 
             valueFrom: 
               secretKeyRef: 
-                name: app-secret4 
+                name: app-secret5 
                 key: CLIENTID 
           - name: CLIENTSECRET 
             valueFrom: 
               secretKeyRef: 
-                name: app-secret4 
+                name: app-secret5 
                 key: CLIENTSECRET 
           - name: LOGGLY_TOKEN 
             valueFrom: 
               secretKeyRef: 
-                name: app-secret4 
+                name: app-secret5 
                 key: LOGGLY_TOKEN
           - name:  SECRET_KEY 
             valueFrom: 
               secretKeyRef: 
-                name: app-secret4 
+                name: app-secret5 
                 key:  SECRET_KEY       
           - name:  FLASK_APP 
             valueFrom: 
               secretKeyRef: 
-                name: app-secret4 
+                name: app-secret5 
                 key:  FLASK_APP
           - name:  FLASK_ENV 
             valueFrom: 
               secretKeyRef: 
-                name: app-secret4 
+                name: app-secret5 
                 key:  FLASK_ENV
           - name:  LOG_LEVEL
             valueFrom: 
               secretKeyRef: 
-                name: app-secret4 
+                name: app-secret5 
                 key:  LOG_LEVEL
-          - name:  LOGGLY_TOKEN 
-            valueFrom: 
-              secretKeyRef: 
-                name: app-secret4 
-                key:  LOGGLY_TOKEN
           - name:  URL 
             valueFrom: 
               secretKeyRef: 
-                name: app-secret4 
+                name: app-secret5 
                 key:  URL
+          - name:  DOCKER_REGISTRY_SERVER_USERNAME 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key:  DOCKER_REGISTRY_SERVER_USERNAME
+          - name:  DOCKER_REGISTRY_SERVER_PASSWORD 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key:  DOCKER_REGISTRY_SERVER_PASSWORD
+                
+

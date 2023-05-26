@@ -1,6 +1,6 @@
 variable "LOG_LEVEL" {
   description = "Log level"
-  default = "INFO"
+  default = "DEBUG"
   sensitive   = false
 }
 
