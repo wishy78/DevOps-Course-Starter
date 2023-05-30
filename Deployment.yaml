@@ -83,5 +83,10 @@ spec:
               secretKeyRef: 
                 name: app-secret5 
                 key:  DOCKER_REGISTRY_SERVER_PASSWORD
-                
+          - name:  CON_STRING 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key:  CON_STRING                
+
 
