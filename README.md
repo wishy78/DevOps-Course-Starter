@@ -263,12 +263,21 @@ terarform apply
 
 ````
 
+To run in Kubinates
+
+prerquisits: please install the following (docker you should have already if following on from above)
+Kubectl -  https://kubernetes.io/docs/tasks/tools/
+minikube - https://minikube.sigs.k8s.io/docs/start/
+
+then run the following:
+````powershell
 docker build --target production --tag todo-app1:prod .
 minikube start
 minikube image load todo-app1:prod
-kubectl delete secret app-secret5
+kubectl delete secret app-secret5 #if already exsit
 kubectl create secret generic app-secret5 --from-env-file=.env # run once or delete and recreate - kubectl delete secret app-secret5
 kubectl apply -f deployment.yaml
 kubectl apply -f service.yaml
 kubectl port-forward service/module-14 5000:5000
-
+````
+Navigate to http://127.0.0.1:5000/
