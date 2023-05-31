@@ -271,9 +271,9 @@ minikube - https://minikube.sigs.k8s.io/docs/start/
 
 then run the following:
 ````powershell
-docker build --target production --tag todo-app1:prod .
+docker build --target production --tag todo-app:prod .
 minikube start
-minikube image load todo-app1:prod
+minikube image load todo-app:prod
 kubectl delete secret app-secret5 #if already exsit
 kubectl create secret generic app-secret5 --from-env-file=.env # run once or delete and recreate - kubectl delete secret app-secret5
 kubectl apply -f deployment.yaml

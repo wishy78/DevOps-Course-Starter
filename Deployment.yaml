@@ -73,16 +73,6 @@ spec:
               secretKeyRef: 
                 name: app-secret5 
                 key:  URL
-          - name:  DOCKER_REGISTRY_SERVER_USERNAME 
-            valueFrom: 
-              secretKeyRef: 
-                name: app-secret5 
-                key:  DOCKER_REGISTRY_SERVER_USERNAME
-          - name:  DOCKER_REGISTRY_SERVER_PASSWORD 
-            valueFrom: 
-              secretKeyRef: 
-                name: app-secret5 
-                key:  DOCKER_REGISTRY_SERVER_PASSWORD
           - name:  CON_STRING 
             valueFrom: 
               secretKeyRef: 
