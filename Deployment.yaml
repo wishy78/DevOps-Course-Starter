@@ -1,0 +1,83 @@
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: module-14
+spec:
+  selector:
+    matchLabels:
+      app: module-14
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: module-14
+    spec:
+      containers:
+        - name: todo-app
+          image: todo-app:prod
+          imagePullPolicy: Never
+          ports:
+          - containerPort: 5000
+          env:
+#          envFrom:
+#          - secretRef:
+#              name: app-secret5
+          - name: DB_NAME  
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key: DB_NAME  
+          - name: COLLECTION_NAME 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key: COLLECTION_NAME 
+          - name: CLIENTID 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key: CLIENTID 
+          - name: CLIENTSECRET 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key: CLIENTSECRET 
+          - name: LOGGLY_TOKEN 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key: LOGGLY_TOKEN
+                optional: true
+          - name:  SECRET_KEY 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key:  SECRET_KEY       
+          - name:  FLASK_APP 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key:  FLASK_APP
+          - name:  FLASK_ENV 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key:  FLASK_ENV
+          - name:  LOG_LEVEL
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key:  LOG_LEVEL
+          - name:  URL 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key:  URL
+          - name:  CON_STRING 
+            valueFrom: 
+              secretKeyRef: 
+                name: app-secret5 
+                key:  CON_STRING                
+
+

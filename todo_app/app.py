@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request, session
-from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils, get_myrole, get_currentuser, randStr
+from todo_app.data.mongo_items import add_card, get_cards, get_lists, move_card, read_env_deatils, get_myrole, get_currentuser, randStr, test_connection
 from todo_app.flask_config import Config
 from todo_app.View_Class import ViewModel
 from flask_login import LoginManager, login_required, login_user
@@ -20,17 +20,12 @@ def create_app():
     BASEURL = getenv('URL')
     LOGGLY_TOKEN = getenv('LOGGLY_TOKEN')
     app.config['LOGIN_DISABLED'] = getenv('LOGIN_DISABLED') == 'True'
-    #app.logger.setLevel(app.config[getenv('LOG_LEVEL')])
     LOGLEVEL = getenv('LOG_LEVEL')
-    app.logger.setLevel(LOGLEVEL)
-    #if app.config['LOGGLY_TOKEN'] is not None:
     if LOGGLY_TOKEN is not None:
-        #handler = HTTPSHandler(f'https://logs-01.loggly.com/inputs/{app.config["LOGGLY_TOKEN"]}/tag/todo-app')
         handler = HTTPSHandler(f'https://logs-01.loggly.com/inputs/{LOGGLY_TOKEN}/tag/todo-app')
         handler.setFormatter(
         Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
     )
-    app.logger.addHandler(handler)
     
     @login_manager.unauthorized_handler
     def unauthenticated():
@@ -50,6 +45,7 @@ def create_app():
     @app.route('/')
     @login_required
     def index():
+        app.logger.info("Database Check: %s ??", test_connection())
         item_view_model = ViewModel(get_cards())
         ThisUser = get_currentuser()
         return render_template('index.html', view_model=item_view_model, lists=get_lists(), user1=ThisUser, role=get_myrole(ThisUser.id))

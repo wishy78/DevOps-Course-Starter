@@ -171,13 +171,13 @@ az webapp config appsettings set -g $RGName -n $WebAppName --settings DB_NAME=$D
 az webapp config appsettings set -g $RGName -n $WebAppName --settings COLLECTION_NAME=$COLLECTION_NAME
 az webapp config appsettings set -g $RGName -n $WebAppName --settings WEBSITES_PORT=5000
 az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_URL=https://hub.docker.com/repository/registry-1.docker.io
-az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_USERNAME=$DockRegUsername
-az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_PASSWORD=$DockRegPassword
-az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTID=$ClientID
-az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTSECRET=$ClientSecret
-az webapp config appsettings set -g $RGName -n $WebAppName --settings URL=$URL
-az webapp config appsettings set -g $RGName -n $WebAppName --settings LOG_LEVEL=DEBUG
-az webapp config appsettings set -g $RGName -n $WebAppName --settings LOGGLY_TOKEN=$LOGGLY_TOKEN
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_USERNAME=$DockRegUsername
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings DOCKER_REGISTRY_SERVER_PASSWORD=$DockRegPassword
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTID=$ClientID
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings CLIENTSECRET=$ClientSecret
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings URL=$URL
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings LOG_LEVEL=DEBUG
+#az webapp config appsettings set -g $RGName -n $WebAppName --settings LOGGLY_TOKEN=$LOGGLY_TOKEN
 ````
 
 In https://portal.azure.com/ navigate to the newly created web app as defined in $WebAppName
@@ -256,9 +256,28 @@ ARM_TENANT_ID=<Tenant ID>
 ARM_CLIENT_ID=<Service principle ID>
 
 ````powershell
-az login
+az login --use-device-code
 
 terarform apply
 # on prompt if successfull type 'yes'
 
 ````
+
+To run in Kubinates
+
+prerquisits: please install the following (docker you should have already if following on from above)
+Kubectl -  https://kubernetes.io/docs/tasks/tools/
+minikube - https://minikube.sigs.k8s.io/docs/start/
+
+then run the following:
+````powershell
+docker build --target production --tag todo-app:prod .
+minikube start
+minikube image load todo-app:prod
+kubectl delete secret app-secret5 #if already exsit
+kubectl create secret generic app-secret5 --from-env-file=.env # run once or delete and recreate - kubectl delete secret app-secret5
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+kubectl port-forward service/module-14 5000:5000
+````
+Navigate to http://127.0.0.1:5000/

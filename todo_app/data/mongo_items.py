@@ -4,6 +4,7 @@ from todo_app.data.task_class import Task
 from flask_login import current_user, AnonymousUserMixin
 import random 
 import string
+from pymongo.errors import ServerSelectionTimeoutError
 
 def read_env_deatils():
     global CLIENT
@@ -16,8 +17,16 @@ def read_env_deatils():
 def get_lists():
     return [{"id":"To Do","name":"To Do"},{"id":"Doing","name":"Doing"},{"id":"Done","name":"Done"}]
 
+def test_connection():
+    try:
+        info = CLIENT.server_info() # Forces a call.
+        return "Connected to Database"
+    except ServerSelectionTimeoutError:
+        return "Database connection is down."
+
 def get_cards():
     cards = []
+    test_connection()
     for card in COLLECTION.find():
         cards.append(Task.from_Mongo_card(card))
     return cards
