@@ -48,6 +48,7 @@ spec:
               secretKeyRef: 
                 name: app-secret5 
                 key: LOGGLY_TOKEN
+                optional: true
           - name:  SECRET_KEY 
             valueFrom: 
               secretKeyRef: 
